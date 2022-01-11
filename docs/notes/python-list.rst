@@ -643,6 +643,33 @@ Sorted List
 
     print(bar) # [Foo(0), Foo(1), Foo(2), Foo(3)]
 
+New a List
+----------
+
+.. code-block:: python
+
+    # new a list with size = 3
+
+    >>> [0] * 3
+    [0, 0, 0]
+
+    # new a 2d list with size 3x3
+
+    >>> [[0] * 3 for _ in range(3)]
+    [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+
+Note that we should avoid creating a multi-dimension list via the following
+snippet because all objects in the list point to the same address.
+
+.. code-block:: python
+
+    >>> a = [[0] * 3] * 3
+    >>> a
+    [[0, 0, 0], [0, 0, 0], [0, 0, 0]]
+    >>> a[1][1] = 2
+    >>> a
+    [[0, 2, 0], [0, 2, 0], [0, 2, 0]]
+
 
 Circular Buffer
 ---------------
@@ -701,3 +728,55 @@ Groupby
     ...
     gp1 [('gp1', 'a')]
     gp2 [('gp2', 'b'), ('gp2', 'c')]
+
+Binary Search
+-------------
+
+.. code-block:: python
+
+    >>> def binary_search(arr, x, lo=0, hi=None):
+    ...     if not hi: hi = len(arr)
+    ...     pos = bisect_left(arr, x, lo, hi)
+    ...     return pos if pos != hi and arr[pos] == x else -1
+    ...
+    >>> a = [1, 1, 1, 2, 3]
+    >>> binary_search(a, 1)
+    0
+    >>> binary_search(a, 2)
+    3
+
+Lower Bound
+-----------
+
+.. code-block:: python
+
+    >>> import bisect
+    >>> a = [1,2,3,3,4,5]
+    >>> bisect.bisect_left(a, 3)
+    2
+    >>> bisect.bisect_left(a, 3.5)
+    4
+
+Upper Bound
+-----------
+
+.. code-block:: python
+
+    >>> import bisect
+    >>> a = [1,2,3,3,4,5]
+    >>> bisect.bisect_right(a, 3)
+    4
+    >>> bisect.bisect_right(a, 3.5)
+    4
+
+Lexicographically Order
+-----------------------
+
+.. code-block:: python
+
+    # python compare lists lexicographically
+
+    >>> a = [(1,2), (1,1), (1,0), (2,1)]
+    >>> a.sort()
+    >>> a
+    [(1, 0), (1, 1), (1, 2), (2, 1)]
