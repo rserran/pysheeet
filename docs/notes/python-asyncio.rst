@@ -1286,3 +1286,66 @@ Simple asyncio WSGI web server
 
 
 .. _29679: https://bugs.python.org/issue29679
+
+
+Run in Executor
+---------------
+
+.. code-block:: python
+
+    import asyncio
+    import urllib.request
+
+    from concurrent.futures import ThreadPoolExecutor
+
+    def fetch(url):
+        with urllib.request.urlopen(url) as f:
+            return f.read(4096)
+
+
+    async def main():
+        loop = asyncio.get_event_loop()
+        url = "http://www.python.org/"
+        with ThreadPoolExecutor() as e:
+            res = await loop.run_in_executor(e, fetch, url)
+            print(res)
+
+    asyncio.run(main())
+
+
+Run in Thread
+-------------
+
+.. code-block:: python
+
+    import asyncio
+    import urllib.request
+
+    from threading import Thread
+
+    class AsyncThread(Thread):
+        def __init__(self, *a, **kw):
+            super().__init__(*a, **kw)
+            self.loop = asyncio.new_event_loop()
+
+        def dispatch(self, coro):
+            return asyncio.run_coroutine_threadsafe(coro, loop=self.loop).result()
+
+        def run(self):
+            self.loop.run_forever()
+
+        def stop(self):
+            self.loop.call_soon_threadsafe(self.loop.stop)
+            self.join()
+
+
+    async def fetch(url):
+        loop = asyncio.get_event_loop()
+        with urllib.request.urlopen(url) as f:
+            return await loop.run_in_executor(None, f.read, 4096)
+
+    t = AsyncThread()
+    t.start()
+    res = t.dispatch(fetch("http://www.python.org/"))
+    print(res)
+    t.stop()
