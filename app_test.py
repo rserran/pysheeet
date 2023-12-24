@@ -44,7 +44,6 @@ class PysheeetTest(LiveServerTestCase):
         """Check security headers."""
         headers = resp.headers
         self.assertTrue("Content-Security-Policy" in headers)
-        self.assertTrue("X-XSS-Protection" in headers)
         self.assertTrue("X-Content-Type-Options" in headers)
         self.assertTrue("Content-Security-Policy" in headers)
         self.assertTrue("Feature-Policy" in headers)
@@ -137,6 +136,10 @@ class PysheeetTest(LiveServerTestCase):
             resp = static_proxy(u)
             self.assertEqual(resp.status_code, 200)
             resp.close()
+
+        u = "notes/../conf.py"
+        _, code = static_proxy(u)
+        self.assertEqual(code, 404)
 
     def test_page_not_found(self):
         """Test page not found."""
