@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+authors:
+- family-names: "Tsai"
+  given-names: "Chang-Ning"
+  orcid: "https://orcid.org/0009-0000-5297-5940"
+  github: "crazyguitar"
+abstract: "A comprehensive Python cheat sheet covering Python 2 and 3 syntax, tips, and code snippets."
+version: "master"
+repository-code: "https://github.com/crazyguitar/pysheeet"
+license: "MIT"
+date-released: "2016-02-29"
+url: "https://www.pythonsheets.com"
+keywords:
+  - python
+  - cheatsheet
+  - python-2
+  - python-3
