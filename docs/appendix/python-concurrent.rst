@@ -234,10 +234,10 @@ is equal to the following snippet (blocking version).
 To migrate the similar structure from blocking to non-blocking, a function (or
 a task) requires to snapshot the current status, including arguments, variables,
 and breakpoints, when it needs to wait for I/O operations. Also, the scheduler
-should be able to re-entry the function and execute the remaining code after
+should be able to re-enter the function and execute the remaining code after
 I/O operations finish. Unlike other programming languages such as C++, Python can
 achieve the concepts discussed above easily because its **generator** can preserve
-all status and re-entry by calling the built-in function ``next()``. By utilizing
+all status and re-enter by calling the built-in function ``next()``. By utilizing
 generators, handling I/O operations like the previous snippet but a non-blocking
 form, which is called *inline callback*, is reachable inside an event loop.
 

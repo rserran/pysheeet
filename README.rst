@@ -15,6 +15,9 @@
       <a href="https://raw.githubusercontent.com/crazyguitar/pysheeet/master/LICENSE">
         <img src="https://img.shields.io/badge/License-MIT-blue.svg" alt="License MIT">
       </a>
+      <a href="https://doi.org/10.5281/zenodo.15529042">
+        <img src="https://zenodo.org/badge/52760178.svg" alt="DOI">
+      </a>
     </p>
 
 Introduction
