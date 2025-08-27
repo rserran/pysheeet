@@ -41,7 +41,6 @@ official document, `What’s New in Python <https://docs.python.org/3/whatsnew/i
 Cheat Sheet
 ===========
 
-- `Code Style <docs/notes/python-code-style.rst>`_
 - `From Scratch <docs/notes/python-basic.rst>`_
 - `Future <docs/notes/python-future.rst>`_
 - `Unicode <docs/notes/python-unicode.rst>`_

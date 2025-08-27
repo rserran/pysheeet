@@ -45,7 +45,6 @@ only includes basic Python features but also data structures and algorithms.
 .. toctree::
    :maxdepth: 1
 
-   notes/python-code-style
    notes/python-basic
    notes/python-future
    notes/python-unicode
