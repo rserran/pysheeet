@@ -69,6 +69,7 @@ Advanced Cheat Sheet
 - `SSH <docs/notes/python-ssh.rst>`_
 - `Tests <docs/notes/python-tests.rst>`_
 - `C Extensions <docs/notes/python-c-extensions.rst>`_
+- `Slurm <docs/notes/slurm.rst>`_
 
 
 Appendix

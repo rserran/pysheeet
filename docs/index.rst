@@ -79,6 +79,7 @@ modules usages.
    notes/python-ssh
    notes/python-tests
    notes/python-c-extensions
+   notes/slurm
 
 Appendix
 --------
