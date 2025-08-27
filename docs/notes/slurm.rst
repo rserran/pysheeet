@@ -7,6 +7,25 @@
 Slurm
 =====
 
+Slurm Info
+----------
+
+.. code-block:: bash
+
+    # show slurm general info
+    sinfo
+
+    # show partition info
+    sinfo -s
+    sinfo --summarize
+
+    # show partition info
+    PARTITION=dev
+    sinfo -p ${PARTITION}
+
+    # show nodes in idle state
+    sinfo --state=idle
+
 Submit Jobs
 -----------
 
