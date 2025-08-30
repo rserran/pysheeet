@@ -45,20 +45,21 @@ only includes basic Python features but also data structures and algorithms.
 .. toctree::
    :maxdepth: 1
 
-   notes/python-basic
-   notes/python-future
-   notes/python-unicode
-   notes/python-list
-   notes/python-set
-   notes/python-dict
-   notes/python-heap
-   notes/python-func
-   notes/python-object
-   notes/python-generator
-   notes/python-typing
-   notes/python-date
-   notes/python-io
-   notes/python-os
+   notes/basic/python-basic
+   notes/basic/python-future
+   notes/basic/python-object
+   notes/basic/python-typing
+   notes/basic/python-func
+   notes/container/python-list
+   notes/container/python-set
+   notes/container/python-dict
+   notes/container/python-heap
+   notes/string/python-unicode
+   notes/string/python-rexp
+   notes/iteration/python-generator
+   notes/os/python-date
+   notes/os/python-os
+   notes/io/python-io
 
 
 Advanced Cheat Sheet
@@ -70,16 +71,15 @@ modules usages.
 .. toctree::
    :maxdepth: 1
 
-   notes/python-rexp
-   notes/python-socket
-   notes/python-asyncio
-   notes/python-concurrency
-   notes/python-sqlalchemy
-   notes/python-security
-   notes/python-ssh
-   notes/python-tests
-   notes/python-c-extensions
-   notes/slurm
+   notes/io/python-socket
+   notes/multitasking/python-asyncio
+   notes/multitasking/python-concurrency
+   notes/database/python-sqlalchemy
+   notes/security/python-security
+   notes/security/python-ssh
+   notes/testing/python-tests
+   notes/extension/python-c-extensions
+   notes/pytorch/slurm
 
 Appendix
 --------
