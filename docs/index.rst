@@ -45,44 +45,12 @@ only includes basic Python features but also data structures and algorithms.
 
 .. toctree::
    :maxdepth: 1
-   :caption: Quick Start
 
-   notes/basic/python-basic
-   notes/basic/python-future
-   notes/basic/python-object
-   notes/basic/python-typing
-   notes/basic/python-func
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Container
-
-   notes/container/python-list
-   notes/container/python-set
-   notes/container/python-dict
-   notes/container/python-heap
-
-.. toctree::
-   :maxdepth: 1
-   :caption: String
-
-   notes/string/python-unicode
-   notes/string/python-rexp
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Iteration
-
-   notes/iteration/python-generator
-
-.. toctree::
-   :maxdepth: 1
-   :caption: Operating System
-
-   notes/os/python-date
-   notes/os/python-os
-   notes/os/python-io
-   notes/os/python-socket
+   notes/basic/index
+   notes/container/index
+   notes/string/index
+   notes/iteration/index
+   notes/os/index
 
 
 Advanced Cheat Sheet
@@ -94,14 +62,12 @@ modules usages.
 .. toctree::
    :maxdepth: 1
 
-   notes/multitasking/python-asyncio
-   notes/multitasking/python-concurrency
-   notes/database/python-sqlalchemy
-   notes/security/python-security
-   notes/security/python-ssh
-   notes/testing/python-tests
-   notes/extension/python-c-extensions
-   notes/pytorch/slurm
+   notes/multitasking/index
+   notes/database/index
+   notes/security/index
+   notes/testing/index
+   notes/extension/index
+   notes/pytorch/index
 
 Appendix
 --------

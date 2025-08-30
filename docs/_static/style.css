@@ -29,6 +29,10 @@ div.highlight > pre {
     color: black;
 }
 
+.bd-sidebar-primary li.has-children>details>summary .toctree-toggle {
+    justify-content: left;
+}
+
 html[data-theme=light] {
     --pst-font-size-base: none;
     --pst-color-secondary: #176de8;
@@ -57,4 +61,16 @@ html[data-theme=light] .graph#doc-flowchart .node text {
 
 .bd-content .sd-tab-set .sd-tab-content {
     padding: 1.5rem;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+button.theme-switch-button {
+    display: none !important;
 }
