@@ -75,10 +75,6 @@ Appendix
 The appendix mainly focuses on some critical concepts missing in cheat sheets.
 
 .. toctree::
-    :maxdepth: 1
+   :maxdepth: 1
 
-    appendix/python-decorator
-    appendix/python-concurrent
-    appendix/python-asyncio
-    appendix/python-walrus
-    appendix/python-gdb
+   notes/appendix/index
