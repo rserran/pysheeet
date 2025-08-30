@@ -27,14 +27,11 @@ What's New In Python 3
 
 The official document, `What's New In Python`_, displays all of the most
 important changes. However, if you're too busy to read the whole changes,
-this part provides a brief glance of new features in Python 3.
+this part provides a brief glance of `new features in Python 3`_.
 
 .. _What's New In Python: https://docs.python.org/3/whatsnew/index.html
+.. _new features in Python 3: notes/python-new-py3
 
-.. toctree::
-   :maxdepth: 1
-
-   notes/python-new-py3
 
 Cheat Sheet
 -----------
