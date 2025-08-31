@@ -7,10 +7,6 @@ New in Python3
 ==============
 
 
-.. contents:: Table of Contents
-    :backlinks: none
-
-
 ``print`` is a function
 -------------------------
 

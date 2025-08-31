@@ -36,6 +36,7 @@ this part provides a brief glance of new features in Python 3.
 
    notes/python-new-py3
 
+
 Cheat Sheet
 -----------
 
@@ -45,21 +46,11 @@ only includes basic Python features but also data structures and algorithms.
 .. toctree::
    :maxdepth: 1
 
-   notes/python-code-style
-   notes/python-basic
-   notes/python-future
-   notes/python-unicode
-   notes/python-list
-   notes/python-set
-   notes/python-dict
-   notes/python-heap
-   notes/python-func
-   notes/python-object
-   notes/python-generator
-   notes/python-typing
-   notes/python-date
-   notes/python-io
-   notes/python-os
+   notes/basic/index
+   notes/container/index
+   notes/string/index
+   notes/iteration/index
+   notes/os/index
 
 
 Advanced Cheat Sheet
@@ -71,15 +62,12 @@ modules usages.
 .. toctree::
    :maxdepth: 1
 
-   notes/python-rexp
-   notes/python-socket
-   notes/python-asyncio
-   notes/python-concurrency
-   notes/python-sqlalchemy
-   notes/python-security
-   notes/python-ssh
-   notes/python-tests
-   notes/python-c-extensions
+   notes/multitasking/index
+   notes/database/index
+   notes/security/index
+   notes/testing/index
+   notes/extension/index
+   notes/pytorch/index
 
 Appendix
 --------
@@ -87,10 +75,6 @@ Appendix
 The appendix mainly focuses on some critical concepts missing in cheat sheets.
 
 .. toctree::
-    :maxdepth: 1
+   :maxdepth: 1
 
-    appendix/python-decorator
-    appendix/python-concurrent
-    appendix/python-asyncio
-    appendix/python-walrus
-    appendix/python-gdb
+   notes/appendix/index
