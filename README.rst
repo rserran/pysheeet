@@ -3,7 +3,7 @@
 
     <h1 align="center">
     <br>
-      <a href="https://www.pythonsheets.com"><img src="docs/_static/logo.png" alt="pysheeet" width=200"></a>
+      <a href="https://www.pythonsheets.com"><img src="docs/_static/logo.svg" alt="pysheeet" width=200"></a>
     </h1>
     <p align="center">
       <a href="https://github.com/crazyguitar/pysheeet/actions">
