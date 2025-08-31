@@ -169,6 +169,9 @@ html_css_files = ['style.css']
 # .htaccess) here, relative to this directory. These files are copied
 # directly to the root of the documentation.
 html_extra_path = ['_extra']
+html_context = {
+    "tracking_id": os.environ.get("TRACKING_ID"),
+}
 
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
