@@ -61,6 +61,8 @@ Submit Jobs
 Alloc Nodes
 -----------
 
+.. image:: images/salloc.svg
+
 .. code-block:: bash
 
     # Allocte 2 nodes and submit a job on those allocated nodes
