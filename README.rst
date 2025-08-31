@@ -75,7 +75,6 @@ Advanced Cheat Sheet
 Appendix
 =========
 
-- `Why does Decorator Need @wraps <docs/notes/appendix/python-decorator.rst>`_
 - `A Hitchhikers Guide to Asynchronous Programming <docs/notes/appendix/python-concurrent.rst>`_
 - `Asyncio behind the Scenes <docs/notes/appendix/python-asyncio.rst>`_
 - `PEP 572 and the walrus operator <docs/notes/appendix/python-walrus.rst>`_

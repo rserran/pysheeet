@@ -58,3 +58,8 @@ a:hover {
 button.theme-switch-button {
     display: none !important;
 }
+
+blockquote {
+  background-color: transparent;
+  border: none;
+}
