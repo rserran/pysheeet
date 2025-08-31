@@ -13,7 +13,6 @@
 # serve to show the default.
 
 from datetime import datetime
-import sys
 import os
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -33,7 +32,25 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
+    'myst_parser',
+    'sphinx_copybutton',
+    'sphinx.ext.graphviz',
+    'sphinx_design',
+    'sphinx.ext.extlinks'
 ]
+
+myst_enable_extensions = [
+    "colon_fence",
+    "attrs_inline",
+    "attrs_block",
+    "tasklist",
+    "substitution",
+]
+
+myst_enable_checkboxes = True
+myst_heading_anchors = 6
+copybutton_prompt_text = r'^\$ '
+copybutton_prompt_is_regexp = True
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']
@@ -113,21 +130,14 @@ todo_include_todos = True
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'alabaster'
+html_theme = 'sphinx_book_theme'
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
 # documentation.
 html_theme_options = {
-    'logo': 'logo.svg',
-    'show_powered_by': False,
-    'github_user': 'crazyguitar',
-    'github_repo': 'pysheeet',
-    'github_banner': True,
-    'github_type': 'star',
-    'show_related': False,
-    'body_max_width': 'none',
-    'body_min_width': 'none',
+  "repository_url": "https://github.com/crazyguitar/pysheeet",
+  "use_repository_button": True,
 }
 
 # Add any paths that contain custom themes here, relative to this directory.
@@ -136,20 +146,13 @@ html_theme_options = {
 # The name for this set of Sphinx documents.  If None, it defaults to
 # "<project> v<release> documentation".
 html_title = "pysheeet"
-html_context = {
-    "tracking_id": os.environ.get("TRACKING_ID"),
-    "carbonad_serve": os.environ.get("CARBONAD_SERVE"),
-    "carbonad_placement": os.environ.get("CARBONAD_PLACEMENT")
-}
-
-has_carbonad = os.environ.get("CARBONAD_SERVE") and os.environ.get("CARBONAD_PLACEMENT")
 
 # A shorter title for the navigation bar.  Default is the same as html_title.
 #html_short_title = None
 
 # The name of an image file (relative to this directory) to place at the top
 # of the sidebar.
-#html_logo = None
+html_logo = "_static/logo.png"
 
 # The name of an image file (within the static path) to use as favicon of the
 # docs.  This file should be a Windows icon file (.ico) being 16x16 or 32x32
@@ -160,10 +163,7 @@ html_favicon = '_static/favicon.ico'
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
-
 html_css_files = ['style.css']
-if has_carbonad:
-    html_css_files.append('carbonad.css')
 
 # Add any extra paths that contain custom files (such as robots.txt or
 # .htaccess) here, relative to this directory. These files are copied
@@ -179,27 +179,6 @@ html_extra_path = ['_extra']
 #html_use_smartypants = True
 
 # Custom sidebar templates, maps document names to template names.
-sidebar_index = [
-    'about.html',
-    'sidebarintro.html',
-    'link.html',
-    'cheatsheets.html',
-]
-sidebar_notes = [
-    'about.html',
-    'sidebarintro.html',
-    'link.html',
-    'cheatsheets.html',
-]
-
-if has_carbonad:
-    sidebar_index.append('carbonad.html')
-    sidebar_notes.append('carbonad.html')
-
-sidebar_index.append('searchbox.html')
-sidebar_notes.append('localtoc.html')
-sidebar_notes.append('searchbox.html')
-html_sidebars = {'index': sidebar_index, '**': sidebar_notes}
 
 
 # Additional templates that should be rendered to pages, maps page names to
