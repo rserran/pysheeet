@@ -11,10 +11,12 @@
 Welcome to Python Cheatsheet!
 ==============================
 
-Welcome to pysheeet. This project aims at collecting useful Python snippets
-in order to enhance pythoneers' coding experiences. Please feel free to
-contribute if you have any awesome ideas for improvements to code snippets,
-explanations, etc.
+Welcome to pysheeet! This project is dedicated to gathering practical Python
+code snippets to make coding easier and more enjoyable for Python developers.
+It’s designed not only to serve as a basic cheat sheet for everyday programming
+tasks but also to provide advanced examples covering topics like databases,
+networking, and multitasking in Python. Contributions are always welcome—feel
+free to share ideas for new snippets, improvements, or clearer explanations!
 
 Any snippets are welcome. If you'd like to contribute, `fork pysheeet on GitHub`_.
 If there is any question or suggestion, please create an issue on `GitHub Issues`_.
