@@ -149,3 +149,65 @@ Submit Batch Jobs
     scontrol show hostnames | sort > "$HOSTFILE"
 
     # sbatch hostname.sh
+
+Submit mpirun
+-------------
+
+.. image:: images/mpirun.svg
+
+.. code-block:: bash
+
+    rank_per_node=8
+    salloc -N 4
+    srun -N 1 ${PWD}/mpi.sh ${rank_per_node} ${binary}
+
+.. code-block:: bash
+
+    #!/bin/bash
+
+    # mpirun.sh
+
+    launch() {
+      local rank_per_node="${1}"
+      local args=("${@:2}")
+      local arr
+      local hosts
+      local cmd
+
+      mapfile -t arr < <(scontrol show hostnames | sort)
+      OLDIFS="${IFS}"
+      IFS=","
+      hosts="${arr[*]}"
+      IFS="${OLDIFS}"
+
+      cmd="$(cat <<EOF
+
+      /usr/bin/mpirun \
+      -N "${rank_per_node}" \
+      --allow-run-as-root \
+      --host "${hosts}" \
+      --mca pml ^cm --mca plm_rsh_no_tree_spawn 1 \
+      --mca btl_tcp_if_exclude lo,docker0,veth_def_agent \
+      --mca plm_rsh_num_concurrent "${#arr[@]}" \
+      --mca btl_vader_single_copy_mechanism none \
+      --oversubscribe --tag-output \
+      -x FI_PROVIDER=efa \
+      -x RDMAV_FORK_SAFE=1 \
+      -x FI_EFA_USE_DEVICE_RDMA=1 \
+      -x NCCL_SOCKET_IFNAME=^lo,docker0 \
+      -x NCCL_ALGO=ring \
+      -x HDF5_USE_FILE_LOCKING=FALSE \
+      -x NCCL_DEBUG=warn \
+      -x LD_LIBRARY_PATH \
+      -x MEM_EFFICIENT_LINEAR=1 \
+      ${args[@]}
+
+    EOF
+    )"
+
+      # submit a mpirun job to a single node because mpirun will launch jobs on
+      # other nodes. Therfore, it is required to spcify -N 1 when using srun.
+      srun -N 1 bash -c "${cmd}"
+    }
+
+    launch "$@"
