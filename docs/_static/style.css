@@ -43,22 +43,6 @@ html[data-theme=light] {
     font-weight: bold;
 }
 
-html[data-theme=light] .graph#doc-flowchart #clickable.node:hover ellipse {
-    fill: black;
-}
-
-html[data-theme=light] .graph#doc-flowchart #clickable.node:hover text {
-    fill: white;
-}
-
-html[data-theme=light] .graph#doc-flowchart .node ellipse {
-    fill: white;
-}
-
-html[data-theme=light] .graph#doc-flowchart .node text {
-    fill: black;
-}
-
 .bd-content .sd-tab-set .sd-tab-content {
     padding: 1.5rem;
 }
