@@ -23,9 +23,10 @@
 Introduction
 =============
 
-Pysheeet was created with intention of collecting python code snippets for
-reducing coding hours and making life easier and faster. Any contributions are welcome.
-Please feel free to fork and send a pull request to this project.
+This project was started to bring together useful Python code snippets that make
+coding faster, easier, and more enjoyable. You can explore all the cheat sheets at
+`Pysheeet <https://www.pythonsheets.com/>`_. Contributions are always welcome—feel
+free to fork the repo and submit a pull request to help it grow!
 
 
 What’s New In Python 3
