@@ -230,7 +230,7 @@ Equals to
 .. note::
 
    It is better to use ``@wrap`` decorator in the decorate wrapper function
-   becuase @wraps preserve attributes of the original function, otherwise attributes
+   becuase ``@wraps`` preserve attributes of the original function, otherwise attributes
    of the decorated function will be replaced by wrapper function. For example
 
     .. code-block:: python
