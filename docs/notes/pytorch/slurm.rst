@@ -184,7 +184,7 @@ Submit mpirun
 
       cmd="$(cat <<EOF
 
-      /usr/bin/mpirun \
+      mpirun \
       -N "${rank_per_node}" \
       --allow-run-as-root \
       --host "${hosts}" \
@@ -192,16 +192,8 @@ Submit mpirun
       --mca btl_tcp_if_exclude lo,docker0,veth_def_agent \
       --mca plm_rsh_num_concurrent "${#arr[@]}" \
       --mca btl_vader_single_copy_mechanism none \
-      --oversubscribe --tag-output \
-      -x FI_PROVIDER=efa \
-      -x RDMAV_FORK_SAFE=1 \
-      -x FI_EFA_USE_DEVICE_RDMA=1 \
-      -x NCCL_SOCKET_IFNAME=^lo,docker0 \
-      -x NCCL_ALGO=ring \
-      -x HDF5_USE_FILE_LOCKING=FALSE \
-      -x NCCL_DEBUG=warn \
-      -x LD_LIBRARY_PATH \
-      -x MEM_EFFICIENT_LINEAR=1 \
+      --oversubscribe \
+      --tag-output \
       ${args[@]}
 
     EOF
@@ -213,3 +205,24 @@ Submit mpirun
     }
 
     launch "$@"
+
+Submit Jobs with Enroot
+-----------------------
+
+.. code-block:: bash
+
+   # build an enroot sqsh file
+   $ enroot import -o "${output_sqsh}" "dockerd://${image}"
+
+   # submit a job with enroot
+   srun --container-image "${output_sqsh}" \
+     --container-mounts "/fsx:/fsx,/nfs:/nfs" \
+     --ntasks-per-node=8 \
+     ${cmd}
+
+   # submit a mpirun with enroot
+   srun --container-image "${output_sqsh}" \
+     --container-mounts "/fsx:/fsx,/nfs:/nfs" \
+     --ntasks-per-node=8 \
+     --mpi=pmix \
+     ${cmd}
