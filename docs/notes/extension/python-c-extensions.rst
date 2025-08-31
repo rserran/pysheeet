@@ -20,9 +20,6 @@ Therefore, if extension modules are considered to be run on other Python
 interpreters, it would be better to use `ctypes <https://docs.python.org/3/library/ctypes.html>`_
 module or `cffi <https://cffi.readthedocs.io/en/latest/>`_.
 
-.. contents:: Table of Contents
-    :backlinks: none
-
 
 Simple setup.py
 ----------------

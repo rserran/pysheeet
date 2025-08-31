@@ -2,9 +2,6 @@
 Regular Expression
 ==================
 
-.. contents:: Table of Contents
-    :backlinks: none
-
 
 Compare HTML tags
 -----------------

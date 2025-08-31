@@ -6,9 +6,6 @@
 Operating System
 ================
 
-.. contents:: Table of Contents
-    :backlinks: none
-
 Get Number of CPUs
 ------------------
 

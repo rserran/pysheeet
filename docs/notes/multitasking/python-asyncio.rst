@@ -6,9 +6,6 @@
 Asyncio
 =======
 
-.. contents:: Table of Contents
-    :backlinks: none
-
 asyncio.run
 ------------
 

@@ -15,9 +15,6 @@ introduce a type system. The main goal of this cheat sheet is to show some
 common usage about type hints in Python3.
 
 
-.. contents:: Table of Contents
-    :backlinks: none
-
 Without type check
 -------------------
 

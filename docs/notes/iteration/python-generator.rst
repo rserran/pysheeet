@@ -6,10 +6,6 @@
 Generator
 =========
 
-.. contents:: Table of Contents
-    :backlinks: none
-
-
 Glossary of Generator
 ---------------------
 

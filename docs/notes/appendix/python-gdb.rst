@@ -6,9 +6,6 @@
 Python Interpreter in GNU Debugger
 ==================================
 
-.. contents:: Table of Contents
-    :backlinks: none
-
 Abstract
 --------
 

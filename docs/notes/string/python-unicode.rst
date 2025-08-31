@@ -19,9 +19,6 @@ Therefore, **Unicode** was developed to solve this issue. It defines the
 *code point* to represent various characters like ASCII but the number of
 characters is up to 1,111,998.
 
-.. contents:: Table of Contents
-    :backlinks: none
-
 String
 ------
 

@@ -5,9 +5,6 @@
 Asyncio behind the Scenes
 =========================
 
-.. contents:: Table of Contents
-    :backlinks: none
-
 What is Task?
 --------------
 

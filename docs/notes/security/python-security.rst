@@ -1,9 +1,6 @@
 Security
 ========
 
-.. contents:: Table of Contents
-    :backlinks: none
-
 
 Simple https server
 ---------------------

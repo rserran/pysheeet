@@ -2,10 +2,6 @@
 Test
 ====
 
-.. contents:: Table of Contents
-    :backlinks: none
-
-
 A simple Python unittest
 ------------------------
 

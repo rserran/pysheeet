@@ -6,10 +6,6 @@
 SQLAlchemy
 ==========
 
-.. contents:: Table of Contents
-    :backlinks: none
-
-
 Set a database URL
 -------------------
 

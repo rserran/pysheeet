@@ -13,9 +13,6 @@ socket interface, e.g., Netlink, Kernel cryptography. To temper a pain to read
 long-winded documents or source code, this cheat sheet tries to collect some
 common or uncommon snippets which are related to low-level socket programming.
 
-.. contents:: Table of Contents
-    :backlinks: none
-
 Get Hostname
 ------------
 

@@ -5,9 +5,6 @@
 A Hitchhikers Guide to Asynchronous Programming
 ===============================================
 
-.. contents:: Table of Contents
-    :backlinks: none
-
 Abstract
 --------
 

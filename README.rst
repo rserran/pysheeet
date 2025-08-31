@@ -41,45 +41,45 @@ official document, `What’s New in Python <https://docs.python.org/3/whatsnew/i
 Cheat Sheet
 ===========
 
-- `From Scratch <docs/notes/python-basic.rst>`_
-- `Future <docs/notes/python-future.rst>`_
-- `Unicode <docs/notes/python-unicode.rst>`_
-- `List <docs/notes/python-list.rst>`_
-- `Set <docs/notes/python-set.rst>`_
-- `Dictionary <docs/notes/python-dict.rst>`_
-- `Heap <docs/notes/python-heap.rst>`_
-- `Function <docs/notes/python-func.rst>`_
-- `Class <docs/notes/python-object.rst>`_
-- `Generator <docs/notes/python-generator.rst>`_
-- `Typing <docs/notes/python-typing.rst>`_
-- `Time <docs/notes/python-date.rst>`_
-- `File <docs/notes/python-io.rst>`_
-- `Operating System <docs/notes/python-os.rst>`_
+- `From Scratch <docs/notes/basic/python-basic.rst>`_
+- `Future <docs/notes/basic/python-future.rst>`_
+- `Typing <docs/notes/basic/python-typing.rst>`_
+- `Class <docs/notes/basic/python-object.rst>`_
+- `Function <docs/notes/basic/python-func.rst>`_
+- `Unicode <docs/notes/string/python-unicode.rst>`_
+- `List <docs/notes/container/python-list.rst>`_
+- `Set <docs/notes/container/python-set.rst>`_
+- `Dictionary <docs/notes/container/python-dict.rst>`_
+- `Heap <docs/notes/container/python-heap.rst>`_
+- `Generator <docs/notes/iteration/python-generator.rst>`_
+- `Time <docs/notes/os/python-date.rst>`_
+- `File <docs/notes/os/python-io.rst>`_
+- `Operating System <docs/notes/os/python-os.rst>`_
 
 
 Advanced Cheat Sheet
 ====================
 
-- `Regular expression <docs/notes/python-rexp.rst>`_
-- `Socket <docs/notes/python-socket.rst>`_
-- `Asyncio <docs/notes/python-asyncio.rst>`_
-- `Concurrency <docs/notes/python-concurrency.rst>`_
-- `Sqlalchemy <docs/notes/python-sqlalchemy.rst>`_
-- `Security <docs/notes/python-security.rst>`_
-- `SSH <docs/notes/python-ssh.rst>`_
-- `Tests <docs/notes/python-tests.rst>`_
-- `C Extensions <docs/notes/python-c-extensions.rst>`_
-- `Slurm <docs/notes/slurm.rst>`_
+- `Regular expression <docs/notes/string/python-rexp.rst>`_
+- `Socket <docs/notes/os/python-socket.rst>`_
+- `Asyncio <docs/notes/multitasking/python-asyncio.rst>`_
+- `Concurrency <docs/notes/multitasking/python-concurrency.rst>`_
+- `Sqlalchemy <docs/notes/database/python-sqlalchemy.rst>`_
+- `Security <docs/notes/security/python-security.rst>`_
+- `SSH <docs/notes/security/python-ssh.rst>`_
+- `Tests <docs/notes/testing/python-tests.rst>`_
+- `C Extensions <docs/notes/extension/python-c-extensions.rst>`_
+- `Slurm <docs/notes/pytorch/slurm.rst>`_
 
 
 Appendix
 =========
 
-- `Why does Decorator Need @wraps <docs/appendix/python-decorator.rst>`_
-- `A Hitchhikers Guide to Asynchronous Programming <docs/appendix/python-concurrent.rst>`_
-- `Asyncio behind the Scenes <docs/appendix/python-asyncio.rst>`_
-- `PEP 572 and the walrus operator <docs/appendix/python-walrus.rst>`_
-- `Python Interpreter in GNU Debugger <docs/appendix/python-gdb.rst>`_
+- `Why does Decorator Need @wraps <docs/notes/appendix/python-decorator.rst>`_
+- `A Hitchhikers Guide to Asynchronous Programming <docs/notes/appendix/python-concurrent.rst>`_
+- `Asyncio behind the Scenes <docs/notes/appendix/python-asyncio.rst>`_
+- `PEP 572 and the walrus operator <docs/notes/appendix/python-walrus.rst>`_
+- `Python Interpreter in GNU Debugger <docs/notes/appendix/python-gdb.rst>`_
 
 PDF Version
 ============

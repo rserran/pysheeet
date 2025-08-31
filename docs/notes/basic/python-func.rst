@@ -12,10 +12,6 @@ we can use many features such as decorator, annotation, docstrings, default
 arguments and so on to define a function. In this cheat sheet, it collects
 many ways to define a function and demystifies some enigmatic syntax in functions.
 
-
-.. contents:: Table of Contents
-    :backlinks: none
-
 Document Functions
 ------------------
 

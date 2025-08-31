@@ -17,9 +17,6 @@ Python interpreter will raise ``SyntaxError``.
 If you're interested in future statements and want to acquire more explanation,
 further information can be found on `PEP 236 - Back to the __future__  <https://www.python.org/dev/peps/pep-0236>`_
 
-.. contents:: Table of Contents
-    :backlinks: none
-
 List All New Features
 ---------------------
 

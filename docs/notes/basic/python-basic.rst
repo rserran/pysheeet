@@ -13,9 +13,6 @@ and again. In addition, because **the end Of life date for Python 2** is coming.
 Most of the snippets are mainly based on **Python 3**'s syntax.
 
 
-.. contents:: Table of Contents
-    :backlinks: none
-
 Hello world!
 ------------
 

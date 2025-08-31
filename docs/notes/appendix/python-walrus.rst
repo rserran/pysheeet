@@ -6,9 +6,6 @@
 PEP 572 and The Walrus Operator
 ===============================
 
-.. contents:: table of Contents
-    :backlinks: none
-
 Abstract
 --------
 

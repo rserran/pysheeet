@@ -6,9 +6,6 @@
 Concurrency
 ===========
 
-.. contents:: Table of Contents
-    :backlinks: none
-
 
 Execute a shell command
 ------------------------

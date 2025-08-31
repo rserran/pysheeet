@@ -6,9 +6,6 @@
 Files and I/O
 =============
 
-.. contents:: Table of Contents
-    :backlinks: none
-
 Read a File
 -----------
 

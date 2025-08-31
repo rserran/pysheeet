@@ -6,9 +6,6 @@
 Heap
 ====
 
-.. contents:: Table of Contents
-    :backlinks: none
-
 Heap Sort
 ---------
 

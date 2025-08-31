@@ -6,9 +6,6 @@
 Datetime
 ========
 
-.. contents:: Table of Contents
-    :backlinks: none
-
 Timestamp
 ---------
 
