@@ -289,7 +289,7 @@ Enroot and Pyxis.
      --ntasks-per-node=8 \
      ${cmd}
 
-   # submit a mpirun with enroot
+   # submit a mpi job with enroot
    srun --container-image "${output_sqsh}" \
      --container-mounts "/fsx:/fsx,/nfs:/nfs" \
      --ntasks-per-node=8 \
