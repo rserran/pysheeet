@@ -136,28 +136,28 @@ provides the ``scancel`` command to terminate jobs cleanly. Example usage:
 .. code-block:: bash
 
     # cancel a job
-    $ scancel "${jobid}"
+    scancel "${jobid}"
 
     # cancel a job and disable warnings
-    $ scancel -q "${jobid}"
+    scancel -q "${jobid}"
 
     # cancel all jobs which are belong to an account
-    $ scancel --account="${account}"
+    scancel --account="${account}"
 
     # cancel all jobs which are belong to a partition
-    $ scancel --partition="${partition}"
+    scancel --partition="${partition}"
 
     # cancel all pending jobs
-    $ scancel --state="PENDING"
+    scancel --state="PENDING"
 
     # cancel all running jobs
-    $ scancel --state="RUNNING"
+    scancel --state="RUNNING"
 
     # cancel all jobs
-    $ squeue -l | awk '{ print $ 1}' | grep '[[:digit:]].*' | xargs scancel
+    squeue -l | awk '{ print $ 1}' | grep '[[:digit:]].*' | xargs scancel
 
     # cancel all jobs (using state option)
-    $ for s in "RUNNING" "PENDING" "SUSPAND"; do scancel --state="$s"; done
+    for s in "RUNNING" "PENDING" "SUSPAND"; do scancel --state="$s"; done
 
 
 Submit Batch Jobs
@@ -352,3 +352,45 @@ create reservations through ``scontrol`` for nodes and check their reservation s
 
     # delete a reservation
     scontrol delete ReservationName=maintain
+
+Accounting
+----------
+
+Slurm includes a powerful accounting and resource management system that allows
+administrators to control how computing resources are allocated and ensure fair
+usage across all users. Through this system, administrators can configure fairshare
+scheduling, job priority policies, and resource limits to prevent individual
+users or groups from monopolizing cluster resources for extended periods.
+
+With ``fairshare``, Slurm dynamically adjusts job priorities based on historical
+resource usage, ensuring that users who have consumed fewer resources get higher
+priority in the job queue, while heavy users may experience lower priority until
+usage balances out. This helps maintain equitable access in multi-user HPC environments.
+Administrators manage these policies through Slurm’s database-backed accounting
+system (``slurmdbd``) and commands like:
+
+.. code-block:: bash
+
+    # create a cluster (the clustername should be identical to ClusterName in slurm.conf)
+    sacctmgr add cluster clustername
+
+    # create an account
+    sacctmgr -i add account worker description="worker account" Organization="your.org"
+
+    # create an user and add to an account
+    sacctmgr create user name=worker DefaultAccount=default
+
+    # create an user and add to additional accounts
+    sacctmgr -i create user "worker" account="worker" adminlevel="None"
+
+    # modify user fairshare configuration
+    sacctmgr modify user where name="worker" account="worker" set fairshare=0
+
+    # remove an user from an account
+    sacctmgr remove user "worker" where account="worker"
+
+    # show all users
+    sacctmgr show account
+
+    # show all users with associations
+    sacctmgr show account -s
