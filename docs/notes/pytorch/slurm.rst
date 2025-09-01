@@ -47,6 +47,19 @@ in an error state.
 Submit Jobs
 -----------
 
+Launching a job across multiple nodes in the foreground is straightforward with
+``srun``. For example, running ``srun hostname`` will execute the ``hostname`` command
+on multiple allocated nodes and wait for all nodes to return results. With ``srun``,
+users can easily specify:
+
+* Number of nodes to run the job on (``--nodes``)
+* Partition or queue to submit the job to (``--partition``)
+* Time limit for the job (``--time``), ensuring compute resources are automatically released when the job finishes or reaches its time limit
+
+By default, ``srun`` runs interactively in the foreground, making it ideal for quick
+tests or debugging. For longer or batch jobs, users typically pair srun with job
+scripts submitted via ``sbatch``.
+
 .. code-block:: bash
 
     # Submit a job to a compute node
@@ -79,17 +92,38 @@ Submit Jobs
 Alloc Nodes
 -----------
 
-.. image:: images/salloc.svg
+In some scenarios, users may need exclusive, interactive access to specific
+nodes for experiments or testing. For instance, a researcher running benchmarking
+tests might require all benchmarks to execute on the same fixed nodes to ensure
+consistent and reproducible results. The salloc command is used to request and
+allocate resources interactively. By using ``salloc``, users can reserve a specific
+number of nodes, ensuring that no other jobs are scheduled on them during the
+experiment. This isolation helps avoid resource contention that could affect
+benchmarking or performance measurements. For example, the following command
+allocates 2 nodes for an interactive session:
 
 .. code-block:: bash
 
     # Allocte 2 nodes and submit a job on those allocated nodes
     salloc -N 2
     srun hostname
+    exit # release allocated nodes
+
 
     # Allocate nodes on a specific partition
     PARTITION=dev
     salloc -N 2 -p ${PARTITION}
+
+.. image:: images/salloc.svg
+
+
+.. note::
+
+    ``salloc`` is particularly useful for:
+
+    * Interactive debugging
+    * Benchmarking and performance testing
+    * Running exploratory workloads without writing a full job script
 
 Reservation
 -----------
