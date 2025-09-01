@@ -47,12 +47,12 @@ Cheat Sheet
 - `Typing <docs/notes/basic/python-typing.rst>`_
 - `Class <docs/notes/basic/python-object.rst>`_
 - `Function <docs/notes/basic/python-func.rst>`_
-- `Unicode <docs/notes/string/python-unicode.rst>`_
-- `List <docs/notes/container/python-list.rst>`_
-- `Set <docs/notes/container/python-set.rst>`_
-- `Dictionary <docs/notes/container/python-dict.rst>`_
-- `Heap <docs/notes/container/python-heap.rst>`_
-- `Generator <docs/notes/iteration/python-generator.rst>`_
+- `Unicode <docs/notes/basic/python-unicode.rst>`_
+- `List <docs/notes/basic/python-list.rst>`_
+- `Set <docs/notes/basic/python-set.rst>`_
+- `Dictionary <docs/notes/basic/python-dict.rst>`_
+- `Heap <docs/notes/basic/python-heap.rst>`_
+- `Generator <docs/notes/basic/python-generator.rst>`_
 - `Time <docs/notes/os/python-date.rst>`_
 - `File <docs/notes/os/python-io.rst>`_
 - `Operating System <docs/notes/os/python-os.rst>`_
@@ -61,7 +61,7 @@ Cheat Sheet
 Advanced Cheat Sheet
 ====================
 
-- `Regular expression <docs/notes/string/python-rexp.rst>`_
+- `Regular expression <docs/notes/basic/python-rexp.rst>`_
 - `Socket <docs/notes/os/python-socket.rst>`_
 - `Asyncio <docs/notes/multitasking/python-asyncio.rst>`_
 - `Concurrency <docs/notes/multitasking/python-concurrency.rst>`_

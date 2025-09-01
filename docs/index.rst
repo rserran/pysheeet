@@ -42,28 +42,16 @@ this part provides a brief glance of new features in Python 3.
 Cheat Sheet
 -----------
 
-This part mainly focuses on common snippets in Python code. The cheat sheet not
-only includes basic Python features but also data structures and algorithms.
+This section focuses on commonly used Python code snippets. The cheat sheet
+covers not only core Python features but also essential data structures,
+algorithms, and frequently used modules to help programmers efficiently tackle
+everyday tasks.
 
 .. toctree::
    :maxdepth: 1
 
    notes/basic/index
-   notes/container/index
-   notes/string/index
-   notes/iteration/index
    notes/os/index
-
-
-Advanced Cheat Sheet
---------------------
-
-The goal of this part is to give common snippets including built-in and 3rd party
-modules usages.
-
-.. toctree::
-   :maxdepth: 1
-
    notes/multitasking/index
    notes/database/index
    notes/security/index
