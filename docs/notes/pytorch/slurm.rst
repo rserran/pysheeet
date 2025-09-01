@@ -181,7 +181,7 @@ script:
     #SBATCH --nodelist=compute-[0-1]
     #SBATCH --output=logs/%x_%j.out
     #SBATCH --error=logs/%x_%j.out
-    #SBATCH ----ntasks-per-node=8
+    #SBATCH --ntasks-per-node=8
 
     master_addr="$(scontrol show hostnames | sort | head -n 1)"
     srun hostname
