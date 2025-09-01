@@ -296,6 +296,29 @@ Enroot and Pyxis.
      --mpi=pmix \
      ${cmd}
 
+Job Status
+----------
+
+To monitor the status of jobs in a Slurm-managed cluster, users can use the
+``squeue`` command. This tool shows essential details about submitted jobs, such
+as job IDs, job names, partitions, allocated nodes, and job states. Common job
+states include:
+
+* RUNNING – The job is actively running on allocated resources.
+* PENDING – The job is waiting in the queue for resources to become available.
+* FAILED – The job has failed due to errors or unmet conditions.
+
+If a job is stuck, fails, or behaves unexpectedly, you can terminate it with
+the ``scancel`` command and resubmit after fixing the issue.
+
+.. code-block:: bash
+
+   # check all Slurm jobs status
+   squeue
+
+   # check user's job status
+   squeue --user=${USER}
+
 Reservation
 -----------
 
