@@ -125,34 +125,14 @@ allocates 2 nodes for an interactive session:
     * Benchmarking and performance testing
     * Running exploratory workloads without writing a full job script
 
-Reservation
------------
-
-.. code-block:: bash
-
-    # reserve nodes for a user to test
-    # - minute
-    # - minute:second
-    # - hours:minutes:seconds
-    # - days-hours
-    # - days-hours:minutes
-    # - days-hours:minutes:seconds
-    #
-    # ex: reserve all nodes 120m for maintenance
-    scontrol create reservation ReservationName=maintenance \
-        starttime=now duration=120 user=root flags=maint,ignore_jobs nodes=ALL
-
-    # must specify reservation; otherwise, the job will not run
-    srun --reservation=maintain ping 8.8.8.8 2>&1 > /dev/null
-
-    # show reservations
-    scontrol show res
-
-    # delete a reservation
-    scontrol delete ReservationName=maintain
-
 Cancel Jobs
 -----------
+
+Users may occasionally need to cancel their jobs for various reasons. For example,
+a cluster administrator may announce maintenance (such as upgrading system libraries),
+requiring users to terminate running jobs. In other cases, a job might hang or
+consume compute resources unnecessarily, making cancellation necessary. Slurm
+provides the ``scancel`` command to terminate jobs cleanly. Example usage:
 
 .. code-block:: bash
 
@@ -180,6 +160,39 @@ Cancel Jobs
     # cancel all jobs (using state option)
     $ for s in "RUNNING" "PENDING" "SUSPAND"; do scancel --state="$s"; done
 
+Reservation
+-----------
+
+From an administrator’s perspective, it may be necessary to reserve specific
+nodes to prevent Slurm from scheduling jobs on them. For example, nodes
+experiencing hardware or software issues—such as network failures or disk
+errors—should be reserved to avoid job failures. Reserving nodes allows
+administrators to troubleshoot, repair, or perform maintenance without
+interfering with active workloads. The following snippet demonstrates how to
+create reservations through ``scontrol`` for nodes and check their reservation status.
+
+.. code-block:: bash
+
+    # reserve nodes for a user to test
+    # - minute
+    # - minute:second
+    # - hours:minutes:seconds
+    # - days-hours
+    # - days-hours:minutes
+    # - days-hours:minutes:seconds
+    #
+    # ex: reserve all nodes 120m for maintenance
+    scontrol create reservation ReservationName=maintenance \
+        starttime=now duration=120 user=root flags=maint,ignore_jobs nodes=ALL
+
+    # must specify reservation; otherwise, the job will not run
+    srun --reservation=maintain ping 8.8.8.8 2>&1 > /dev/null
+
+    # show reservations
+    scontrol show res
+
+    # delete a reservation
+    scontrol delete ReservationName=maintain
 
 Submit Batch Jobs
 -----------------
