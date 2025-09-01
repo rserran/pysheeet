@@ -160,62 +160,39 @@ provides the ``scancel`` command to terminate jobs cleanly. Example usage:
     # cancel all jobs (using state option)
     $ for s in "RUNNING" "PENDING" "SUSPAND"; do scancel --state="$s"; done
 
-Reservation
------------
-
-From an administrator’s perspective, it may be necessary to reserve specific
-nodes to prevent Slurm from scheduling jobs on them. For example, nodes
-experiencing hardware or software issues—such as network failures or disk
-errors—should be reserved to avoid job failures. Reserving nodes allows
-administrators to troubleshoot, repair, or perform maintenance without
-interfering with active workloads. The following snippet demonstrates how to
-create reservations through ``scontrol`` for nodes and check their reservation status.
-
-.. code-block:: bash
-
-    # reserve nodes for a user to test
-    # - minute
-    # - minute:second
-    # - hours:minutes:seconds
-    # - days-hours
-    # - days-hours:minutes
-    # - days-hours:minutes:seconds
-    #
-    # ex: reserve all nodes 120m for maintenance
-    scontrol create reservation ReservationName=maintenance \
-        starttime=now duration=120 user=root flags=maint,ignore_jobs nodes=ALL
-
-    # must specify reservation; otherwise, the job will not run
-    srun --reservation=maintain ping 8.8.8.8 2>&1 > /dev/null
-
-    # show reservations
-    scontrol show res
-
-    # delete a reservation
-    scontrol delete ReservationName=maintain
 
 Submit Batch Jobs
 -----------------
+
+``sbatch`` is a Slurm command used to submit batch jobs for execution on a
+cluster. Unlike ``srun``, which typically runs jobs interactively in the foreground,
+``sbatch`` is designed for running long, non-interactive workloads in the background.
+This allows users to submit jobs without maintaining an active SSH session to the
+cluster's head node, making it ideal for large-scale or time-consuming tasks.
+
+A typical workflow involves writing a Slurm job script containing job specifications
+(such as the number of nodes, time limits, and partitions) and one or more srun
+commands to execute programs. Submitting this script with sbatch queues the job,
+and Slurm automatically schedules it based on available resources. Example sbatch
+script:
 
 .. code-block:: bash
 
     #!/bin/bash
     #SBATCH --nodelist=compute-[0-1]
-    srun hostname
-
-    # sbatch job.sh
-
-.. code-block:: bash
-
-    #!/bin/bash
-
     #SBATCH --output=logs/%x_%j.out
     #SBATCH --error=logs/%x_%j.out
 
-    HOSTFILE="hosts_${SLURM_JOB_ID}"
-    scontrol show hostnames | sort > "$HOSTFILE"
+    master_addr="$(scontrol show hostnames | sort | head -n 1)"
+    srun hostname
+    srun torchrun \
+      --nproc-per-node="$SLURM_NPROCS" \
+      --nnodes="$SLURM_NNODES"
+      --master-addr="${master_addr}" \
+      --master-port=29500 \
+      ${PWD}/train.py
 
-    # sbatch hostname.sh
+    # sbatch job.sh
 
 Submit mpirun
 -------------
@@ -291,3 +268,37 @@ Submit Jobs with Enroot
      --ntasks-per-node=8 \
      --mpi=pmix \
      ${cmd}
+
+Reservation
+-----------
+
+From an administrator’s perspective, it may be necessary to reserve specific
+nodes to prevent Slurm from scheduling jobs on them. For example, nodes
+experiencing hardware or software issues—such as network failures or disk
+errors—should be reserved to avoid job failures. Reserving nodes allows
+administrators to troubleshoot, repair, or perform maintenance without
+interfering with active workloads. The following snippet demonstrates how to
+create reservations through ``scontrol`` for nodes and check their reservation status.
+
+.. code-block:: bash
+
+    # reserve nodes for a user to test
+    # - minute
+    # - minute:second
+    # - hours:minutes:seconds
+    # - days-hours
+    # - days-hours:minutes
+    # - days-hours:minutes:seconds
+    #
+    # ex: reserve all nodes 120m for maintenance
+    scontrol create reservation ReservationName=maintenance \
+        starttime=now duration=120 user=root flags=maint,ignore_jobs nodes=ALL
+
+    # must specify reservation; otherwise, the job will not run
+    srun --reservation=maintain ping 8.8.8.8 2>&1 > /dev/null
+
+    # show reservations
+    scontrol show res
+
+    # delete a reservation
+    scontrol delete ReservationName=maintain
