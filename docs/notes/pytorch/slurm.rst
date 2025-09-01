@@ -181,6 +181,7 @@ script:
     #SBATCH --nodelist=compute-[0-1]
     #SBATCH --output=logs/%x_%j.out
     #SBATCH --error=logs/%x_%j.out
+    #SBATCH ----ntasks-per-node=8
 
     master_addr="$(scontrol show hostnames | sort | head -n 1)"
     srun hostname
@@ -196,19 +197,24 @@ script:
 Submit mpirun
 -------------
 
+In some HPC environments, users may not be able to load the MPI module directly
+on the head (login) node due to security restrictions, minimal software installations,
+or site policies that restrict heavy workloads on login nodes. In such cases,
+the workflow is to use Slurm to allocate compute nodes and launch ``mpirun`` from
+within one of those nodes. From there, mpirun orchestrates the execution of the
+MPI program across all allocated nodes.
+
 .. image:: images/mpirun.svg
-
-.. code-block:: bash
-
-    rank_per_node=8
-    salloc -N 4
-    srun -N 1 ${PWD}/mpi.sh ${rank_per_node} ${binary}
 
 .. code-block:: bash
 
     #!/bin/bash
 
-    # mpirun.sh
+    # Usage:
+    #
+    # rank_per_node=8
+    # salloc -N 4
+    # ./mpirun.sh ${rank_per_node} ${binary}
 
     launch() {
       local rank_per_node="${1}"
