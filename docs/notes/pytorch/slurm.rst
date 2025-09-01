@@ -251,6 +251,28 @@ Submit mpirun
 Submit Jobs with Enroot
 -----------------------
 
+Sometimes, users need to run jobs with custom dependencies that differ from the
+cluster’s system-wide environment. For example, if the cluster is configured with
+NCCL 2.23 but a user wants to benchmark NCCL 2.27, it’s often impractical to ask
+administrators to upgrade or modify system libraries for a single experiment.
+One workaround is to create a custom container (e.g., Docker image) with the
+required dependencies and launch jobs from that environment. However, running
+containers in HPC environments often requires extra setup and special flags
+due to namespace isolation and security restrictions.
+
+To simplify this process, `Enroot <https://github.com/NVIDIA/enroot>`_ provides
+a lightweight alternative to traditional container runtimes. It allows users to
+run isolated filesystem in an HPC setting with minimal overhead, similar to
+``chroot``, while still granting direct access to system hardware (e.g., GPUs, interconnects).
+This makes it ideal for ML and HPC workflows that require fine-tuned performance.
+
+Building on Enroot, `Pyxis <https://github.com/NVIDIA/pyxis>`_ is a Slurm plugin
+that enables launching jobs inside Enroot containers without writing additional
+wrapper scripts. Users can specify Enroot squash file and runtime options directly
+in their sbatch or srun commands, integrating container workflows seamlessly into
+Slurm job submission. The following snippet shows serveral to launch a job through
+Enroot and Pyxis.
+
 .. code-block:: bash
 
    # build an enroot sqsh file
