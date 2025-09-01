@@ -353,6 +353,12 @@ create reservations through ``scontrol`` for nodes and check their reservation s
     # delete a reservation
     scontrol delete ReservationName=maintain
 
+    # drain nodes for maintenance. ex: nodes=compute-[01-02],compute-08
+    scontrol update NodeName=compute-[01-02],compute-08 State=DOWN Reason=”maintenance”
+
+    # resume nodes
+    scontrol update NodeName=compute-[01-02],compute-08 State=Resume
+
 Accounting
 ----------
 
