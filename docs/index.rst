@@ -4,8 +4,8 @@
    contain the root `toctree` directive.
 
 .. meta::
-    :description lang=en: Collect useful python snippets for pythoneers or non-pythoneers.
-    :keywords: Python, Python Cheat Sheet
+    :description lang=en: Comprehensive Python cheat sheet with practical code snippets, examples, and tutorials for Python developers. Learn Python basics, advanced topics, databases, networking, and more.
+    :keywords: Python, Python Cheat Sheet, Python Tutorial, Python Examples, Python Code Snippets, Programming, Development, Python Reference, Python Guide
 
 
 Welcome to Python Cheatsheet!
@@ -39,8 +39,8 @@ this part provides a brief glance of new features in Python 3.
    notes/python-new-py3
 
 
-Cheat Sheet
------------
+Python Cheat Sheet
+------------------
 
 This section focuses on commonly used Python code snippets. The cheat sheet
 covers not only core Python features but also essential data structures,
