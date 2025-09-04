@@ -11,10 +11,12 @@
 Welcome to Python Cheatsheet!
 ==============================
 
-Welcome to pysheeet. This project aims at collecting useful Python snippets
-in order to enhance pythoneers' coding experiences. Please feel free to
-contribute if you have any awesome ideas for improvements to code snippets,
-explanations, etc.
+Welcome to pysheeet! This project is dedicated to gathering practical Python
+code snippets to make coding easier and more enjoyable for Python developers.
+It’s designed not only to serve as a basic cheat sheet for everyday programming
+tasks but also to provide advanced examples covering topics like databases,
+networking, and multitasking in Python. Contributions are always welcome—feel
+free to share ideas for new snippets, improvements, or clearer explanations!
 
 Any snippets are welcome. If you'd like to contribute, `fork pysheeet on GitHub`_.
 If there is any question or suggestion, please create an issue on `GitHub Issues`_.
@@ -36,50 +38,26 @@ this part provides a brief glance of new features in Python 3.
 
    notes/python-new-py3
 
+
 Cheat Sheet
 -----------
 
-This part mainly focuses on common snippets in Python code. The cheat sheet not
-only includes basic Python features but also data structures and algorithms.
+This section focuses on commonly used Python code snippets. The cheat sheet
+covers not only core Python features but also essential data structures,
+algorithms, and frequently used modules to help programmers efficiently tackle
+everyday tasks.
 
 .. toctree::
    :maxdepth: 1
 
-   notes/python-code-style
-   notes/python-basic
-   notes/python-future
-   notes/python-unicode
-   notes/python-list
-   notes/python-set
-   notes/python-dict
-   notes/python-heap
-   notes/python-func
-   notes/python-object
-   notes/python-generator
-   notes/python-typing
-   notes/python-date
-   notes/python-io
-   notes/python-os
-
-
-Advanced Cheat Sheet
---------------------
-
-The goal of this part is to give common snippets including built-in and 3rd party
-modules usages.
-
-.. toctree::
-   :maxdepth: 1
-
-   notes/python-rexp
-   notes/python-socket
-   notes/python-asyncio
-   notes/python-concurrency
-   notes/python-sqlalchemy
-   notes/python-security
-   notes/python-ssh
-   notes/python-tests
-   notes/python-c-extensions
+   notes/basic/index
+   notes/os/index
+   notes/multitasking/index
+   notes/database/index
+   notes/security/index
+   notes/testing/index
+   notes/extension/index
+   notes/pytorch/index
 
 Appendix
 --------
@@ -87,10 +65,6 @@ Appendix
 The appendix mainly focuses on some critical concepts missing in cheat sheets.
 
 .. toctree::
-    :maxdepth: 1
+   :maxdepth: 1
 
-    appendix/python-decorator
-    appendix/python-concurrent
-    appendix/python-asyncio
-    appendix/python-walrus
-    appendix/python-gdb
+   notes/appendix/index

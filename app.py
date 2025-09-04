@@ -36,6 +36,7 @@ csp = {
         "'unsafe-inline'",
         "'unsafe-eval'",
     ],
+    "font-src": "'self'",
     "form-action": "'self'",
     "base-uri": "'self'",
     "img-src": "*",
