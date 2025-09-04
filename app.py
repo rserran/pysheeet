@@ -40,6 +40,7 @@ csp = {
         "'self'",
         "*.google-analytics.com",
         "*.analytics.google.com",
+        "analytics.google.com",
         "*.googletagmanager.com",
     ],
     "font-src": "'self'",
