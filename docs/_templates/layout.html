@@ -1,16 +1,26 @@
 {% extends "!layout.html" %}
 {%- block extrahead %}
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="{% if pagename == 'index' %}Comprehensive Python cheat sheet with practical code snippets for developers. Learn Python basics, advanced topics, databases, networking, and more.{% else %}{{ title }} - Python code examples and snippets from the comprehensive Python cheat sheet.{% endif %}">
+<meta name="keywords" content="Python, Python cheat sheet, Python tutorial, Python examples, Python code snippets, programming, development">
+<meta name="author" content="crazyguitar">
+<meta name="robots" content="index, follow">
 {%- if pagename == 'index' %}
 <link rel="canonical" href="https://www.pythonsheets.com/"/>
 <meta property="og:url" content="https://www.pythonsheets.com/">
+<meta property="og:description" content="Comprehensive Python cheat sheet with practical code snippets for developers. Learn Python basics, advanced topics, databases, networking, and more.">
 {%- elif pagename == '404' -%}
 {%- else %}
 <link rel="canonical" href="https://www.pythonsheets.com/{{ pagename }}{{ file_suffix }}"/>
 <meta property="og:url" content="https://www.pythonsheets.com/{{ pagename }}{{ file_suffix }}">
+<meta property="og:description" content="{{ title }} - Python code examples and snippets from the comprehensive Python cheat sheet.">
 {%- endif %}
 <meta property="og:type" content="article">
 <meta property="og:title" content="{{ title }}{{ titlesuffix }}">
+<meta property="og:site_name" content="Python Cheat Sheet">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="{{ title }}{{ titlesuffix }}">
+<meta name="twitter:description" content="{% if pagename == 'index' %}Comprehensive Python cheat sheet with practical code snippets for developers{% else %}{{ title }} - Python code examples and snippets{% endif %}">
 {%- if tracking_id %}
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ tracking_id }}"></script>

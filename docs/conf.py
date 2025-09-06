@@ -316,7 +316,11 @@ def add_html_link(app, pagename, templatename, context, doctree):
     """Append html page."""
     if pagename in ['404', 'search', 'genindex']:
         return
-    app.sitemaps.append(pagename + ".html")
+    app.sitemaps.append({
+        'pagename': pagename + ".html",
+        'priority': '1.0' if pagename == 'index' else '0.8',
+        'changefreq': 'weekly' if pagename == 'index' else 'monthly'
+    })
 
 
 def create_sitemap(app, exception):
@@ -330,11 +334,13 @@ def create_sitemap(app, exception):
     r.set("xsi:schemaLocation", "http://www.sitemaps.org/schemas/sitemap/0.9" +
         " http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd")
 
-    for link in app.sitemaps:
+    for link_info in app.sitemaps:
         url = SubElement(r, "url")
         now = datetime.now()
-        SubElement(url, "loc").text = app.pysheeet + link
+        SubElement(url, "loc").text = app.pysheeet + link_info['pagename']
         SubElement(url, "lastmod").text = now.date().isoformat()
+        SubElement(url, "changefreq").text = link_info['changefreq']
+        SubElement(url, "priority").text = link_info['priority']
 
     f = app.outdir + "/sitemap.xml"
     t = ElementTree(r)

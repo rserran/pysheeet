@@ -36,6 +36,13 @@ csp = {
         "'unsafe-inline'",
         "'unsafe-eval'",
     ],
+    "connect-src": [
+        "'self'",
+        "*.google-analytics.com",
+        "*.analytics.google.com",
+        "analytics.google.com",
+        "*.googletagmanager.com",
+    ],
     "font-src": "'self'",
     "form-action": "'self'",
     "base-uri": "'self'",
