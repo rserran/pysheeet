@@ -292,3 +292,33 @@ Automatic differentiation is PyTorch's core feature for training neural networks
     >>> z.backward()        # compute dz/dx = 2(x + 1) (chain rule applied)
     >>> print(f"gradient dz/dx: {x.grad}")
     gradient dz/dx: tensor([1.2036, 5.0103, 0.5143])
+
+Numpy
+-----
+
+.. code-block:: python
+
+    # move tensor from GPU to CPU and convert to an numpy array
+    >>> x = torch.randn([1,2,3], device=0)
+    >>> y = x.cpu().numpy()
+    >>> y
+    array([[[-0.11979043,  0.13762406, -1.2633433 ],
+            [-0.380241  ,  1.5320604 , -1.0828359 ]]], dtype=float32)
+
+    # tensor share the same memory with numpy array
+    >>> x = torch.randn(1,2,3)
+    >>> x
+    tensor([[[ 0.8195,  2.0259, -0.3267],
+             [ 1.6539,  0.1562, -1.9821]]])
+    >>> y = x.numpy()
+    >>> y
+    array([[[ 0.8194908 ,  2.0258512 , -0.32673392],
+            [ 1.653947  ,  0.15618315, -1.9821146 ]]], dtype=float32)
+    >>> x.add_(1)
+    tensor([[[ 1.8195,  3.0259,  0.6733],
+             [ 2.6539,  1.1562, -0.9821]]])
+
+    # y print the same value due to same memory region w/ x
+    >>> y
+    array([[[ 1.8194908 ,  3.0258512 ,  0.67326605],
+            [ 2.6539469 ,  1.1561831 , -0.98211455]]], dtype=float32)
