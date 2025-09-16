@@ -70,6 +70,7 @@ Advanced Cheat Sheet
 - `SSH <docs/notes/security/python-ssh.rst>`_
 - `Tests <docs/notes/testing/python-tests.rst>`_
 - `C Extensions <docs/notes/extension/python-c-extensions.rst>`_
+- `PyTorch <docs/notes/pytorch/pytorch.rst>`_
 - `Slurm <docs/notes/pytorch/slurm.rst>`_
 
 
