@@ -113,3 +113,45 @@ Arithmetic
     >>> y.div_(x)
     tensor([[0.6766, 0.1862],
             [0.2438, 0.0076]], device='cuda:0')
+
+
+Gradient
+--------
+
+.. code-block:: python
+
+    # create a tensor with gradient calculation requirement
+    >>> x = torch.randn(3, requires_grad=True, device=0)
+    >>> x
+    tensor([-1.1442, -0.8709, -0.2581], device='cuda:0', requires_grad=True)
+
+    # copy a tensor from an existing tensor without gradient calculation requirement
+    >>> y = x.detach()
+    >>> y
+    tensor([-1.1442, -0.8709, -0.2581], device='cuda:0')
+
+    # make x becomes a tensor without gradient calculation requirement
+    >>> x.requires_grad_(False)
+    tensor([-1.1442, -0.8709, -0.2581], device='cuda:0')
+
+    # using a context manager to calculate a tensor without grad requirment
+    >>> x = torch.randn(3, requires_grad=True, device=0)
+    >>> with torch.no_grad():
+    ...     y = x + 1
+    ...     print(y)
+    ...
+    tensor([1.2969, 1.5251, 0.7915], device='cuda:0')
+
+    # without the context manager, the output is
+    >>> y = x + 1
+    >>> print(y)
+    tensor([1.2969, 1.5251, 0.7915], device='cuda:0', grad_fn=<AddBackward0>)
+
+    # calculate a gradient
+    >>> x = torch.randn(3, requires_grad=True)
+    >>> y = x + 1
+    >>> z = y * y * 3
+    >>> z = z.mean()
+    >>> z.backward() # dz/dx
+    >>> print(f"gradient dz/dx: {x.grad}")
+    gradient dz/dx: tensor([1.2036, 5.0103, 0.5143])
