@@ -62,7 +62,7 @@ Creating tensors is fundamental in PyTorch. Tensors can be initialized on CPU or
 Arithmetic
 ----------
 
-PyTorch supports both element-wise operations and matrix operations. In-place operations (ending with _) modify tensors directly and save memory.
+PyTorch supports both element-wise operations and matrix operations. In-place operations (ending with `_`) modify tensors directly.
 
 .. code-block:: python
 
