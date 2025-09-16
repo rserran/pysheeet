@@ -124,7 +124,7 @@ PyTorch supports both element-wise operations and matrix operations. In-place op
 High Dimension Arithmetic
 -------------------------
 
-Working with multi-dimensional tensors is common in deep learning. Understanding tensor shapes and dimension manipulation is crucial for neural networks.
+Working with multi-dimensional tensors is common in deep learning. Understanding tensor shapes and dimension manipulation is crucial for neural networks. These operations are fundamental for batch processing, matrix operations across multiple dimensions, and tensor reshaping.
 
 .. code-block:: python
 
@@ -176,10 +176,42 @@ Working with multi-dimensional tensors is common in deep learning. Understanding
               [-0.3049,  0.1591, -0.2596],
               [-0.5129, -0.2596,  2.9863]]]], device='cuda:0')
 
+    # sum along the first dimension
+    tensor([[ 1.2050,  1.9625,  0.0374],
+            [ 0.7517, -0.5384, -1.4520]], device='cuda:0')
+    >>> x.sum(dim=0)
+    tensor([ 1.9567,  1.4241, -1.4146], device='cuda:0')
+
+    # sum along the last dimension
+    >>> x.sum(dim=-1)
+    tensor([ 3.2049, -1.2387], device='cuda:0')
+
+    # sum along the last dimension
+    >>> x = torch.randn(1,2,3,4, device=0)
+    >>> x
+    tensor([[[[-0.5222, -1.2467, -1.2115,  0.1807],
+              [-0.5484,  0.2415, -0.5310,  0.5405],
+              [ 1.1058, -2.1904, -1.3629, -1.5551]],
+
+             [[-0.2041, -0.4985, -0.3239,  0.5274],
+              [ 0.4084, -0.0435,  0.2088,  0.3941],
+              [-0.9391,  0.9659,  0.4092,  0.0661]]]], device='cuda:0')
+
+    # sum along the last column dimension
+    >>> x.sum(dim=-1)
+    tensor([[[-2.7996, -0.2974, -4.0025],
+             [-0.4991,  0.9678,  0.5021]]], device='cuda:0')
+
+    # sum along the last row dimension
+    >>> x.sum(dim=-2)
+    tensor([[[ 0.0352, -3.1955, -3.1054, -0.8339],
+             [-0.7349,  0.4240,  0.2941,  0.9876]]], device='cuda:0')
+
+
 Slicing
 -------
 
-Tensor slicing allows you to extract specific parts of tensors. This is essential for data manipulation and accessing individual elements or subsets.
+Tensor slicing allows you to extract specific parts of tensors. This is essential for data manipulation and accessing individual elements or subsets. PyTorch uses NumPy-style indexing with support for advanced indexing patterns.
 
 .. code-block:: python
 
@@ -218,7 +250,7 @@ Tensor slicing allows you to extract specific parts of tensors. This is essentia
 Gradient
 --------
 
-Automatic differentiation is PyTorch's core feature for training neural networks. Understanding gradient computation and control is essential for deep learning.
+Automatic differentiation is PyTorch's core feature for training neural networks. Understanding gradient computation and control is essential for deep learning. PyTorch builds a dynamic computation graph during forward pass and computes gradients during backward pass using the chain rule.
 
 .. code-block:: python
 
