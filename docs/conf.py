@@ -140,6 +140,8 @@ html_theme_options = {
   "use_repository_button": True,
 }
 
+# Custom sidebar templates
+
 # Add any paths that contain custom themes here, relative to this directory.
 #html_theme_path = []
 
@@ -173,6 +175,11 @@ html_context = {
     "tracking_id": os.environ.get("TRACKING_ID"),
 }
 
+has_carbonad = os.environ.get("CARBONAD_SERVE") and os.environ.get("CARBONAD_PLACEMENT")
+if has_carbonad:
+    html_context["carbonad_serve"] = os.environ.get("CARBONAD_SERVE")
+    html_context["carbonad_placement"] = os.environ.get("CARBONAD_PLACEMENT")
+
 # If not '', a 'Last updated on:' timestamp is inserted at every page bottom,
 # using the given strftime format.
 #html_last_updated_fmt = '%b %d, %Y'
@@ -180,8 +187,6 @@ html_context = {
 # If true, SmartyPants will be used to convert quotes and dashes to
 # typographically correct entities.
 #html_use_smartypants = True
-
-# Custom sidebar templates, maps document names to template names.
 
 
 # Additional templates that should be rendered to pages, maps page names to
@@ -299,6 +304,15 @@ texinfo_documents = [
      author, 'python-cheatsheet', 'One line description of project.',
      'Miscellaneous'),
 ]
+
+html_sidebars = {
+    "**": [
+        "navbar-logo.html",
+        "search-button-field.html",
+        "sbt-sidebar-nav.html",
+        "carbonad.html",
+    ]
+}
 
 # Documents to append as an appendix to all manuals.
 #texinfo_appendices = []
