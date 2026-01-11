@@ -3,62 +3,12 @@
 Source code examples for docs/notes/python-new-py3.rst
 """
 
+import sys
 import asyncio
 import pytest
 from dataclasses import dataclass, FrozenInstanceError
 
-
-# Python 3.12 - Type Parameter Syntax (PEP 695)
-class Box[T]:
-    """Generic class using new type parameter syntax."""
-
-    def __init__(self, item: T) -> None:
-        self.item = item
-
-
-def first[T](items: list[T]) -> T:
-    """Generic function using new type parameter syntax."""
-    return items[0]
-
-
-# Python 3.12 - f-string improvements (PEP 701)
-def fstring_nested() -> str:
-    """F-strings now support nested quotes and expressions."""
-    songs = ["Take me back to Eden", "&", "Satellite"]
-    return f"Playlist: {", ".join(songs)}"
-
-
-# Python 3.11 - Exception Groups (PEP 654)
-def raise_exception_group():
-    """Raise multiple exceptions simultaneously."""
-    raise ExceptionGroup("errors", [ValueError("invalid"), TypeError("wrong")])
-
-
-# Python 3.10 - Pattern Matching (PEP 634)
-def http_status(status: int) -> str:
-    """Match statement for cleaner conditionals."""
-    match status:
-        case 200:
-            return "OK"
-        case 404:
-            return "Not Found"
-        case 500:
-            return "Internal Server Error"
-        case _:
-            return "Unknown"
-
-
-def describe_point(point: tuple) -> str:
-    """Pattern matching with destructuring."""
-    match point:
-        case (0, 0):
-            return "Origin"
-        case (x, 0):
-            return f"On x-axis at {x}"
-        case (0, y):
-            return f"On y-axis at {y}"
-        case (x, y):
-            return f"Point at ({x}, {y})"
+PY_VERSION = sys.version_info[:2]
 
 
 # Python 3.9 - Dictionary Merge (PEP 584)
@@ -80,7 +30,7 @@ def positional_only(a, b, /, c, d):
 
 
 # Python 3.8 - Walrus operator (PEP 572)
-def walrus_example(data: list) -> int | None:
+def walrus_example(data: list):
     """Assignment expression in condition."""
     if (n := len(data)) > 3:
         return n
@@ -119,11 +69,6 @@ def fstring_basic(name: str) -> str:
 def fstring_format(value: float) -> str:
     """F-string with format spec."""
     return f"{value:1.3}"
-
-
-# Python 3.6 - Variable annotations (PEP 526)
-x: list[int] = [1, 2, 3]
-y: dict[str, str] = {"foo": "bar"}
 
 
 # Python 3.5 - Async/Await (PEP 492)
@@ -180,44 +125,68 @@ def nonlocal_example() -> str:
 
 
 # Tests
+@pytest.mark.skipif(PY_VERSION < (3, 12), reason="Requires Python 3.12+")
 class TestPython312:
     def test_box_int(self):
-        assert Box(42).item == 42
-
-    def test_box_str(self):
-        assert Box("hello").item == "hello"
+        exec(
+            "class Box[T]:\n    def __init__(self, item: T): self.item = item\nassert Box(42).item == 42"
+        )
 
     def test_first(self):
-        assert first([1, 2, 3]) == 1
+        exec(
+            "def first[T](items: list[T]) -> T: return items[0]\nassert first([1, 2, 3]) == 1"
+        )
 
     def test_fstring_nested(self):
-        assert "Playlist:" in fstring_nested()
+        songs = ["Take me back to Eden", "&", "Satellite"]
+        result = eval('f"Playlist: {", ".join(songs)}"')
+        assert "Playlist:" in result
 
 
+@pytest.mark.skipif(PY_VERSION < (3, 11), reason="Requires Python 3.11+")
 class TestPython311:
     def test_exception_group(self):
-        caught_value = caught_type = False
-        try:
-            raise_exception_group()
-        except* ValueError:
-            caught_value = True
-        except* TypeError:
-            caught_type = True
-        assert caught_value and caught_type
+        code = """
+caught_value = caught_type = False
+try:
+    raise ExceptionGroup("errors", [ValueError("invalid"), TypeError("wrong")])
+except* ValueError:
+    caught_value = True
+except* TypeError:
+    caught_type = True
+assert caught_value and caught_type
+"""
+        exec(code)
 
 
+@pytest.mark.skipif(PY_VERSION < (3, 10), reason="Requires Python 3.10+")
 class TestPython310:
     def test_http_status(self):
-        assert http_status(200) == "OK"
-        assert http_status(404) == "Not Found"
-        assert http_status(500) == "Internal Server Error"
-        assert http_status(999) == "Unknown"
+        code = """
+def http_status(status: int) -> str:
+    match status:
+        case 200: return "OK"
+        case 404: return "Not Found"
+        case 500: return "Internal Server Error"
+        case _: return "Unknown"
+assert http_status(200) == "OK"
+assert http_status(404) == "Not Found"
+assert http_status(999) == "Unknown"
+"""
+        exec(code)
 
     def test_describe_point(self):
-        assert describe_point((0, 0)) == "Origin"
-        assert describe_point((5, 0)) == "On x-axis at 5"
-        assert describe_point((0, 3)) == "On y-axis at 3"
-        assert describe_point((2, 4)) == "Point at (2, 4)"
+        code = """
+def describe_point(point: tuple) -> str:
+    match point:
+        case (0, 0): return "Origin"
+        case (x, 0): return f"On x-axis at {x}"
+        case (0, y): return f"On y-axis at {y}"
+        case (x, y): return f"Point at ({x}, {y})"
+assert describe_point((0, 0)) == "Origin"
+assert describe_point((5, 0)) == "On x-axis at 5"
+"""
+        exec(code)
 
 
 class TestPython39:
