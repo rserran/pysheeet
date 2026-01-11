@@ -4,7 +4,7 @@ VER  = $(word 2, $(shell python --version 2>&1))
 SRC  = app.py app_test.py
 PY36 = $(shell expr $(VER) \>= 3.6)
 
-.PHONY: build deps test
+.PHONY: build deps test format
 build: html
 
 %:
@@ -15,6 +15,7 @@ test: clean build
 	pydocstyle $(SRC)
 	bandit app.py
 	coverage run app_test.py && coverage report --fail-under=100 -m $(SRC)
+	python -m pytest src/new_py3/py3.py -v
 ifeq ($(PY36), 1)
 	black --quiet --diff --check --line-length 79 $(SRC)
 endif
@@ -24,3 +25,6 @@ deps:
 ifeq ($(PY36), 1)
 	pip install black==22.3.0
 endif
+
+format:
+	black --line-length 79 $(SRC) src/
