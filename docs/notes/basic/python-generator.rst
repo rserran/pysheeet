@@ -2,12 +2,12 @@
     :description lang=en: Collect useful snippets of Python generator
     :keywords: Python, Python3, Python Generator, Python Generator Cheat Sheet
 
-=========
+
 Generator
 =========
 
-Glossary of Generator
----------------------
+Generators vs Generator Expressions
+-----------------------------------
 
 .. code-block:: python
 
@@ -49,7 +49,7 @@ Glossary of Generator
       File "<stdin>", line 1, in <module>
     StopIteration
 
-Produce value via generator
+Yield Values from Generator
 ---------------------------
 
 .. code-block:: python
@@ -83,8 +83,8 @@ Produce value via generator
     2 3 5 7 11 >>>
 
 
-Unpacking Generators
-----------------------
+Unpack Generators
+-----------------
 
 .. code-block:: python
 
@@ -127,8 +127,8 @@ Unpacking Generators
     0 1 2
 
 
-Implement Iterable object via generator
----------------------------------------
+Iterable via Generator
+----------------------
 
 .. code-block:: python
 
@@ -156,8 +156,8 @@ Implement Iterable object via generator
     ...
     1 2 3 4 5 >>>
 
-Send message to generator
--------------------------
+Send to Generator
+-----------------
 
 .. code-block:: python
 
@@ -176,8 +176,8 @@ Send message to generator
     ...
     Message: Hello World!
 
-``yield from`` expression
----------------------------
+yield from Expression
+---------------------
 
 .. code-block:: python
 
@@ -221,8 +221,8 @@ Send message to generator
     >>> inspect.getgeneratorstate(g)
     'GEN_CLOSED'
 
-yield (from) EXPR return RES
-----------------------------
+yield from with Return
+----------------------
 
 .. code-block:: python
 
@@ -269,7 +269,7 @@ yield (from) EXPR return RES
     9527
     5566
 
-Generate sequences
+Generate Sequences
 ------------------
 
 .. code-block:: python
@@ -297,7 +297,7 @@ Generate sequences
     ['a', 'b', 0, 1, 2]
 
 What ``RES = yield from EXP`` actually do?
---------------------------------------------
+------------------------------------------
 
 .. code-block:: python
 
@@ -343,7 +343,7 @@ What ``RES = yield from EXP`` actually do?
 
 
 ``for _ in gen()`` simulate ``yield from``
--------------------------------------------
+------------------------------------------
 
 .. code-block:: python
 
@@ -371,7 +371,7 @@ What ``RES = yield from EXP`` actually do?
     1
 
 
-Check generator type
+Check Generator Type
 --------------------
 
 .. code-block:: python
@@ -407,8 +407,8 @@ Check Generator State
     'GEN_CLOSED'
 
 
-Simple compiler
------------------
+Simple Compiler
+---------------
 
 .. code-block:: python
 
@@ -535,7 +535,7 @@ output:
     49995000
 
 
-Context manager and generator
+Context Manager via Generator
 -----------------------------
 
 .. code-block:: python
@@ -556,7 +556,7 @@ Context manager and generator
     exit scope
 
 What ``@contextmanager`` actually doing?
-------------------------------------------
+----------------------------------------
 
 .. code-block:: python
 
@@ -611,7 +611,7 @@ output:
 
 
 profile code block
--------------------
+------------------
 
 .. code-block:: python
 
@@ -636,7 +636,7 @@ profile code block
 
 
 ``yield from`` and ``__iter__``
---------------------------------
+-------------------------------
 
 .. code-block:: python
 
@@ -676,7 +676,7 @@ profile code block
     9525
 
 ``yield from == await`` expression
-------------------------------------
+----------------------------------
 
 .. code-block:: python
 
@@ -977,7 +977,7 @@ simple round-robin with blocking and non-blocking
 
 
 Asynchronous Generators
-------------------------
+-----------------------
 
 .. code-block:: python
 
@@ -1002,7 +1002,7 @@ Asynchronous Generators
     2
 
 Asynchronous generators can have ``try..finally`` blocks
----------------------------------------------------------
+--------------------------------------------------------
 
 .. code-block:: python
 
@@ -1030,7 +1030,7 @@ Asynchronous generators can have ``try..finally`` blocks
 
 
 send value and throw exception into async generator
-----------------------------------------------------
+---------------------------------------------------
 
 .. code-block:: python
 
@@ -1062,7 +1062,7 @@ send value and throw exception into async generator
 
 
 Simple async round-robin
----------------------------
+------------------------
 
 .. code-block:: python
 
@@ -1098,7 +1098,7 @@ Simple async round-robin
 
 
 Async generator get better performance than async iterator
-------------------------------------------------------------
+----------------------------------------------------------
 
 .. code-block:: python
 

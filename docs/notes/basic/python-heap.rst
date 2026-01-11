@@ -1,13 +1,34 @@
 .. meta::
-    :description lang=en: Collect useful snippets of Python heap
-    :keywords: Python, Python Cheat Sheet, heap, heapq, priority queue
+    :description lang=en: Python heap and priority queue cheat sheet covering heapq module operations, heap sort algorithm, priority queue implementation with custom comparators, and practical examples
+    :keywords: Python, Python Cheat Sheet, heap, heapq, priority queue, heap sort, min heap, max heap, Python heapq, nlargest, nsmallest
 
 ====
 Heap
 ====
 
-Heap Sort
----------
+.. contents:: Table of Contents
+    :backlinks: none
+
+The heapq module provides an implementation of the heap queue algorithm, also
+known as the priority queue algorithm. Heaps are binary trees where every parent
+node has a value less than or equal to any of its children (min-heap). This
+cheat sheet covers heap operations including heap sort, priority queues, merging
+sorted iterables, and finding the n largest or smallest elements efficiently.
+
+The source code is available on `GitHub <https://github.com/crazyguitar/pysheeet/blob/master/src/basic/heap.py>`_.
+
+References
+----------
+
+- `heapq — Heap queue algorithm <https://docs.python.org/3/library/heapq.html>`_
+- `queue.PriorityQueue <https://docs.python.org/3/library/queue.html#queue.PriorityQueue>`_
+
+Implement Heap Sort with ``heapq``
+----------------------------------
+
+Heap sort works by pushing all elements onto a heap and then popping them off
+one by one. Since the heap maintains the min-heap property, elements come out
+in sorted order. The time complexity is O(n log n).
 
 .. code-block:: python
 
@@ -21,8 +42,12 @@ Heap Sort
     >>> x
     [1, 2, 3, 5, 6]
 
-Priority Queue
---------------
+Implement Priority Queue with ``heapq``
+---------------------------------------
+
+A priority queue processes elements based on their priority rather than insertion
+order. Use tuples ``(priority, value)`` where lower numbers indicate higher priority.
+For custom objects, implement the ``__lt__`` method to define comparison behavior.
 
 .. code-block:: python
 

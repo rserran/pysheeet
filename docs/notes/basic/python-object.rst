@@ -2,16 +2,16 @@
 Class
 =====
 
-List Attributes
----------------
+List Attributes with dir()
+--------------------------
 
 .. code-block:: python
 
     >>> dir(list)  # check all attr of list
     ['__add__', '__class__', ...]
 
-Get Instance Type
------------------
+Check Type with isinstance()
+----------------------------
 
 .. code-block:: python
 
@@ -19,8 +19,8 @@ Get Instance Type
     >>> isinstance(ex, int)
     True
 
-Declare a Class
----------------
+Declare Class with type()
+-------------------------
 
 .. code-block:: python
 
@@ -104,8 +104,8 @@ Get Class Name
     >>> ex.__class__.__name__
     'ExampleClass'
 
-New and Init
-------------
+__new__ vs __init__
+-------------------
 
 ``__init__`` will be invoked
 
@@ -166,8 +166,8 @@ The problem of multiple inheritance in searching a method
     >>> ClsD().foo()
     This is ClsB
 
-Representation of a Class
--------------------------
+__str__ and __repr__
+--------------------
 
 .. code-block:: python
 
@@ -182,8 +182,8 @@ Representation of a Class
     >>> Example()
     Example __repr__
 
-Callable Object
----------------
+Callable with __call__
+----------------------
 
 .. code-block:: python
 
@@ -197,8 +197,8 @@ Callable Object
     >>> ex()
     I am callable!
 
-Context Manager
----------------
+Context Manager Protocol
+------------------------
 
 .. code-block:: python
 
@@ -255,8 +255,8 @@ Using contextlib
     with opening('example.txt') as fd:
        fd.read()
 
-Property
---------
+@property Decorator
+-------------------
 
 .. code-block:: python
 
@@ -322,8 +322,8 @@ memory previously.
     >>> ex.square3
     8
 
-Descriptor
-----------
+Descriptor Protocol
+-------------------
 
 .. code-block:: python
 
@@ -398,8 +398,8 @@ Singleton is a design pattern that restricts the creation of instances of a clas
 
         print("id(a):", id(a), "id(b):", id(b), "Diff:", id(a)-id(b))
 
-Static and Class Methond
-------------------------
+@staticmethod and @classmethod
+------------------------------
 
 ``@classmethod`` is bound to a class. ``@staticmethod`` is similar to a python
 function but define in a class.
@@ -432,8 +432,8 @@ function but define in a class.
       File "", line 1, in
     TypeError: unbound method instmethod() ...
 
-Abstract Method
----------------
+Abstract Methods with abc
+-------------------------
 
 ``abc`` is used to define methods but not implement
 
@@ -470,8 +470,8 @@ Another common way is to ``raise NotImplementedError``
     >>> ex.absmethod()
     abstract
 
-Using slot to Save Memory
--------------------------
+Using __slots__
+---------------
 
 .. code-block:: python
 
@@ -533,8 +533,8 @@ output:
     mem usage: 70922240 Byte
     mem usage: 100659200 Byte
 
-Common Magic
-------------
+Common Magic Methods
+--------------------
 
 .. code-block:: python
 

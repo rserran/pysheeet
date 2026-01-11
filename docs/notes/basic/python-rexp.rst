@@ -68,8 +68,8 @@ Compare HTML tags
     >>> re.findall('<[^/>]+/>', html)[0:2]
     []
 
-Group Comparison
-----------------
+Group Matching
+--------------
 
 .. code-block:: python
 
@@ -102,7 +102,7 @@ Group Comparison
     '2016'
 
 Non capturing group
----------------------
+-------------------
 
 .. code-block:: python
 
@@ -217,7 +217,7 @@ Look around
 
 
 Match common username or password
------------------------------------
+---------------------------------
 
 .. code-block:: python
 
@@ -227,7 +227,7 @@ Match common username or password
     True
 
 Match hex color value
-----------------------
+---------------------
 
 .. code-block:: python
 
@@ -238,7 +238,7 @@ Match hex color value
 
 
 Match email
-------------
+-----------
 
 .. code-block:: python
 
@@ -257,7 +257,7 @@ Match email
     <_sre.SRE_Match object at 0x1083efeb8>
 
 Match URL
-----------
+---------
 
 .. code-block:: python
 
@@ -276,7 +276,7 @@ Match URL
     >>> exp.match('http://www.example/file!.html')
 
 
-Match IP address
+Match IP Address
 ----------------
 
 +----------------+-----------------------+
@@ -308,8 +308,8 @@ Match IP address
     >>> exp.match('256.0.0.0') is None
     True
 
-Match Mac address
-------------------
+Match Mac Address
+-----------------
 
 .. code-block:: python
 
@@ -330,8 +330,8 @@ Match Mac address
     True
 
 
-Lexer
-------
+Simple Lexer
+------------
 
 .. code-block:: python
 

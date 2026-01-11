@@ -15,7 +15,7 @@ test: clean build
 	pydocstyle $(SRC)
 	bandit app.py
 	coverage run app_test.py && coverage report --fail-under=100 -m $(SRC)
-	python -m pytest src/new_py3/py3.py -v
+	python -m pytest src/basic/*.py src/new_py3/*.py -v
 ifeq ($(PY36), 1)
 	black --quiet --diff --check --line-length 79 $(SRC)
 endif
