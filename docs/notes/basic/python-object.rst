@@ -1,9 +1,24 @@
+.. meta::
+    :description lang=en: Python class and object-oriented programming cheat sheet covering magic methods, property decorators, inheritance, context managers, and design patterns
+    :keywords: Python, Python Cheat Sheet, Python OOP, Python Class, Magic Methods, Property Decorator, Context Manager, Singleton, Abstract Class, Descriptor
+
 =====
 Class
 =====
 
+.. contents:: Table of Contents
+    :backlinks: none
+
+Python is an object-oriented programming language. This cheat sheet covers
+class definitions, inheritance, magic methods, property decorators, context
+managers, and common design patterns. Understanding these concepts is essential
+for writing clean, maintainable Python code.
+
 List Attributes with dir()
 --------------------------
+
+The ``dir()`` function returns a list of all attributes and methods of an object.
+This is useful for introspection and discovering what operations are available.
 
 .. code-block:: python
 
@@ -13,587 +28,477 @@ List Attributes with dir()
 Check Type with isinstance()
 ----------------------------
 
+Use ``isinstance()`` to check if an object is an instance of a class or its
+subclasses. This is preferred over ``type()`` comparison because it supports
+inheritance.
+
 .. code-block:: python
 
     >>> ex = 10
     >>> isinstance(ex, int)
     True
-
-Declare Class with type()
--------------------------
-
-.. code-block:: python
-
-    >>> def fib(self, n):
-    ...     if n <= 2:
-    ...         return 1
-    ...     return fib(self, n-1) + fib(self, n-2)
-    ...
-    >>> Fib = type('Fib', (object,), {'val': 10,
-    ...                               'fib': fib})
-    >>> f = Fib()
-    >>> f.val
-    10
-    >>> f.fib(f.val)
-    55
-
-Equals to
-
-.. code-block:: python
-
-    >>> class Fib(object):
-    ...     val = 10
-    ...     def fib(self, n):
-    ...         if n <=2:
-    ...             return 1
-    ...         return self.fib(n-1)+self.fib(n-2)
-    ...
-    >>> f = Fib()
-    >>> f.val
-    10
-    >>> f.fib(f.val)
-    55
-
-Has / Get / Set Attributes
---------------------------
-
-.. code-block:: python
-
-    >>> class Example(object):
-    ...   def __init__(self):
-    ...     self.name = "ex"
-    ...   def printex(self):
-    ...     print("This is an example")
-    ...
-    >>> ex = Example()
-    >>> hasattr(ex,"name")
+    >>> isinstance(ex, (int, float))  # check multiple types
     True
-    >>> hasattr(ex,"printex")
-    True
-    >>> hasattr(ex,"print")
-    False
-    >>> getattr(ex,'name')
-    'ex'
-    >>> setattr(ex,'name','example')
-    >>> ex.name
-    'example'
 
-Check Inheritance
------------------
+Check Inheritance with issubclass()
+-----------------------------------
+
+Use ``issubclass()`` to check if a class is a subclass of another class.
 
 .. code-block:: python
 
-    >>> class Example(object):
-    ...   def __init__(self):
-    ...     self.name = "ex"
-    ...   def printex(self):
-    ...     print("This is an Example")
-    ...
-    >>> issubclass(Example, object)
+    >>> class Animal: pass
+    >>> class Dog(Animal): pass
+    >>> issubclass(Dog, Animal)
+    True
+    >>> issubclass(Dog, object)
     True
 
 Get Class Name
 --------------
 
+Access the class name through the ``__class__.__name__`` attribute.
+
 .. code-block:: python
 
-    >>> class ExampleClass(object):
-    ...   pass
+    >>> class ExampleClass:
+    ...     pass
     ...
     >>> ex = ExampleClass()
     >>> ex.__class__.__name__
     'ExampleClass'
 
+Has / Get / Set Attributes
+--------------------------
+
+Python provides built-in functions to dynamically access and modify object
+attributes at runtime.
+
+.. code-block:: python
+
+    >>> class Example:
+    ...     def __init__(self):
+    ...         self.name = "ex"
+    ...
+    >>> ex = Example()
+    >>> hasattr(ex, "name")
+    True
+    >>> getattr(ex, 'name')
+    'ex'
+    >>> setattr(ex, 'name', 'example')
+    >>> ex.name
+    'example'
+    >>> getattr(ex, 'missing', 'default')  # with default
+    'default'
+
+Declare Class with type()
+-------------------------
+
+Classes can be created dynamically using ``type()``. This is useful for
+metaprogramming and creating classes at runtime.
+
+.. code-block:: python
+
+    >>> def greet(self):
+    ...     return f"Hello, I'm {self.name}"
+    ...
+    >>> Person = type('Person', (object,), {
+    ...     'name': 'Anonymous',
+    ...     'greet': greet
+    ... })
+    >>> p = Person()
+    >>> p.greet()
+    "Hello, I'm Anonymous"
+
+This is equivalent to:
+
+.. code-block:: python
+
+    >>> class Person:
+    ...     name = 'Anonymous'
+    ...     def greet(self):
+    ...         return f"Hello, I'm {self.name}"
+
 __new__ vs __init__
 -------------------
 
-``__init__`` will be invoked
+``__new__`` creates the instance, ``__init__`` initializes it. ``__init__`` is
+only called if ``__new__`` returns an instance of the class.
 
 .. code-block:: python
 
-    >>> class ClassA(object):
+    >>> class Example:
     ...     def __new__(cls, arg):
-    ...         print('__new__ ' + arg)
-    ...         return object.__new__(cls, arg)
+    ...         print(f'__new__ {arg}')
+    ...         return super().__new__(cls)
     ...     def __init__(self, arg):
-    ...         print('__init__ ' + arg)
+    ...         print(f'__init__ {arg}')
     ...
-    >>> o = ClassA("Hello")
+    >>> o = Example("Hello")
     __new__ Hello
     __init__ Hello
-
-``__init__`` won't be invoked
-
-.. code-block:: python
-
-    >>> class ClassB(object):
-    ...     def __new__(cls, arg):
-    ...         print('__new__ ' + arg)
-    ...         return object
-    ...     def __init__(self, arg):
-    ...         print('__init__ ' + arg)
-    ...
-    >>> o = ClassB("Hello")
-    __new__ Hello
-
-
-The Diamond Problem
--------------------
-
-The problem of multiple inheritance in searching a method
-
-.. code-block:: python
-
-    >>> def foo_a(self):
-    ...     print("This is ClsA")
-    ...
-    >>> def foo_b(self):
-    ...     print("This is ClsB")
-    ...
-    >>> def foo_c(self):
-    ...     print("This is ClsC")
-    ...
-    >>> class Type(type):
-    ...     def __repr__(cls):
-    ...         return cls.__name__
-    ...
-    >>> ClsA = Type("ClsA", (object,), {'foo': foo_a})
-    >>> ClsB = Type("ClsB", (ClsA,), {'foo': foo_b})
-    >>> ClsC = Type("ClsC", (ClsA,), {'foo': foo_c})
-    >>> ClsD = Type("ClsD", (ClsB, ClsC), {})
-    >>> ClsD.mro()
-    [ClsD, ClsB, ClsC, ClsA, <type 'object'>]
-    >>> ClsD().foo()
-    This is ClsB
 
 __str__ and __repr__
 --------------------
 
+``__str__`` returns a human-readable string, ``__repr__`` returns an unambiguous
+representation for debugging. When ``__str__`` is not defined, ``__repr__`` is used.
+
 .. code-block:: python
 
-    >>> class Example(object):
-    ...    def __str__(self):
-    ...       return "Example __str__"
-    ...    def __repr__(self):
-    ...       return "Example __repr__"
+    >>> class Vector:
+    ...     def __init__(self, x, y):
+    ...         self.x, self.y = x, y
+    ...     def __repr__(self):
+    ...         return f"Vector({self.x}, {self.y})"
+    ...     def __str__(self):
+    ...         return f"({self.x}, {self.y})"
     ...
-    >>> print(str(Example()))
-    Example __str__
-    >>> Example()
-    Example __repr__
+    >>> v = Vector(1, 2)
+    >>> repr(v)
+    'Vector(1, 2)'
+    >>> str(v)
+    '(1, 2)'
+    >>> print(v)
+    (1, 2)
+
+Comparison Magic Methods
+------------------------
+
+Implement comparison operators by defining magic methods. Use
+``functools.total_ordering`` to generate all comparisons from ``__eq__`` and one other.
+
+.. code-block:: python
+
+    >>> from functools import total_ordering
+    >>> @total_ordering
+    ... class Number:
+    ...     def __init__(self, val):
+    ...         self.val = val
+    ...     def __eq__(self, other):
+    ...         return self.val == other.val
+    ...     def __lt__(self, other):
+    ...         return self.val < other.val
+    ...
+    >>> Number(1) < Number(2)
+    True
+    >>> Number(2) >= Number(1)
+    True
+
+Arithmetic Magic Methods
+------------------------
+
+Implement arithmetic operators to make objects work with ``+``, ``-``, ``*``, etc.
+
+.. code-block:: python
+
+    >>> class Vector:
+    ...     def __init__(self, x, y):
+    ...         self.x, self.y = x, y
+    ...     def __add__(self, other):
+    ...         return Vector(self.x + other.x, self.y + other.y)
+    ...     def __mul__(self, scalar):
+    ...         return Vector(self.x * scalar, self.y * scalar)
+    ...     def __repr__(self):
+    ...         return f"Vector({self.x}, {self.y})"
+    ...
+    >>> Vector(1, 2) + Vector(3, 4)
+    Vector(4, 6)
+    >>> Vector(1, 2) * 3
+    Vector(3, 6)
 
 Callable with __call__
 ----------------------
 
+Implement ``__call__`` to make instances callable like functions. This is useful
+for creating function-like objects that maintain state.
+
 .. code-block:: python
 
-    >>> class CallableObject(object):
-    ...   def example(self, *args, **kwargs):
-    ...     print("I am callable!")
-    ...   def __call__(self, *args, **kwargs):
-    ...     self.example(*args, **kwargs)
+    >>> class Multiplier:
+    ...     def __init__(self, factor):
+    ...         self.factor = factor
+    ...     def __call__(self, x):
+    ...         return x * self.factor
     ...
-    >>> ex = CallableObject()
-    >>> ex()
-    I am callable!
+    >>> double = Multiplier(2)
+    >>> double(5)
+    10
+    >>> callable(double)
+    True
+
+@property Decorator
+-------------------
+
+Use ``@property`` to define getters, setters, and deleters for managed attributes.
+This allows attribute access syntax while running custom code.
+
+.. code-block:: python
+
+    >>> class Circle:
+    ...     def __init__(self, radius):
+    ...         self._radius = radius
+    ...     @property
+    ...     def radius(self):
+    ...         return self._radius
+    ...     @radius.setter
+    ...     def radius(self, value):
+    ...         if value < 0:
+    ...             raise ValueError("Radius must be positive")
+    ...         self._radius = value
+    ...     @property
+    ...     def area(self):
+    ...         return 3.14159 * self._radius ** 2
+    ...
+    >>> c = Circle(5)
+    >>> c.area
+    78.53975
+    >>> c.radius = 10
+    >>> c.radius
+    10
+
+Descriptor Protocol
+-------------------
+
+Descriptors control attribute access at the class level. They implement
+``__get__``, ``__set__``, and/or ``__delete__`` methods.
+
+.. code-block:: python
+
+    >>> class Positive:
+    ...     def __init__(self, name):
+    ...         self.name = name
+    ...     def __get__(self, obj, objtype=None):
+    ...         return obj.__dict__[self.name]
+    ...     def __set__(self, obj, value):
+    ...         if value < 0:
+    ...             raise ValueError("Must be positive")
+    ...         obj.__dict__[self.name] = value
+    ...
+    >>> class Example:
+    ...     x = Positive('x')
+    ...     def __init__(self, x):
+    ...         self.x = x
+    ...
+    >>> ex = Example(10)
+    >>> ex.x
+    10
 
 Context Manager Protocol
 ------------------------
 
+Context managers implement ``__enter__`` and ``__exit__`` to manage resources
+with the ``with`` statement. This ensures proper cleanup even if exceptions occur.
+
 .. code-block:: python
 
-    # replace try: ... finally: ...
-    # see: PEP343
-    # common use in open and close
-
-    import socket
-
-    class Socket(object):
-        def __init__(self, host, port):
-            self.host = host
-            self.port = port
+    class ManagedFile:
+        def __init__(self, filename):
+            self.filename = filename
 
         def __enter__(self):
-            sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            sock.bind((self.host,self.port))
-            sock.listen(5)
-            self.sock = sock
-            return self.sock
+            self.file = open(self.filename, 'r')
+            return self.file
 
-        def __exit__(self,*exc_info):
-            if exc_info[0] is not None:
-                import traceback
-                traceback.print_exception(*exc_info)
-            self.sock.close()
+        def __exit__(self, exc_type, exc_val, exc_tb):
+            self.file.close()
+            return False  # don't suppress exceptions
 
-    if __name__=="__main__":
-        host = 'localhost'
-        port = 5566
-        with Socket(host, port) as s:
-            while True:
-                conn, addr = s.accept()
-                msg = conn.recv(1024)
-                print(msg)
-                conn.send(msg)
-                conn.close()
+    with ManagedFile('example.txt') as f:
+        content = f.read()
 
 Using contextlib
 ----------------
+
+The ``contextlib`` module provides utilities for creating context managers
+without writing a full class.
 
 .. code-block:: python
 
     from contextlib import contextmanager
 
     @contextmanager
-    def opening(filename, mode='r'):
-       f = open(filename, mode)
-       try:
-          yield f
-       finally:
-          f.close()
+    def managed_file(filename):
+        f = open(filename, 'r')
+        try:
+            yield f
+        finally:
+            f.close()
 
-    with opening('example.txt') as fd:
-       fd.read()
-
-@property Decorator
--------------------
-
-.. code-block:: python
-
-    >>> class Example(object):
-    ...     def __init__(self, value):
-    ...        self._val = value
-    ...     @property
-    ...     def val(self):
-    ...         return self._val
-    ...     @val.setter
-    ...     def val(self, value):
-    ...         if not isinstance(value, int):
-    ...             raise TypeError("Expected int")
-    ...         self._val = value
-    ...     @val.deleter
-    ...     def val(self):
-    ...         del self._val
-    ...
-    >>> ex = Example(123)
-    >>> ex.val = "str"
-    Traceback (most recent call last):
-      File "", line 1, in
-      File "test.py", line 12, in val
-        raise TypeError("Expected int")
-    TypeError: Expected int
-
-Equals to
-
-.. code-block:: python
-
-    >>> class Example(object):
-    ...     def __init__(self, value):
-    ...        self._val = value
-    ...
-    ...     def _val_getter(self):
-    ...         return self._val
-    ...
-    ...     def _val_setter(self, value):
-    ...         if not isinstance(value, int):
-    ...             raise TypeError("Expected int")
-    ...         self._val = value
-    ...
-    ...     def _val_deleter(self):
-    ...         del self._val
-    ...
-    ...     val = property(fget=_val_getter, fset=_val_setter, fdel=_val_deleter, doc=None)
-    ...
-
-Computed Attributes
--------------------
-
-``@property`` computes a value of a attribute only when we need. Not store in
-memory previously.
-
-.. code-block:: python
-
-    >>> class Example(object):
-    ...   @property
-    ...   def square3(self):
-    ...     return 2**3
-    ...
-    >>> ex = Example()
-    >>> ex.square3
-    8
-
-Descriptor Protocol
--------------------
-
-.. code-block:: python
-
-    >>> class Integer(object):
-    ...   def __init__(self, name):
-    ...     self._name = name
-    ...   def __get__(self, inst, cls):
-    ...     if inst is None:
-    ...       return self
-    ...     else:
-    ...       return inst.__dict__[self._name]
-    ...   def __set__(self, inst, value):
-    ...     if not isinstance(value, int):
-    ...       raise TypeError("Expected int")
-    ...     inst.__dict__[self._name] = value
-    ...   def __delete__(self,inst):
-    ...     del inst.__dict__[self._name]
-    ...
-    >>> class Example(object):
-    ...   x = Integer('x')
-    ...   def __init__(self, val):
-    ...     self.x = val
-    ...
-    >>> ex1 = Example(1)
-    >>> ex1.x
-    1
-    >>> ex2 = Example("str")
-    Traceback (most recent call last):
-      File "<stdin>", line 1, in <module>
-      File "<stdin>", line 4, in __init__
-      File "<stdin>", line 11, in __set__
-    TypeError: Expected an int
-    >>> ex3 = Example(3)
-    >>> hasattr(ex3, 'x')
-    True
-    >>> del ex3.x
-    >>> hasattr(ex3, 'x')
-    False
-
-Singleton Decorator
--------------------
-
-Singleton is a design pattern that restricts the creation of instances of a class so that it only creates one instance of the class that implements it.
-
-.. code-block:: python
-
-    #!/usr/bin/env python3
-    """Singleton decorator class."""
-
-    class Singleton(object):
-
-        def __init__(self, cls):
-            self.__cls = cls
-            self.__obj = None
-
-        def __call__(self, *args, **kwargs):
-            if not self.__obj:
-                self.__obj = self.__cls(*args, **kwargs)
-            return self.__obj
-
-    if __name__ == "__main__":
-        # Testing ...
-
-        @Singleton
-        class Test(object):
-
-            def __init__(self, text):
-                self.text = text
-
-        a = Test("Hello")
-        b = Test("World")
-
-        print("id(a):", id(a), "id(b):", id(b), "Diff:", id(a)-id(b))
+    with managed_file('example.txt') as f:
+        content = f.read()
 
 @staticmethod and @classmethod
 ------------------------------
 
-``@classmethod`` is bound to a class. ``@staticmethod`` is similar to a python
-function but define in a class.
+``@staticmethod`` defines a method that doesn't access instance or class.
+``@classmethod`` receives the class as the first argument, useful for
+alternative constructors.
 
 .. code-block:: python
 
-    >>> class example(object):
-    ...   @classmethod
-    ...   def clsmethod(cls):
-    ...     print("I am classmethod")
-    ...   @staticmethod
-    ...   def stmethod():
-    ...     print("I am staticmethod")
-    ...   def instmethod(self):
-    ...     print("I am instancemethod")
+    >>> class Date:
+    ...     def __init__(self, year, month, day):
+    ...         self.year, self.month, self.day = year, month, day
+    ...     @classmethod
+    ...     def from_string(cls, date_string):
+    ...         year, month, day = map(int, date_string.split('-'))
+    ...         return cls(year, month, day)
+    ...     @staticmethod
+    ...     def is_valid(date_string):
+    ...         try:
+    ...             y, m, d = map(int, date_string.split('-'))
+    ...             return 1 <= m <= 12 and 1 <= d <= 31
+    ...         except:
+    ...             return False
     ...
-    >>> ex = example()
-    >>> ex.clsmethod()
-    I am classmethod
-    >>> ex.stmethod()
-    I am staticmethod
-    >>> ex.instmethod()
-    I am instancemethod
-    >>> example.clsmethod()
-    I am classmethod
-    >>> example.stmethod()
-    I am staticmethod
-    >>> example.instmethod()
-    Traceback (most recent call last):
-      File "", line 1, in
-    TypeError: unbound method instmethod() ...
+    >>> d = Date.from_string('2024-01-15')
+    >>> d.year
+    2024
+    >>> Date.is_valid('2024-13-01')
+    False
 
-Abstract Methods with abc
+Abstract Base Classes with abc
+------------------------------
+
+Use ``abc`` module to define abstract base classes that cannot be instantiated
+and require subclasses to implement certain methods.
+
+.. code-block:: python
+
+    >>> from abc import ABC, abstractmethod
+    >>> class Shape(ABC):
+    ...     @abstractmethod
+    ...     def area(self):
+    ...         pass
+    ...
+    >>> class Rectangle(Shape):
+    ...     def __init__(self, width, height):
+    ...         self.width, self.height = width, height
+    ...     def area(self):
+    ...         return self.width * self.height
+    ...
+    >>> r = Rectangle(3, 4)
+    >>> r.area()
+    12
+    >>> Shape()  # raises TypeError
+
+The Diamond Problem (MRO)
 -------------------------
 
-``abc`` is used to define methods but not implement
+Python uses Method Resolution Order (MRO) to resolve the diamond problem in
+multiple inheritance. Use ``ClassName.mro()`` to see the resolution order.
 
 .. code-block:: python
 
-    >>> from abc import ABCMeta, abstractmethod
-    >>> class base(object):
-    ...   __metaclass__ = ABCMeta
-    ...   @abstractmethod
-    ...   def absmethod(self):
-    ...     """ Abstract method """
+    >>> class A:
+    ...     def method(self):
+    ...         return "A"
     ...
-    >>> class example(base):
-    ...   def absmethod(self):
-    ...     print("abstract")
+    >>> class B(A):
+    ...     def method(self):
+    ...         return "B"
     ...
-    >>> ex = example()
-    >>> ex.absmethod()
-    abstract
+    >>> class C(A):
+    ...     def method(self):
+    ...         return "C"
+    ...
+    >>> class D(B, C):
+    ...     pass
+    ...
+    >>> D().method()
+    'B'
+    >>> D.mro()
+    [<class 'D'>, <class 'B'>, <class 'C'>, <class 'A'>, <class 'object'>]
 
-Another common way is to ``raise NotImplementedError``
+Singleton Pattern
+-----------------
+
+Singleton ensures only one instance of a class exists. Implement using
+``__new__`` or a decorator.
 
 .. code-block:: python
 
-    >>> class base(object):
-    ...   def absmethod(self):
-    ...     raise NotImplementedError
-    ...
-    >>> class example(base):
-    ...   def absmethod(self):
-    ...     print("abstract")
-    ...
-    >>> ex = example()
-    >>> ex.absmethod()
-    abstract
+    class Singleton:
+        _instance = None
+
+        def __new__(cls):
+            if cls._instance is None:
+                cls._instance = super().__new__(cls)
+            return cls._instance
+
+    a = Singleton()
+    b = Singleton()
+    print(a is b)  # True
 
 Using __slots__
 ---------------
 
-.. code-block:: python
-
-    #!/usr/bin/env python3
-
-    import resource
-    import platform
-    import functools
-
-
-    def profile_mem(func):
-        @functools.wraps(func)
-        def wrapper(*a, **k):
-            s = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-            ret = func(*a, **k)
-            e = resource.getrusage(resource.RUSAGE_SELF).ru_maxrss
-
-            uname = platform.system()
-            if uname == "Linux":
-                print(f"mem usage: {e - s} kByte")
-            elif uname == "Darwin":
-                print(f"mem usage: {e - s} Byte")
-            else:
-                raise Exception("not support")
-            return ret
-        return wrapper
-
-
-    class S(object):
-        __slots__ = ['attr1', 'attr2', 'attr3']
-
-        def __init__(self):
-            self.attr1 = "Foo"
-            self.attr2 = "Bar"
-            self.attr3 = "Baz"
-
-
-    class D(object):
-
-        def __init__(self):
-            self.attr1 = "Foo"
-            self.attr2 = "Bar"
-            self.attr3 = "Baz"
-
-
-    @profile_mem
-    def alloc(cls):
-        _ = [cls() for _ in range(1000000)]
-
-
-    alloc(S)
-    alloc(D)
-
-output:
-
-.. code-block:: console
-
-    $ python3.6 s.py
-    mem usage: 70922240 Byte
-    mem usage: 100659200 Byte
-
-Common Magic Methods
---------------------
+``__slots__`` restricts instance attributes and reduces memory usage by avoiding
+``__dict__`` per instance.
 
 .. code-block:: python
 
-    # see python document: data model
-    # For command class
-    __main__
-    __name__
-    __file__
-    __module__
-    __all__
-    __dict__
-    __class__
-    __doc__
-    __init__(self, [...)
-    __str__(self)
-    __repr__(self)
-    __del__(self)
+    >>> class Point:
+    ...     __slots__ = ['x', 'y']
+    ...     def __init__(self, x, y):
+    ...         self.x, self.y = x, y
+    ...
+    >>> p = Point(1, 2)
+    >>> p.x
+    1
+    >>> p.z = 3  # raises AttributeError
 
-    # For Descriptor
-    __get__(self, instance, owner)
-    __set__(self, instance, value)
-    __delete__(self, instance)
+Common Magic Methods Reference
+------------------------------
 
-    # For Context Manager
-    __enter__(self)
-    __exit__(self, exc_ty, exc_val, tb)
+.. code-block:: python
 
-    # Emulating container types
-    __len__(self)
-    __getitem__(self, key)
-    __setitem__(self, key, value)
-    __delitem__(self, key)
-    __iter__(self)
-    __contains__(self, value)
+    # Object Creation and Representation
+    __new__(cls, ...)        # create instance
+    __init__(self, ...)      # initialize instance
+    __del__(self)            # destructor
+    __repr__(self)           # repr(obj)
+    __str__(self)            # str(obj)
 
-    # Controlling Attribute Access
-    __getattr__(self, name)
-    __setattr__(self, name, value)
-    __delattr__(self, name)
-    __getattribute__(self, name)
+    # Comparison
+    __eq__(self, other)      # ==
+    __ne__(self, other)      # !=
+    __lt__(self, other)      # <
+    __le__(self, other)      # <=
+    __gt__(self, other)      # >
+    __ge__(self, other)      # >=
 
-    # Callable object
-    __call__(self, [args...])
+    # Arithmetic
+    __add__(self, other)     # +
+    __sub__(self, other)     # -
+    __mul__(self, other)     # *
+    __truediv__(self, other) # /
+    __floordiv__(self, other)# //
+    __mod__(self, other)     # %
+    __pow__(self, other)     # **
 
-    # Compare related
-    __cmp__(self, other)
-    __eq__(self, other)
-    __ne__(self, other)
-    __lt__(self, other)
-    __gt__(self, other)
-    __le__(self, other)
-    __ge__(self, other)
+    # Container
+    __len__(self)            # len(obj)
+    __getitem__(self, key)   # obj[key]
+    __setitem__(self, k, v)  # obj[key] = value
+    __delitem__(self, key)   # del obj[key]
+    __contains__(self, item) # item in obj
+    __iter__(self)           # iter(obj)
 
-    # arithmetical operation related
-    __add__(self, other)
-    __sub__(self, other)
-    __mul__(self, other)
-    __div__(self, other)
-    __mod__(self, other)
-    __and__(self, other)
-    __or__(self, other)
-    __xor__(self, other)
+    # Attribute Access
+    __getattr__(self, name)  # obj.name (when not found)
+    __setattr__(self, n, v)  # obj.name = value
+    __delattr__(self, name)  # del obj.name
+
+    # Callable
+    __call__(self, ...)      # obj()
+
+    # Context Manager
+    __enter__(self)          # with obj
+    __exit__(self, ...)      # exit with block
+
+    # Descriptor
+    __get__(self, obj, type) # descriptor access
+    __set__(self, obj, val)  # descriptor assignment
+    __delete__(self, obj)    # descriptor deletion

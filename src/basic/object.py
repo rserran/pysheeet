@@ -3,8 +3,10 @@
 Source code for docs/notes/basic/python-object.rst
 """
 
-import pytest
 from abc import ABC, abstractmethod
+from functools import total_ordering
+
+import pytest
 
 
 # Basic Class
@@ -51,7 +53,7 @@ class Cat(Animal):
         return f"{self.name} says Meow!"
 
 
-# Magic Methods
+# Magic Methods - repr and str
 class Vector:
     """Class with magic methods."""
 
@@ -61,11 +63,32 @@ class Vector:
     def __repr__(self):
         return f"Vector({self.x}, {self.y})"
 
+    def __str__(self):
+        return f"({self.x}, {self.y})"
+
     def __add__(self, other):
         return Vector(self.x + other.x, self.y + other.y)
 
+    def __mul__(self, scalar):
+        return Vector(self.x * scalar, self.y * scalar)
+
     def __eq__(self, other):
         return self.x == other.x and self.y == other.y
+
+
+# Comparison with total_ordering
+@total_ordering
+class Number:
+    """Class with comparison methods."""
+
+    def __init__(self, val):
+        self.val = val
+
+    def __eq__(self, other):
+        return self.val == other.val
+
+    def __lt__(self, other):
+        return self.val < other.val
 
 
 # Callable
@@ -99,6 +122,31 @@ class Circle:
     @property
     def area(self) -> float:
         return 3.14159 * self._radius**2
+
+
+# Descriptor
+class Positive:
+    """Descriptor that enforces positive values."""
+
+    def __init__(self, name):
+        self.name = name
+
+    def __get__(self, obj, objtype=None):
+        if obj is None:
+            return self
+        return obj.__dict__[self.name]
+
+    def __set__(self, obj, value):
+        if value < 0:
+            raise ValueError("Must be positive")
+        obj.__dict__[self.name] = value
+
+
+class DescriptorExample:
+    x = Positive("x")
+
+    def __init__(self, x):
+        self.x = x
 
 
 # Context Manager
@@ -147,7 +195,7 @@ class Date:
         try:
             year, month, day = map(int, date_string.split("-"))
             return 1 <= month <= 12 and 1 <= day <= 31
-        except:
+        except Exception:
             return False
 
 
@@ -168,6 +216,36 @@ class Rectangle(Shape):
         return self.width * self.height
 
 
+# MRO - Diamond Problem
+class A:
+    def method(self):
+        return "A"
+
+
+class B(A):
+    def method(self):
+        return "B"
+
+
+class C(A):
+    def method(self):
+        return "C"
+
+
+class D(B, C):
+    pass
+
+
+# Slots
+class PointWithSlots:
+    """Class with __slots__ for memory efficiency."""
+
+    __slots__ = ["x", "y"]
+
+    def __init__(self, x, y):
+        self.x, self.y = x, y
+
+
 # Tests
 class TestBasicClass:
     def test_person(self):
@@ -178,7 +256,7 @@ class TestBasicClass:
 
 class TestClassAttributes:
     def test_counter(self):
-        Counter.count = 0  # reset
+        Counter.count = 0
         a, b = Counter(), Counter()
         assert a.id == 1
         assert b.id == 2
@@ -199,8 +277,24 @@ class TestMagicMethods:
         v2 = Vector(3, 4)
         assert v1 + v2 == Vector(4, 6)
 
+    def test_vector_mul(self):
+        v = Vector(1, 2)
+        assert v * 3 == Vector(3, 6)
+
     def test_vector_repr(self):
         assert repr(Vector(1, 2)) == "Vector(1, 2)"
+
+    def test_vector_str(self):
+        assert str(Vector(1, 2)) == "(1, 2)"
+
+
+class TestComparison:
+    def test_total_ordering(self):
+        assert Number(1) < Number(2)
+        assert Number(2) > Number(1)
+        assert Number(2) >= Number(1)
+        assert Number(1) <= Number(2)
+        assert Number(1) == Number(1)
 
 
 class TestCallable:
@@ -226,6 +320,16 @@ class TestProperty:
             c.radius = -1
 
 
+class TestDescriptor:
+    def test_positive(self):
+        ex = DescriptorExample(10)
+        assert ex.x == 10
+
+    def test_positive_invalid(self):
+        with pytest.raises(ValueError):
+            DescriptorExample(-1)
+
+
 class TestContextManager:
     def test_managed_resource(self):
         with ManagedResource() as r:
@@ -235,6 +339,7 @@ class TestContextManager:
 
 class TestSingleton:
     def test_singleton(self):
+        Singleton._instance = None  # reset
         a = Singleton()
         b = Singleton()
         assert a is b
@@ -259,3 +364,22 @@ class TestABC:
     def test_abstract_instantiation(self):
         with pytest.raises(TypeError):
             Shape()
+
+
+class TestMRO:
+    def test_diamond(self):
+        assert D().method() == "B"
+
+    def test_mro(self):
+        assert D.mro() == [D, B, C, A, object]
+
+
+class TestSlots:
+    def test_slots(self):
+        p = PointWithSlots(1, 2)
+        assert p.x == 1
+        assert p.y == 2
+
+    def test_slots_no_dict(self):
+        p = PointWithSlots(1, 2)
+        assert not hasattr(p, "__dict__")
