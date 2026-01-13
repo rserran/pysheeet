@@ -6,6 +6,9 @@
 From Scratch
 ============
 
+.. contents:: Table of Contents
+    :backlinks: none
+
 The main goal of this cheat sheet is to collect some common and basic semantics
 or snippets. The cheat sheet includes some syntax, which we have already known
 but still ambiguous in our mind, or some snippets, which we google them again

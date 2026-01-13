@@ -368,7 +368,7 @@ Multiple return values
     a, b = foo(1, 2)      # ok
     c, d = bar(3, "bar")  # ok
 
-Union[Any, None] == Optional[Any]
+Optional Type
 ----------------------------------
 
 .. code-block:: python
@@ -553,7 +553,7 @@ After Python 3.7 (include 3.7)
     names are not available in the current scope. **Postponed evaluation
     of annotations** will become the default behavior in Python 4.0.
 
-Type alias
+Type Alias
 ----------
 
 Like ``typedef`` or ``using`` in c/c++
@@ -601,7 +601,7 @@ Type aliases are defined by simple variable assignments
     Vector = List[int]
     v: Vector = [1., 2.]
 
-Define a ``NewType``
+Using NewType
 ---------------------
 
 Unlike alias, ``NewType`` returns a separate type but is identical to the original type at runtime.

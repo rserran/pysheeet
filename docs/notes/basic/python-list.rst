@@ -1,6 +1,13 @@
+.. meta::
+    :description lang=en: Collect useful snippets of Python list operations
+    :keywords: Python, Python List, Python Cheat Sheet, List Comprehension, List Slicing, List Sorting
+
 ====
 List
 ====
+
+.. contents:: Table of Contents
+    :backlinks: none
 
 The list is a common data structure which we use to store objects. Most of the
 time, programmers concern about getting, setting, searching, filtering, and
@@ -8,8 +15,8 @@ sorting. Furthermore, sometimes, we waltz ourself into common pitfalls of
 the memory management. Thus, the main goal of this cheat sheet is to collect
 some common operations and pitfalls.
 
-From Scratch
-------------
+Python List Basics and Common Operations
+----------------------------------------
 
 There are so many ways that we can manipulate lists in Python. Before we start
 to learn those versatile manipulations, the following snippet shows the most
@@ -62,8 +69,8 @@ common operations of lists.
     >>> a + b
     [0, 2, 3, 4, 5, 6, 7, 8, 0, 1, 2]
 
-Initialize
-----------
+Initialize Lists with Multiplication Operator
+---------------------------------------------
 
 Generally speaking, we can create a list through ``*`` operator if the item in
 the list expression is an immutable object.
@@ -92,8 +99,8 @@ pitfall, we should use a list comprehension to initialize a list.
     >>> b
     [['Python'], [], []]
 
-Copy
-----
+Copy Lists: Shallow vs Deep Copy
+--------------------------------
 
 Assigning a list to a variable is a common pitfall. This assignment does not
 copy the list to the variable. The variable only refers to the list and increase
@@ -146,8 +153,8 @@ we have to use a deep copy.
     >>> b
     [[123], [2]]
 
-Using ``slice``
----------------
+Slice Lists with slice Objects
+------------------------------
 
 Sometimes, our data may concatenate as a large segment such as packets. In
 this case, we will represent the range of data by using ``slice`` objects
@@ -166,8 +173,8 @@ as explaining variables instead of using *slicing expressions*.
     >>> icmp[head]
     b'080062988e2100005bff49c20005767c'
 
-List Comprehensions
--------------------
+Create Lists with List Comprehensions
+-------------------------------------
 
 `List comprehensions <https://docs.python.org/3/tutorial/datastructures.html#list-comprehensions>`_
 which was proposed in PEP `202 <https://www.python.org/dev/peps/pep-0202/>`_
@@ -190,8 +197,8 @@ substitute ``map`` and ``filter`` sometimes.
     >>> [(x, y) for x in range(3) for y in range(2)]
     [(0, 0), (0, 1), (1, 0), (1, 1), (2, 0), (2, 1)]
 
-Unpacking
----------
+Unpack Lists into Variables
+---------------------------
 
 Sometimes, we want to unpack our list to variables in order to make our code
 become more readable. In this case, we assign N elements to N variables as
@@ -217,8 +224,8 @@ than N in Python 3.
     >>> c
     [3, 4]
 
-Using ``enumerate``
--------------------
+Iterate with Index Using enumerate()
+------------------------------------
 
 ``enumerate`` is a built-in function. It helps us to acquire indexes
 (or a count) and elements at the same time without using ``range(len(list))``.
@@ -240,8 +247,8 @@ Further information can be found on
     2 1
     3 2
 
-Zip Lists
----------
+Combine Lists with zip()
+------------------------
 
 `zip <https://docs.python.org/3/library/functions.html#zip>`_ enables us to
 iterate over items contained in multiple lists at a time. Iteration stops
@@ -264,8 +271,8 @@ in **Python 2**.
     [(1, 4, 1), (2, 5, None), (3, 6, None)]
 
 
-Filter Items
-------------
+Filter List Items
+-----------------
 
 `filter <https://docs.python.org/3/library/functions.html#filter>`_ is a
 built-in function to assist us to remove unnecessary items. In **Python 2**,
@@ -286,8 +293,8 @@ expression* provides a more concise way to remove items.
     >>> list((i for i in l if f(i)))
     [3, 4]
 
-Stacks
-------
+Implement Stack with List
+-------------------------
 
 There is no need for an additional data structure, stack, in Python because the
 ``list`` provides ``append`` and ``pop`` methods which enable us use a list as
@@ -308,8 +315,8 @@ a stack.
     >>> stack
     [1]
 
-``in`` Operation
-----------------
+Check Membership with in Operator
+---------------------------------
 
 We can implement the ``__contains__`` method to make a class do ``in``
 operations. It is a common way for a programmer to emulate
@@ -344,8 +351,8 @@ Example
     True
     False
 
-Accessing Items
----------------
+Access Items with __getitem__ and __setitem__
+---------------------------------------------
 
 Making custom classes perform get and set operations like lists is simple. We
 can implement a ``__getitem__`` method and a ``__setitem__`` method to enable
@@ -397,8 +404,8 @@ Example
     stack: [3, 2]
     num items: 2
 
-Delegating Iterations
----------------------
+Delegate Iteration with __iter__
+--------------------------------
 
 If a custom container class holds a list and we want iterations to work on the
 container, we can implement a ``__iter__`` method to delegate iterations to
@@ -435,8 +442,8 @@ Example
     1
     2
 
-Sorting
--------
+Sort Lists with sort() and sorted()
+-----------------------------------
 
 Python list provides a built-in ``list.sort`` method which sorts a list
 `in-place <https://en.wikipedia.org/wiki/In-place_algorithm>`_ without using
@@ -598,8 +605,13 @@ is useful since it converts a comparison function to a key function.
     >>> nodes
     [Node(1), Node(2), Node(3)]
 
-Sorted List
------------
+Maintain Sorted List with bisect
+--------------------------------
+
+The `bisect <https://docs.python.org/3/library/bisect.html>`_ module provides
+functions to maintain a list in sorted order without having to sort the list
+after each insertion. It uses a binary search algorithm, making insertions
+efficient for large lists.
 
 .. code-block:: python
 
@@ -640,8 +652,12 @@ Sorted List
 
     print(bar) # [Foo(0), Foo(1), Foo(2), Foo(3)]
 
-New a List
-----------
+Create Nested Lists Correctly
+-----------------------------
+
+When creating nested lists (2D lists or matrices), we should use list
+comprehension to ensure each inner list is a separate object. The following
+snippet shows the correct way to create a 2D list.
 
 .. code-block:: python
 
@@ -668,8 +684,13 @@ snippet because all objects in the list point to the same address.
     [[0, 2, 0], [0, 2, 0], [0, 2, 0]]
 
 
-Circular Buffer
----------------
+Implement Circular Buffer with deque
+------------------------------------
+
+`collections.deque <https://docs.python.org/3/library/collections.html#collections.deque>`_
+is a double-ended queue that supports adding and removing elements from both ends
+efficiently. By setting ``maxlen``, we can create a circular buffer that automatically
+discards old elements when new ones are added.
 
 .. code-block:: python
 
@@ -681,6 +702,9 @@ Circular Buffer
     >>> d
     deque([1, 2, 3, 4, 5, 6, 7, 8], maxlen=8)
 
+The following example shows how to implement a ``tail`` function similar to
+the Unix command using ``deque``.
+
 .. code-block:: python
 
     >>> from collections import deque
@@ -690,8 +714,11 @@ Circular Buffer
     ...
     >>> tail("/etc/hosts")
 
-Chunk
------
+Split List into Chunks
+----------------------
+
+Sometimes, we need to split a list into smaller chunks of a specific size.
+The following generator function yields successive chunks from the list.
 
 .. code-block:: python
 
@@ -703,8 +730,12 @@ Chunk
     >>> list(chunk(a, 3))
     [[1, 2, 3], [4, 5, 6], [7, 8]]
 
-Groupby
--------
+Group Consecutive Elements with itertools.groupby
+-------------------------------------------------
+
+`itertools.groupby <https://docs.python.org/3/library/itertools.html#itertools.groupby>`_
+groups consecutive elements in an iterable that have the same key. It is useful
+for run-length encoding or grouping sorted data.
 
 .. code-block:: python
 
@@ -726,8 +757,11 @@ Groupby
     gp1 [('gp1', 'a')]
     gp2 [('gp2', 'b'), ('gp2', 'c')]
 
-Binary Search
--------------
+Binary Search in Sorted List
+----------------------------
+
+Binary search is an efficient algorithm for finding an item in a sorted list.
+The following snippet shows how to implement binary search using ``bisect_left``.
 
 .. code-block:: python
 
@@ -742,8 +776,11 @@ Binary Search
     >>> binary_search(a, 2)
     3
 
-Lower Bound
------------
+Find Lower Bound with bisect_left
+---------------------------------
+
+``bisect_left`` returns the leftmost position where an element can be inserted
+to keep the list sorted. This is equivalent to finding the lower bound.
 
 .. code-block:: python
 
@@ -754,8 +791,11 @@ Lower Bound
     >>> bisect.bisect_left(a, 3.5)
     4
 
-Upper Bound
------------
+Find Upper Bound with bisect_right
+----------------------------------
+
+``bisect_right`` (or ``bisect``) returns the rightmost position where an element
+can be inserted to keep the list sorted. This is equivalent to finding the upper bound.
 
 .. code-block:: python
 
@@ -766,8 +806,12 @@ Upper Bound
     >>> bisect.bisect_right(a, 3.5)
     4
 
-Lexicographically Order
------------------------
+Sort Tuples Lexicographically
+-----------------------------
+
+Python compares tuples and lists lexicographically by default. This means it
+compares the first elements, and if they are equal, it compares the second
+elements, and so on.
 
 .. code-block:: python
 
@@ -778,8 +822,12 @@ Lexicographically Order
     >>> a
     [(1, 0), (1, 1), (1, 2), (2, 1)]
 
-Trie
-----
+Implement Trie (Prefix Tree)
+----------------------------
+
+A `Trie <https://en.wikipedia.org/wiki/Trie>`_ (prefix tree) is a tree data
+structure used for efficient retrieval of keys in a dataset of strings. The
+following snippet shows a compact implementation using ``defaultdict``.
 
 .. code-block:: python
 

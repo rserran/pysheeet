@@ -1,9 +1,35 @@
+.. meta::
+    :description lang=en: Python dictionary cheat sheet covering creation, manipulation, merging, comprehensions, defaultdict, OrderedDict, and advanced patterns like emulating dictionaries and implementing LRU cache with practical code examples
+    :keywords: Python, Python Dictionary, dict, Python dict tutorial, Python hashmap, key-value pairs, defaultdict, OrderedDict, dictionary comprehension, LRU cache Python, Python dict methods
+
 ==========
 Dictionary
 ==========
 
-Get All Keys
-------------
+.. contents:: Table of Contents
+    :backlinks: none
+
+Dictionaries are one of Python's most powerful and frequently used data structures.
+They store key-value pairs and provide O(1) average time complexity for lookups,
+insertions, and deletions. Since Python 3.7, dictionaries maintain insertion order
+as a language feature. This cheat sheet covers essential dictionary operations,
+from basic manipulation to advanced patterns like emulating dictionary behavior
+with special methods and implementing an LRU (Least Recently Used) cache.
+
+The source code is available on `GitHub <https://github.com/crazyguitar/pysheeet/blob/master/src/basic/dict.py>`_.
+
+References
+----------
+
+- `Mapping Types — dict <https://docs.python.org/3/library/stdtypes.html#mapping-types-dict>`_
+- `collections — Container datatypes <https://docs.python.org/3/library/collections.html>`_
+- `PEP 584 -- Add Union Operators To dict <https://www.python.org/dev/peps/pep-0584/>`_
+
+Get All Keys with ``dict.keys()``
+---------------------------------
+
+The ``keys()`` method returns a view object containing all dictionary keys.
+In Python 3, this is a dynamic view that reflects changes to the dictionary.
 
 .. code-block:: python
 
@@ -12,16 +38,22 @@ Get All Keys
     >>> a.keys()
     ['1', '3', '2']
 
-Get Key and Value
------------------
+Get Key-Value Pairs with ``dict.items()``
+-----------------------------------------
+
+The ``items()`` method returns key-value pairs as tuples, which is useful for
+iterating over both keys and values simultaneously.
 
 .. code-block:: python
 
     >>> a = {"1":1, "2":2, "3":3}
     >>> a.items()
 
-Find Same Keys
---------------
+Find Common Keys Between Dictionaries
+-------------------------------------
+
+Finding keys that exist in multiple dictionaries is a common operation. Using
+set intersection is the most efficient approach.
 
 .. code-block:: python
 
@@ -38,8 +70,11 @@ Find Same Keys
     ['3', '2']
     [('1', 1), ('3', 3), ('2', 2)]
 
-Set a Default Value
--------------------
+Set Default Values with ``setdefault()`` and ``defaultdict``
+------------------------------------------------------------
+
+When working with dictionaries, you often need to set default values for missing
+keys. Python provides ``setdefault()`` and ``collections.defaultdict`` for this.
 
 .. code-block:: python
 
@@ -83,8 +118,11 @@ return its value.
     >>> d.setdefault("key", [])
     'bar'
 
-Update Dictionary
------------------
+Update Dictionary with ``dict.update()``
+----------------------------------------
+
+The ``update()`` method merges another dictionary into the current one. Keys from
+the second dictionary overwrite existing keys in the first.
 
 .. code-block:: python
 
@@ -94,8 +132,11 @@ Update Dictionary
     >>> a
     {'1': 1, '3': 3, '2': 2, '4': 4}
 
-Merge Two Dictionaries
-----------------------
+Merge Two Dictionaries in Python
+--------------------------------
+
+There are several ways to merge dictionaries depending on your Python version.
+Python 3.9+ also supports the ``|`` operator for dictionary merging.
 
 Python 3.4 or lower
 
@@ -119,8 +160,11 @@ Python 3.5 or above
     >>> c
     {'x': 55, 'y': 66, 'a': 'foo', 'b': 'bar'}
 
-Emulating a Dictionary
-----------------------
+Emulate a Dictionary with Special Methods
+-----------------------------------------
+
+You can create dictionary-like objects by implementing special methods:
+``__getitem__``, ``__setitem__``, ``__delitem__``, ``__contains__``, and ``__iter__``.
 
 .. code-block:: python
 
@@ -161,8 +205,11 @@ Emulating a Dictionary
     >>> '1' in emud  # __contains__
     True
 
-LRU Cache
----------
+Implement LRU Cache with OrderedDict
+------------------------------------
+
+An LRU (Least Recently Used) cache evicts the least recently accessed items when
+full. ``OrderedDict.move_to_end()`` makes implementation straightforward.
 
 .. code-block:: python
 
