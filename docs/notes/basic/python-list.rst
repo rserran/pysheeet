@@ -6,6 +6,9 @@
 List
 ====
 
+.. contents:: Table of Contents
+    :backlinks: none
+
 The list is a common data structure which we use to store objects. Most of the
 time, programmers concern about getting, setting, searching, filtering, and
 sorting. Furthermore, sometimes, we waltz ourself into common pitfalls of
