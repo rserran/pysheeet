@@ -4,6 +4,7 @@ Source code for docs/notes/basic/python-heap.rst
 """
 
 import heapq
+
 import pytest
 
 
@@ -24,6 +25,16 @@ def heap_push(h: list, item) -> list:
 def heap_pop(h: list):
     """Pop smallest item from heap."""
     return heapq.heappop(h)
+
+
+def heap_pushpop(h: list, item):
+    """Push item then pop smallest."""
+    return heapq.heappushpop(h, item)
+
+
+def heap_replace(h: list, item):
+    """Pop smallest then push item."""
+    return heapq.heapreplace(h, item)
 
 
 # Heap Sort
@@ -97,17 +108,69 @@ def k_largest(items: list, k: int) -> list:
     return heapq.nlargest(k, items)
 
 
+def k_largest_by_key(items: list, k: int, key) -> list:
+    """Find k largest by key function."""
+    return heapq.nlargest(k, items, key=key)
+
+
 # Merge Sorted
 def merge_sorted(*iterables) -> list:
     """Merge sorted iterables."""
     return list(heapq.merge(*iterables))
 
 
+def merge_sorted_reverse(*iterables) -> list:
+    """Merge sorted iterables in reverse."""
+    return list(heapq.merge(*iterables, reverse=True))
+
+
+# Fixed-Size Heap
+def top_k(items: list, k: int) -> list:
+    """Keep track of k largest elements."""
+    h = []
+    for x in items:
+        if len(h) < k:
+            heapq.heappush(h, x)
+        elif x > h[0]:
+            heapq.heapreplace(h, x)
+    return sorted(h, reverse=True)
+
+
+# Indexed Heap
+class IndexedHeap:
+    """Heap with priority updates."""
+
+    REMOVED = "<removed>"
+
+    def __init__(self):
+        self.heap = []
+        self.entry_finder = {}
+
+    def push(self, item, priority):
+        if item in self.entry_finder:
+            self.remove(item)
+        entry = [priority, item]
+        self.entry_finder[item] = entry
+        heapq.heappush(self.heap, entry)
+
+    def remove(self, item):
+        entry = self.entry_finder.pop(item)
+        entry[-1] = self.REMOVED
+
+    def pop(self):
+        while self.heap:
+            priority, item = heapq.heappop(self.heap)
+            if item is not self.REMOVED:
+                del self.entry_finder[item]
+                return item
+        raise KeyError("pop from empty heap")
+
+
 # Tests
 class TestBasicHeap:
     def test_heapify(self):
         h = heapify_list([5, 1, 3, 2, 6])
-        assert h[0] == 1  # min at root
+        assert h[0] == 1
 
     def test_push_pop(self):
         h = []
@@ -116,6 +179,17 @@ class TestBasicHeap:
         heap_push(h, 2)
         assert heap_pop(h) == 1
         assert heap_pop(h) == 2
+
+    def test_pushpop(self):
+        h = [1, 3, 5]
+        heapq.heapify(h)
+        assert heap_pushpop(h, 2) == 1
+
+    def test_replace(self):
+        h = [1, 3, 5]
+        heapq.heapify(h)
+        assert heap_replace(h, 2) == 1
+        assert h[0] == 2
 
 
 class TestHeapSort:
@@ -155,7 +229,40 @@ class TestKElements:
     def test_k_largest(self):
         assert k_largest([5, 1, 8, 3, 9], 3) == [9, 8, 5]
 
+    def test_k_largest_by_key(self):
+        data = [{"score": 85}, {"score": 92}, {"score": 78}]
+        result = k_largest_by_key(data, 2, key=lambda x: x["score"])
+        assert result[0]["score"] == 92
+        assert result[1]["score"] == 85
+
 
 class TestMerge:
     def test_merge_sorted(self):
         assert merge_sorted([1, 3, 5], [2, 4, 6]) == [1, 2, 3, 4, 5, 6]
+
+    def test_merge_three(self):
+        assert merge_sorted([1, 3], [2, 4], [0, 5]) == [0, 1, 2, 3, 4, 5]
+
+    def test_merge_reverse(self):
+        assert merge_sorted_reverse([5, 3, 1], [6, 4, 2]) == [6, 5, 4, 3, 2, 1]
+
+
+class TestTopK:
+    def test_top_k(self):
+        assert top_k([5, 1, 8, 3, 9, 2, 7, 4, 6], 3) == [9, 8, 7]
+
+
+class TestIndexedHeap:
+    def test_push_pop(self):
+        h = IndexedHeap()
+        h.push("a", 3)
+        h.push("b", 1)
+        h.push("c", 2)
+        assert h.pop() == "b"
+
+    def test_update_priority(self):
+        h = IndexedHeap()
+        h.push("task1", 3)
+        h.push("task2", 1)
+        h.push("task1", 0)  # update priority
+        assert h.pop() == "task1"
