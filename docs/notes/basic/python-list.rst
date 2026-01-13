@@ -1,3 +1,7 @@
+.. meta::
+    :description lang=en: Collect useful snippets of Python list operations
+    :keywords: Python, Python List, Python Cheat Sheet, List Comprehension, List Slicing, List Sorting
+
 ====
 List
 ====
@@ -601,6 +605,11 @@ is useful since it converts a comparison function to a key function.
 Maintain Sorted List with bisect
 --------------------------------
 
+The `bisect <https://docs.python.org/3/library/bisect.html>`_ module provides
+functions to maintain a list in sorted order without having to sort the list
+after each insertion. It uses a binary search algorithm, making insertions
+efficient for large lists.
+
 .. code-block:: python
 
     import bisect
@@ -643,6 +652,10 @@ Maintain Sorted List with bisect
 Create Nested Lists Correctly
 -----------------------------
 
+When creating nested lists (2D lists or matrices), we should use list
+comprehension to ensure each inner list is a separate object. The following
+snippet shows the correct way to create a 2D list.
+
 .. code-block:: python
 
     # new a list with size = 3
@@ -671,6 +684,11 @@ snippet because all objects in the list point to the same address.
 Implement Circular Buffer with deque
 ------------------------------------
 
+`collections.deque <https://docs.python.org/3/library/collections.html#collections.deque>`_
+is a double-ended queue that supports adding and removing elements from both ends
+efficiently. By setting ``maxlen``, we can create a circular buffer that automatically
+discards old elements when new ones are added.
+
 .. code-block:: python
 
     >>> from collections import deque
@@ -680,6 +698,9 @@ Implement Circular Buffer with deque
     ...
     >>> d
     deque([1, 2, 3, 4, 5, 6, 7, 8], maxlen=8)
+
+The following example shows how to implement a ``tail`` function similar to
+the Unix command using ``deque``.
 
 .. code-block:: python
 
@@ -693,6 +714,9 @@ Implement Circular Buffer with deque
 Split List into Chunks
 ----------------------
 
+Sometimes, we need to split a list into smaller chunks of a specific size.
+The following generator function yields successive chunks from the list.
+
 .. code-block:: python
 
     >>> def chunk(lst, n):
@@ -705,6 +729,10 @@ Split List into Chunks
 
 Group Consecutive Elements with itertools.groupby
 -------------------------------------------------
+
+`itertools.groupby <https://docs.python.org/3/library/itertools.html#itertools.groupby>`_
+groups consecutive elements in an iterable that have the same key. It is useful
+for run-length encoding or grouping sorted data.
 
 .. code-block:: python
 
@@ -729,6 +757,9 @@ Group Consecutive Elements with itertools.groupby
 Binary Search in Sorted List
 ----------------------------
 
+Binary search is an efficient algorithm for finding an item in a sorted list.
+The following snippet shows how to implement binary search using ``bisect_left``.
+
 .. code-block:: python
 
     >>> def binary_search(arr, x, lo=0, hi=None):
@@ -745,6 +776,9 @@ Binary Search in Sorted List
 Find Lower Bound with bisect_left
 ---------------------------------
 
+``bisect_left`` returns the leftmost position where an element can be inserted
+to keep the list sorted. This is equivalent to finding the lower bound.
+
 .. code-block:: python
 
     >>> import bisect
@@ -756,6 +790,9 @@ Find Lower Bound with bisect_left
 
 Find Upper Bound with bisect_right
 ----------------------------------
+
+``bisect_right`` (or ``bisect``) returns the rightmost position where an element
+can be inserted to keep the list sorted. This is equivalent to finding the upper bound.
 
 .. code-block:: python
 
@@ -769,6 +806,10 @@ Find Upper Bound with bisect_right
 Sort Tuples Lexicographically
 -----------------------------
 
+Python compares tuples and lists lexicographically by default. This means it
+compares the first elements, and if they are equal, it compares the second
+elements, and so on.
+
 .. code-block:: python
 
     # python compare lists lexicographically
@@ -780,6 +821,10 @@ Sort Tuples Lexicographically
 
 Implement Trie (Prefix Tree)
 ----------------------------
+
+A `Trie <https://en.wikipedia.org/wiki/Trie>`_ (prefix tree) is a tree data
+structure used for efficient retrieval of keys in a dataset of strings. The
+following snippet shows a compact implementation using ``defaultdict``.
 
 .. code-block:: python
 
