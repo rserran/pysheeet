@@ -1,23 +1,31 @@
 .. meta::
-    :description lang=en: Collect useful snippets of Slurm
-    :keywords: Python, Python3, Slurm
-
+    :description lang=en: Slurm cheat sheet for HPC job scheduling, batch jobs, distributed training, MPI, Enroot containers, and cluster management commands
+    :keywords: Slurm, HPC, job scheduler, sbatch, srun, salloc, distributed training, MPI, Enroot, Pyxis, cluster computing, workload manager, GPU cluster, machine learning, PyTorch distributed
 
 =====
 Slurm
 =====
 
-Slurm is an open-source job scheduling and workload management system widely
-used in high-performance computing (HPC) clusters. It is designed to efficiently
-allocate resources, manage queues, and dispatch jobs across large numbers of compute
-nodes. For example, machine learning engineers can use Slurm to launch distributed
-training jobs for large language models (LLMs) sharded across multiple nodes.
+.. contents:: Table of Contents
+    :backlinks: none
 
-Compared to systems like Kubernetes—which often requires additional components
-such as Kubeflow for ML workload scheduling—Slurm provides a simpler, HPC-focused
-workflow. Users can submit and manage jobs directly with commands like
-``srun``, ``sbatch``, and ``squeue``, without needing to configure complex
-orchestration layers.
+Slurm (Simple Linux Utility for Resource Management) is an open-source job scheduling
+and workload management system widely used in high-performance computing (HPC) clusters.
+It is designed to efficiently allocate resources, manage queues, and dispatch jobs across
+large numbers of compute nodes. Slurm is the de facto standard for HPC job scheduling,
+powering many of the world's largest supercomputers and GPU clusters used for scientific
+computing, machine learning, and AI research.
+
+For machine learning engineers, Slurm provides a straightforward way to launch distributed
+training jobs for large language models (LLMs) and deep learning workloads sharded across
+multiple nodes. Unlike container orchestration systems like Kubernetes—which often require
+additional components such as Kubeflow for ML workload scheduling—Slurm provides a simpler,
+HPC-focused workflow. Users can submit and manage jobs directly with commands like ``srun``,
+``sbatch``, and ``squeue``, without needing to configure complex orchestration layers.
+
+This cheat sheet covers essential Slurm commands and workflows for submitting jobs, managing
+resources, running distributed training with PyTorch, launching MPI applications, and using
+containers with Enroot and Pyxis.
 
 Slurm Info
 ----------
@@ -39,6 +47,39 @@ in an error state.
     # show partition info
     PARTITION=dev
     sinfo -p ${PARTITION}
+
+    # show nodes in idle state
+    sinfo --state=idle
+
+    # show nodes in specific format
+    sinfo -o "%n %P %t %C"  # node, partition, state, CPUs
+
+    # show GPU info (if configured)
+    sinfo -o "%n %G"
+
+Node Info
+---------
+
+``scontrol show node`` provides detailed information about specific nodes in the
+cluster, including CPU count, memory, GPU resources, and current state. This is
+useful for debugging node issues or verifying hardware configurations.
+
+.. code-block:: bash
+
+    # show all nodes info
+    scontrol show nodes
+
+    # show specific node info
+    scontrol show node compute-01
+
+    # show node in parseable format
+    scontrol show node compute-01 --oneliner
+
+    # list all hostnames
+    scontrol show hostnames
+
+    # expand node range to list
+    scontrol show hostnames compute-[0-5]
 
     # show nodes in idle state
     sinfo --state=idle
@@ -400,3 +441,283 @@ system (``slurmdbd``) and commands like:
 
     # show all users with associations
     sacctmgr show account -s
+
+
+Job History
+-----------
+
+``sacct`` displays accounting data for completed and running jobs. This is essential
+for analyzing job performance, debugging failed jobs, and tracking resource usage
+over time. Unlike ``squeue`` which only shows active jobs, ``sacct`` can retrieve
+historical job information from the Slurm accounting database.
+
+.. code-block:: bash
+
+    # show recent jobs for current user
+    sacct
+
+    # show jobs from specific date range
+    sacct --starttime=2024-01-01 --endtime=2024-01-31
+
+    # show specific job details
+    sacct -j ${jobid} --format=JobID,JobName,Partition,State,ExitCode,Elapsed
+
+    # show detailed resource usage
+    sacct -j ${jobid} --format=JobID,MaxRSS,MaxVMSize,AveRSS,AveCPU
+
+    # show all fields
+    sacct -j ${jobid} --format=ALL
+
+    # show jobs with specific state
+    sacct --state=FAILED --starttime=2024-01-01
+
+    # common format for debugging
+    sacct -j ${jobid} --format=JobID,JobName,State,ExitCode,DerivedExitCode,Comment
+
+Environment Variables
+---------------------
+
+Slurm sets various environment variables when a job runs, providing information
+about the job's allocation and configuration. These variables are essential for
+writing portable job scripts that adapt to different resource allocations.
+
+.. code-block:: bash
+
+    # Common Slurm environment variables
+    echo $SLURM_JOB_ID          # Job ID
+    echo $SLURM_JOB_NAME        # Job name
+    echo $SLURM_JOB_NODELIST    # List of allocated nodes
+    echo $SLURM_JOB_NUM_NODES   # Number of nodes allocated
+    echo $SLURM_NNODES          # Same as SLURM_JOB_NUM_NODES
+    echo $SLURM_NTASKS          # Total number of tasks
+    echo $SLURM_NTASKS_PER_NODE # Tasks per node
+    echo $SLURM_CPUS_PER_TASK   # CPUs per task
+    echo $SLURM_PROCID          # MPI rank (global)
+    echo $SLURM_LOCALID         # Local task ID on node
+    echo $SLURM_NODEID          # Node ID in allocation
+    echo $SLURM_SUBMIT_DIR      # Directory where job was submitted
+    echo $SLURM_GPUS            # Number of GPUs (if allocated)
+    echo $SLURM_GPUS_PER_NODE   # GPUs per node
+
+GPU Jobs
+--------
+
+For machine learning and deep learning workloads, requesting GPU resources is
+essential. Slurm supports GPU scheduling through the Generic Resource (GRES)
+plugin. Users can request specific numbers of GPUs, GPU types, or GPUs per task.
+
+.. code-block:: bash
+
+    # request 1 GPU
+    srun --gres=gpu:1 nvidia-smi
+
+    # request 4 GPUs
+    srun --gres=gpu:4 python train.py
+
+    # request specific GPU type (if configured)
+    srun --gres=gpu:a100:2 python train.py
+
+    # request GPUs per task
+    srun --ntasks=4 --gres=gpu:4 --gpus-per-task=1 python train.py
+
+    # sbatch example with GPUs
+    #!/bin/bash
+    #SBATCH --nodes=2
+    #SBATCH --ntasks-per-node=8
+    #SBATCH --gres=gpu:8
+    #SBATCH --cpus-per-task=12
+
+    srun python train.py
+
+PyTorch Distributed Training
+----------------------------
+
+Launching distributed PyTorch training jobs on Slurm requires coordinating
+multiple processes across nodes. The ``torchrun`` launcher simplifies this by
+handling process spawning and environment setup. Here's a complete example for
+multi-node distributed training.
+
+.. code-block:: bash
+
+    #!/bin/bash
+    #SBATCH --job-name=distributed-train
+    #SBATCH --nodes=4
+    #SBATCH --ntasks-per-node=1
+    #SBATCH --gpus-per-node=8
+    #SBATCH --cpus-per-task=96
+    #SBATCH --output=logs/%x_%j.out
+    #SBATCH --error=logs/%x_%j.err
+
+    # Get master node address
+    MASTER_ADDR=$(scontrol show hostnames $SLURM_JOB_NODELIST | head -n 1)
+    MASTER_PORT=29500
+
+    # Set environment variables for distributed training
+    export NCCL_DEBUG=INFO
+    export NCCL_IB_DISABLE=0
+    export NCCL_NET_GDR_LEVEL=2
+
+    srun torchrun \
+        --nnodes=$SLURM_NNODES \
+        --nproc_per_node=8 \
+        --rdzv_id=$SLURM_JOB_ID \
+        --rdzv_backend=c10d \
+        --rdzv_endpoint=$MASTER_ADDR:$MASTER_PORT \
+        train.py --batch-size=32 --epochs=100
+
+For containerized environments using Enroot and Pyxis, add ``--container-image``
+to run training inside a custom container with specific CUDA, PyTorch, or NCCL versions.
+Use ``--container-env`` to pass environment variables into the container:
+
+.. code-block:: bash
+
+    #!/bin/bash
+    #SBATCH --job-name=distributed-train
+    #SBATCH --nodes=4
+    #SBATCH --ntasks-per-node=1
+    #SBATCH --gpus-per-node=8
+    #SBATCH --cpus-per-task=96
+    #SBATCH --output=logs/%x_%j.out
+
+    MASTER_ADDR=$(scontrol show hostnames $SLURM_JOB_NODELIST | head -n 1)
+    MASTER_PORT=29500
+
+    srun --container-image=/path/to/pytorch-24.01.sqsh \
+         --container-mounts="/data:/data,${PWD}:/workspace" \
+         --container-workdir=/workspace \
+         --container-env="NCCL_DEBUG=INFO,NCCL_IB_DISABLE=0,NCCL_NET_GDR_LEVEL=2" \
+         torchrun \
+            --nnodes=$SLURM_NNODES \
+            --nproc_per_node=8 \
+            --rdzv_id=$SLURM_JOB_ID \
+            --rdzv_backend=c10d \
+            --rdzv_endpoint=$MASTER_ADDR:$MASTER_PORT \
+            train.py --batch-size=32 --epochs=100
+
+Array Jobs
+----------
+
+Array jobs allow submitting multiple similar jobs with a single ``sbatch`` command.
+Each job in the array runs independently with a unique ``SLURM_ARRAY_TASK_ID``,
+making it ideal for parameter sweeps, hyperparameter tuning, or processing multiple
+datasets.
+
+.. code-block:: bash
+
+    #!/bin/bash
+    #SBATCH --job-name=array-job
+    #SBATCH --array=0-9
+    #SBATCH --output=logs/array_%A_%a.out
+
+    # SLURM_ARRAY_JOB_ID  - Job array's master job ID
+    # SLURM_ARRAY_TASK_ID - Job array index (0-9 in this case)
+
+    echo "Array task ID: $SLURM_ARRAY_TASK_ID"
+    python train.py --seed=$SLURM_ARRAY_TASK_ID
+
+    # Submit array job
+    # sbatch array_job.sh
+
+    # Submit with step size (0, 2, 4, 6, 8)
+    #SBATCH --array=0-9:2
+
+    # Submit with max concurrent tasks
+    #SBATCH --array=0-99%10  # max 10 running at once
+
+    # Cancel specific array tasks
+    scancel ${jobid}_5      # cancel task 5
+    scancel ${jobid}_[1-3]  # cancel tasks 1-3
+
+Job Dependencies
+----------------
+
+Job dependencies allow you to control the execution order of jobs. A job can
+wait for another job to complete, succeed, or fail before starting. This is
+useful for creating pipelines where preprocessing must finish before training.
+
+.. code-block:: bash
+
+    # Submit first job
+    JOB1=$(sbatch --parsable preprocess.sh)
+
+    # Submit second job after first completes successfully
+    JOB2=$(sbatch --parsable --dependency=afterok:$JOB1 train.sh)
+
+    # Submit third job after second completes (regardless of status)
+    sbatch --dependency=afterany:$JOB2 postprocess.sh
+
+    # Dependency types:
+    # after:jobid       - start after job begins
+    # afterok:jobid     - start after job completes successfully
+    # afternotok:jobid  - start after job fails
+    # afterany:jobid    - start after job completes (any status)
+    # singleton         - only one job with same name runs at a time
+
+    # Multiple dependencies
+    sbatch --dependency=afterok:$JOB1:$JOB2 final.sh
+
+Resource Limits
+---------------
+
+Setting appropriate resource limits helps ensure fair cluster usage and prevents
+jobs from consuming excessive resources. Slurm allows specifying memory, CPU,
+and time limits per job.
+
+.. code-block:: bash
+
+    # Memory per node
+    srun --mem=64G python train.py
+
+    # Memory per CPU
+    srun --mem-per-cpu=4G python train.py
+
+    # CPU limit
+    srun --cpus-per-task=8 python train.py
+
+    # Time limit (job killed if exceeded)
+    srun --time=24:00:00 python train.py
+
+    # Exclusive node access (no sharing)
+    srun --exclusive python train.py
+
+    # sbatch example with limits
+    #!/bin/bash
+    #SBATCH --mem=128G
+    #SBATCH --cpus-per-task=32
+    #SBATCH --time=48:00:00
+    #SBATCH --exclusive
+
+Debugging Failed Jobs
+---------------------
+
+When jobs fail, Slurm provides several tools to diagnose the issue. Common
+problems include out-of-memory errors, time limits exceeded, and node failures.
+
+.. code-block:: bash
+
+    # Check job exit code and state
+    sacct -j ${jobid} --format=JobID,State,ExitCode,DerivedExitCode
+
+    # Common exit codes:
+    # 0     - Success
+    # 1     - General error
+    # 137   - OOM killed (128 + 9 SIGKILL)
+    # 143   - Time limit (128 + 15 SIGTERM)
+
+    # Check job's stderr/stdout
+    cat slurm-${jobid}.out
+
+    # Check why job is pending
+    squeue -j ${jobid} --format="%i %r"
+
+    # Common pending reasons:
+    # Resources    - Waiting for resources
+    # Priority     - Lower priority than other jobs
+    # Dependency   - Waiting for dependent job
+    # QOSMaxJobsPerUserLimit - User job limit reached
+
+    # Show detailed job info
+    scontrol show job ${jobid}
+
+    # Check node health where job ran
+    scontrol show node ${nodename}
