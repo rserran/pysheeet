@@ -62,7 +62,6 @@ Advanced Cheat Sheet
 ====================
 
 - `Regular expression <docs/notes/basic/python-rexp.rst>`_
-- `Socket <docs/notes/os/python-socket.rst>`_
 - `Asyncio <docs/notes/multitasking/python-asyncio.rst>`_
 - `Concurrency <docs/notes/multitasking/python-concurrency.rst>`_
 - `Security <docs/notes/security/python-security.rst>`_
@@ -70,6 +69,16 @@ Advanced Cheat Sheet
 - `C Extensions <docs/notes/extension/python-c-extensions.rst>`_
 - `PyTorch <docs/notes/pytorch/pytorch.rst>`_
 - `Slurm <docs/notes/pytorch/slurm.rst>`_
+
+
+Network
+=======
+
+- `Socket Basics <docs/notes/network/python-socket.rst>`_
+- `Socket Servers <docs/notes/network/python-socket-server.rst>`_
+- `Async Socket I/O <docs/notes/network/python-socket-async.rst>`_
+- `SSL/TLS Sockets <docs/notes/network/python-socket-ssl.rst>`_
+- `Packet Sniffing <docs/notes/network/python-socket-sniffer.rst>`_
 
 
 Database

@@ -7,4 +7,3 @@ Operating System
    python-date
    python-os
    python-io
-   python-socket
