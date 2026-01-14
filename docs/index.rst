@@ -54,7 +54,8 @@ everyday tasks.
 
    notes/basic/index
    notes/os/index
-   notes/multitasking/index
+   notes/concurrency/index
+   notes/asyncio/index
    notes/network/index
    notes/database/index
    notes/cryptography/index

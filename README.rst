@@ -62,9 +62,19 @@ Advanced Cheat Sheet
 
 - `Operating System <docs/notes/os/python-os.rst>`_
 - `Regular expression <docs/notes/basic/python-rexp.rst>`_
-- `Concurrency <docs/notes/multitasking/python-concurrency.rst>`_
 - `PyTorch <docs/notes/pytorch/pytorch.rst>`_
 - `Slurm <docs/notes/pytorch/slurm.rst>`_
+
+
+Concurrency
+===========
+
+Threading, multiprocessing, and concurrent.futures for parallel execution.
+Covers synchronization primitives, process pools, and bypassing the GIL.
+
+- `Threading <docs/notes/concurrency/python-threading.rst>`_ - Threads, locks, semaphores, events, conditions
+- `Multiprocessing <docs/notes/concurrency/python-multiprocessing.rst>`_ - Processes, pools, shared memory, IPC
+- `concurrent.futures <docs/notes/concurrency/python-futures.rst>`_ - Executors, futures, callbacks
 
 
 Asyncio
