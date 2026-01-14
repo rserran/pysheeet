@@ -100,14 +100,15 @@ PyTorch, TensorFlow), ctypes, cffi, Cython, and the traditional Python C API.
 - `Modern C/C++ Extensions <docs/notes/extension/python-cext-modern.rst>`_ - pybind11, Cython
 
 
-Cryptography
-============
+Security
+========
 
-Modern cryptographic practices using the ``cryptography`` library. Includes
-algorithm recommendations, security checklists, and common mistakes to avoid.
+Modern cryptographic practices and common security vulnerabilities. Covers
+encryption, TLS/SSL, and why legacy patterns are dangerous.
 
-- `Modern Cryptography <docs/notes/cryptography/python-crypto.rst>`_ - AES-GCM, RSA-OAEP, Ed25519, Argon2, key derivation
-- `TLS/SSL and Certificates <docs/notes/cryptography/python-tls.rst>`_ - HTTPS servers, certificate generation, CSR, CA
+- `Modern Cryptography <docs/notes/security/python-crypto.rst>`_ - AES-GCM, RSA-OAEP, Ed25519, Argon2
+- `TLS/SSL and Certificates <docs/notes/security/python-tls.rst>`_ - HTTPS servers, certificate generation
+- `Common Vulnerabilities <docs/notes/security/python-vulnerability.rst>`_ - Padding oracle, injection, timing attacks
 
 
 Network

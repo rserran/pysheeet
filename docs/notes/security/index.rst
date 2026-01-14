@@ -1,16 +1,25 @@
 .. meta::
-    :description lang=en: Python security examples using legacy libraries PyCrypto and pyOpenSSL for reference and backward compatibility
-    :keywords: Python, Python3, security, PyCrypto, pyOpenSSL, legacy, encryption, deprecated
+    :description lang=en: Python security and cryptography guide covering modern encryption, TLS/SSL, common vulnerabilities, and secure coding practices
+    :keywords: Python, Python3, security, cryptography, encryption, AES, RSA, TLS, SSL, vulnerability, padding oracle, injection, secure coding
 
+========
 Security
 ========
 
-This section contains legacy security examples using older libraries like PyCrypto
-and pyOpenSSL. These examples are preserved for reference and compatibility with
-existing codebases. For new projects, please refer to the Cryptography section
-which covers modern, actively maintained libraries with secure defaults.
+Security is essential for protecting data in transit and at rest. This section
+covers modern cryptographic practices using well-maintained libraries like
+``cryptography`` and ``argon2-cffi``, as well as common security vulnerabilities
+and how to avoid them. We emphasize secure defaults: authenticated encryption
+(AES-GCM), proper key derivation (PBKDF2, Argon2), secure signatures (Ed25519,
+RSA-PSS), and correct TLS configuration.
+
+Understanding vulnerabilities is equally important—knowing why legacy patterns
+like AES-CBC without authentication or PKCS#1 v1.5 padding are dangerous helps
+you recognize and fix insecure code in existing systems.
 
 .. toctree::
-   :maxdepth: 1
+    :maxdepth: 1
 
-   python-security
+    python-crypto
+    python-tls
+    python-vulnerability

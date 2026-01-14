@@ -58,7 +58,6 @@ everyday tasks.
    notes/asyncio/index
    notes/network/index
    notes/database/index
-   notes/cryptography/index
    notes/security/index
    notes/extension/index
    notes/pytorch/index
