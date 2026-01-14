@@ -64,10 +64,19 @@ Advanced Cheat Sheet
 - `Regular expression <docs/notes/basic/python-rexp.rst>`_
 - `Asyncio <docs/notes/multitasking/python-asyncio.rst>`_
 - `Concurrency <docs/notes/multitasking/python-concurrency.rst>`_
-- `Security <docs/notes/security/python-security.rst>`_
 - `C Extensions <docs/notes/extension/python-c-extensions.rst>`_
 - `PyTorch <docs/notes/pytorch/pytorch.rst>`_
 - `Slurm <docs/notes/pytorch/slurm.rst>`_
+
+
+Cryptography
+============
+
+Modern cryptographic practices using the ``cryptography`` library. Includes
+algorithm recommendations, security checklists, and common mistakes to avoid.
+
+- `Modern Cryptography <docs/notes/cryptography/python-crypto.rst>`_ - AES-GCM, RSA-OAEP, Ed25519, Argon2, key derivation
+- `TLS/SSL and Certificates <docs/notes/cryptography/python-tls.rst>`_ - HTTPS servers, certificate generation, CSR, CA
 
 
 Network
