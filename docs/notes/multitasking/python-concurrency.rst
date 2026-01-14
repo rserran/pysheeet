@@ -1,11 +1,13 @@
 .. meta::
-    :description lang=en: Collect useful snippets of Python concurrency
-    :keywords: Python, Python3, Python Concurrency, Python Concurrent Cheat Sheet
+    :description lang=en: Python concurrency tutorial covering threading, multiprocessing, locks, semaphores, queues, thread pools, and parallel execution patterns
+    :keywords: Python, Python3, threading, multiprocessing, concurrency, parallel, lock, semaphore, queue, ThreadPoolExecutor, GIL, producer consumer
 
 ===========
 Concurrency
 ===========
 
+.. contents:: Table of Contents
+    :backlinks: none
 
 Execute a shell command
 ------------------------

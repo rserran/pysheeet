@@ -1,10 +1,13 @@
 .. meta::
-    :description lang=en: Collect useful snippets of Python datetime
-    :keywords: Python, Python Cheat Sheet, datetime
+    :description lang=en: Python datetime tutorial covering timestamps, date formatting, parsing, timezones, timedelta calculations, and calendar operations
+    :keywords: Python, Python3, datetime, date, time, timestamp, timezone, timedelta, strftime, strptime, calendar
 
 ========
 Datetime
 ========
+
+.. contents:: Table of Contents
+    :backlinks: none
 
 Timestamp
 ---------

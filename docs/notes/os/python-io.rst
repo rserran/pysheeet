@@ -1,10 +1,13 @@
 .. meta::
-    :description lang=en: Collect useful snippets of I/O operations.
-    :keywords: Python, Python I/O Operations
+    :description lang=en: Python file I/O tutorial covering reading, writing, binary files, context managers, file modes, and efficient file handling patterns
+    :keywords: Python, Python3, file, I/O, read, write, binary, text, context manager, open, with statement, encoding
 
 =============
 Files and I/O
 =============
+
+.. contents:: Table of Contents
+    :backlinks: none
 
 Read a File
 -----------
