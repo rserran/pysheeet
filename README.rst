@@ -62,10 +62,21 @@ Advanced Cheat Sheet
 
 - `Operating System <docs/notes/os/python-os.rst>`_
 - `Regular expression <docs/notes/basic/python-rexp.rst>`_
-- `Asyncio <docs/notes/multitasking/python-asyncio.rst>`_
 - `Concurrency <docs/notes/multitasking/python-concurrency.rst>`_
 - `PyTorch <docs/notes/pytorch/pytorch.rst>`_
 - `Slurm <docs/notes/pytorch/slurm.rst>`_
+
+
+Asyncio
+=======
+
+Asynchronous programming with Python's ``asyncio`` module. Covers coroutines,
+event loops, tasks, networking, and advanced patterns.
+
+- `A Hitchhiker's Guide to Asynchronous Programming <docs/notes/asyncio/python-asyncio-guide.rst>`_ - Design philosophy and evolution
+- `Asyncio Basics <docs/notes/asyncio/python-asyncio-basic.rst>`_ - Coroutines, tasks, gather, timeouts
+- `Asyncio Networking <docs/notes/asyncio/python-asyncio-server.rst>`_ - TCP/UDP servers, HTTP, SSL/TLS
+- `Asyncio Advanced <docs/notes/asyncio/python-asyncio-advanced.rst>`_ - Synchronization, queues, subprocesses
 
 
 C/C++ Extensions
@@ -111,7 +122,6 @@ Database
 Appendix
 =========
 
-- `A Hitchhikers Guide to Asynchronous Programming <docs/notes/appendix/python-concurrent.rst>`_
 - `PEP 572 and the walrus operator <docs/notes/appendix/python-walrus.rst>`_
 - `Python Interpreter in GNU Debugger <docs/notes/appendix/python-gdb.rst>`_
 
