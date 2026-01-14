@@ -1,3 +1,7 @@
+.. meta::
+    :description lang=en: Python asyncio tutorial covering coroutines, event loops, tasks, async/await syntax, networking, and asynchronous programming patterns
+    :keywords: Python, Python3, asyncio, async, await, coroutine, event loop, asynchronous, concurrent, networking, TCP, UDP
+
 Asyncio
 =======
 

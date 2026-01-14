@@ -1,3 +1,7 @@
+.. meta::
+    :description lang=en: Python cryptography tutorial covering AES-GCM encryption, RSA, digital signatures, key derivation, TLS/SSL, and certificate management
+    :keywords: Python, Python3, cryptography, encryption, AES, RSA, TLS, SSL, certificate, HTTPS, digital signature, key derivation, Argon2
+
 ============
 Cryptography
 ============

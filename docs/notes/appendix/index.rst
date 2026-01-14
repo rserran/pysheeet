@@ -1,3 +1,7 @@
+.. meta::
+    :description lang=en: Python appendix covering advanced topics including the walrus operator (PEP 572) and Python debugging with GDB
+    :keywords: Python, Python3, walrus operator, PEP 572, GDB, debugging, advanced Python
+
 Appendix
 --------
 

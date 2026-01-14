@@ -1,3 +1,7 @@
+.. meta::
+    :description lang=en: Python network programming tutorial covering sockets, TCP/UDP servers, async I/O, SSL/TLS, packet sniffing, and SSH tunneling
+    :keywords: Python, Python3, socket, networking, TCP, UDP, SSL, TLS, async, select, epoll, SSH, packet sniffing, server, client
+
 =======
 Network
 =======

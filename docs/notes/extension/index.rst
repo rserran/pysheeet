@@ -1,3 +1,7 @@
+.. meta::
+    :description lang=en: Python C/C++ extension tutorial covering pybind11, ctypes, cffi, Cython, and the Python C API for high-performance native code
+    :keywords: Python, Python3, pybind11, ctypes, cffi, Cython, C extension, C API, native code, performance, NumPy, shared library
+
 Extension
 =========
 

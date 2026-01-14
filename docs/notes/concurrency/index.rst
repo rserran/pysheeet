@@ -1,3 +1,7 @@
+.. meta::
+    :description lang=en: Python concurrency tutorial covering threading, multiprocessing, locks, semaphores, queues, process pools, and concurrent.futures
+    :keywords: Python, Python3, threading, multiprocessing, concurrency, parallel, lock, semaphore, queue, ThreadPoolExecutor, ProcessPoolExecutor, GIL
+
 Concurrency
 ===========
 
