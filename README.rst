@@ -42,6 +42,9 @@ official document, `What’s New in Python <https://docs.python.org/3/whatsnew/i
 Cheat Sheet
 ===========
 
+Core Python fundamentals including data types, functions, classes, and commonly
+used patterns for everyday programming tasks.
+
 - `From Scratch <docs/notes/basic/python-basic.rst>`_
 - `Future <docs/notes/basic/python-future.rst>`_
 - `Typing <docs/notes/basic/python-typing.rst>`_
@@ -64,12 +67,6 @@ Date/time handling, file I/O, and operating system interfaces.
 - `Datetime <docs/notes/os/python-date.rst>`_ - Timestamps, formatting, parsing, timezones, timedelta
 - `Files and I/O <docs/notes/os/python-io.rst>`_ - Reading, writing, pathlib, shutil, tempfile
 - `Operating System <docs/notes/os/python-os.rst>`_ - Processes, environment, system calls
-
-
-Advanced Cheat Sheet
-====================
-- `PyTorch <docs/notes/pytorch/pytorch.rst>`_
-- `Slurm <docs/notes/pytorch/slurm.rst>`_
 
 
 Concurrency
@@ -120,6 +117,9 @@ encryption, TLS/SSL, and why legacy patterns are dangerous.
 Network
 =======
 
+Low-level network programming with Python sockets. Covers TCP/UDP communication,
+server implementations, asynchronous I/O, SSL/TLS encryption, and packet analysis.
+
 - `Socket Basics <docs/notes/network/python-socket.rst>`_
 - `Socket Servers <docs/notes/network/python-socket-server.rst>`_
 - `Async Socket I/O <docs/notes/network/python-socket-async.rst>`_
@@ -131,13 +131,29 @@ Network
 Database
 ========
 
+Database access with SQLAlchemy, Python's most popular ORM. Covers connection
+management, raw SQL, object-relational mapping, and common query patterns.
+
 - `SQLAlchemy Basics <docs/notes/database/python-sqlalchemy.rst>`_
 - `SQLAlchemy ORM <docs/notes/database/python-sqlalchemy-orm.rst>`_
 - `SQLAlchemy Query Recipes <docs/notes/database/python-sqlalchemy-query.rst>`_
 
 
+PyTorch
+=======
+
+Deep learning with PyTorch and distributed training on HPC clusters. Covers
+tensor operations, neural networks, and job scheduling with Slurm.
+
+- `Slurm <docs/notes/pytorch/slurm.rst>`_
+- `PyTorch <docs/notes/pytorch/pytorch.rst>`_
+
+
 Appendix
 =========
+
+Supplementary topics covering Python internals, debugging techniques, and
+language features that don't fit elsewhere.
 
 - `PEP 572 and the walrus operator <docs/notes/appendix/python-walrus.rst>`_
 - `Python Interpreter in GNU Debugger <docs/notes/appendix/python-gdb.rst>`_
