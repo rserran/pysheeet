@@ -55,12 +55,12 @@ Cheat Sheet
 - `Generator <docs/notes/basic/python-generator.rst>`_
 - `Time <docs/notes/os/python-date.rst>`_
 - `File <docs/notes/os/python-io.rst>`_
-- `Operating System <docs/notes/os/python-os.rst>`_
 
 
 Advanced Cheat Sheet
 ====================
 
+- `Operating System <docs/notes/os/python-os.rst>`_
 - `Regular expression <docs/notes/basic/python-rexp.rst>`_
 - `Asyncio <docs/notes/multitasking/python-asyncio.rst>`_
 - `Concurrency <docs/notes/multitasking/python-concurrency.rst>`_
