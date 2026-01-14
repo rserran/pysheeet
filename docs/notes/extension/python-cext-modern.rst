@@ -1,6 +1,6 @@
 .. meta::
-    :description lang=en: Modern Python C/C++ extensions guide covering pybind11, ctypes, cffi, and Cython with practical examples for high-performance Python code
-    :keywords: Python, Python3, pybind11, C Extension, C++, ctypes, cffi, Cython, NumPy, Performance, GIL, Native Code
+    :description lang=en: Comprehensive guide to modern Python C/C++ extensions covering pybind11, ctypes, cffi, and Cython with practical examples for building high-performance Python modules, NumPy integration, GIL management, and class bindings
+    :keywords: Python, Python3, pybind11, C Extension, C++, ctypes, cffi, Cython, NumPy, Performance, GIL, Native Code, PyTorch, TensorFlow, SciPy, shared library
 
 =========================
 Modern C/C++ Extensions
@@ -9,17 +9,22 @@ Modern C/C++ Extensions
 .. contents:: Table of Contents
     :backlinks: none
 
-Python's flexibility comes at a performance cost. When you need speed—numerical
-computing, system interfaces, or wrapping existing C/C++ libraries—native extensions
-bridge the gap. This guide covers modern approaches: **pybind11** (recommended for
-C++), **ctypes/cffi** (no compilation needed), and **Cython** (Python-like syntax).
-We compare each approach with the same example to help you choose the right tool.
+Python's flexibility and ease of use come at a performance cost compared to compiled
+languages. When you need maximum speed for numerical computing, real-time processing,
+system interfaces, or wrapping existing C/C++ libraries, native extensions bridge the
+gap between Python's productivity and C/C++'s performance. This guide covers modern
+approaches to building Python extensions: **pybind11** (the recommended choice for C++
+projects), **ctypes/cffi** (for calling C libraries without compilation), and **Cython**
+(for Python-like syntax that compiles to C). We compare each approach using the same
+Fibonacci benchmark to help you choose the right tool for your specific use case.
 
 .. note::
 
     For most C++ projects, **pybind11** is the recommended choice. It's used by
-    major projects like PyTorch, TensorFlow, and SciPy. It provides clean C++11
-    syntax, automatic type conversions, and excellent NumPy integration.
+    major machine learning frameworks like PyTorch, TensorFlow, and scientific
+    computing libraries like SciPy. pybind11 provides clean C++11 syntax, automatic
+    type conversions between Python and C++ types, excellent NumPy integration for
+    numerical computing, and seamless exception handling across language boundaries.
 
 Comparison of Approaches
 ------------------------
@@ -65,8 +70,14 @@ pybind11: Getting Started
 
 :Source: `src/cext/example.cpp <https://github.com/crazyguitar/pysheeet/blob/master/src/cext/example.cpp>`_
 
-pybind11 is a lightweight header-only library that exposes C++ types to Python.
-Install with ``pip install pybind11``. It requires a C++11 compatible compiler.
+pybind11 is a lightweight header-only C++ library that creates Python bindings for
+existing C++ code. Unlike the traditional Python C API, pybind11 uses modern C++11
+features like variadic templates and lambda expressions to provide a clean, intuitive
+syntax. Installation is simple with ``pip install pybind11``, and it requires only a
+C++11 compatible compiler (GCC 4.8+, Clang 3.3+, MSVC 2015+). The ``PYBIND11_MODULE``
+macro defines the module entry point, and ``m.def()`` binds C++ functions to Python
+with automatic type conversion for common types like int, float, string, and STL
+containers.
 
 **Simple function binding:**
 
@@ -127,7 +138,12 @@ pybind11: Classes
 
 :Source: `src/cext/vector.cpp <https://github.com/crazyguitar/pysheeet/blob/master/src/cext/vector.cpp>`_
 
-Binding C++ classes with constructors, methods, and properties.
+pybind11 makes binding C++ classes to Python straightforward with the ``py::class_``
+template. You can expose constructors with ``def(py::init<...>())``, member variables
+with ``def_readwrite()`` or ``def_readonly()``, and methods with ``def()``. Python
+special methods like ``__repr__``, ``__add__``, ``__eq__`` are bound by name, enabling
+natural Python syntax for your C++ objects. Default argument values are supported via
+``py::arg()``, and you can add docstrings to improve the Python help() experience.
 
 .. code-block:: cpp
 
@@ -183,8 +199,13 @@ pybind11: NumPy Integration
 
 :Source: `src/cext/numpy_example.cpp <https://github.com/crazyguitar/pysheeet/blob/master/src/cext/numpy_example.cpp>`_
 
-pybind11 has excellent NumPy support for high-performance numerical code.
-Arrays are passed by reference without copying.
+pybind11 provides first-class NumPy support through the ``pybind11/numpy.h`` header,
+enabling high-performance numerical computing without data copying. The ``py::array_t<T>``
+template wraps NumPy arrays with type safety, and ``unchecked<N>()`` provides fast,
+bounds-check-free access for performance-critical inner loops. Arrays can be modified
+in-place using ``mutable_unchecked<N>()``, or new arrays can be created and returned.
+This zero-copy approach is essential for scientific computing where large datasets
+would be expensive to duplicate.
 
 .. code-block:: cpp
 
@@ -243,8 +264,13 @@ pybind11: Releasing the GIL
 
 :Source: `src/cext/gil_example.cpp <https://github.com/crazyguitar/pysheeet/blob/master/src/cext/gil_example.cpp>`_
 
-For CPU-intensive operations, release the GIL to allow other Python threads
-to run. Use ``py::gil_scoped_release`` for automatic RAII-style management.
+Python's Global Interpreter Lock (GIL) prevents true parallel execution of Python code
+across threads. For CPU-intensive C++ operations or blocking I/O that doesn't need
+Python objects, releasing the GIL allows other Python threads to run concurrently.
+pybind11 provides ``py::gil_scoped_release`` for RAII-style GIL management—the GIL is
+released when the object is created and automatically reacquired when it goes out of
+scope. This pattern is essential for multi-threaded applications where C++ code performs
+heavy computation while Python threads handle other tasks like UI updates or network I/O.
 
 .. code-block:: cpp
 
@@ -301,8 +327,13 @@ ctypes: Quick C Library Access
 
 :Source: `src/cext/fib.c <https://github.com/crazyguitar/pysheeet/blob/master/src/cext/fib.c>`_
 
-ctypes lets you call C functions from shared libraries without writing any C code.
-It's in the standard library—no installation needed.
+ctypes is Python's built-in foreign function interface (FFI) that lets you call C
+functions from shared libraries (.so, .dylib, .dll) without writing any C wrapper code
+or compiling Python extensions. It's ideal for quick prototyping, accessing system
+libraries, or wrapping existing C code when you don't want a build step. The key
+requirement is declaring function signatures with ``argtypes`` and ``restype``—without
+these declarations, ctypes assumes all arguments and return values are C ``int``, which
+causes silent bugs or crashes with other types like ``double`` or pointers.
 
 .. code-block:: c
 
@@ -339,7 +370,12 @@ It's in the standard library—no installation needed.
 ctypes: Structures and Pointers
 -------------------------------
 
-Working with C structures and pointers requires careful type declarations.
+Working with C structures and pointers in ctypes requires careful type declarations
+that mirror the C memory layout exactly. Define structures by subclassing ``Structure``
+and specifying ``_fields_`` as a list of (name, type) tuples in the same order as the
+C struct. Use ``POINTER(Type)`` to create pointer types and ``byref(obj)`` to pass
+objects by reference (equivalent to ``&obj`` in C). This approach is more error-prone
+than pybind11 but works without any compilation step.
 
 .. code-block:: c
 
@@ -392,8 +428,12 @@ Working with C structures and pointers requires careful type declarations.
 cffi: Cleaner Foreign Function Interface
 ----------------------------------------
 
-cffi provides a cleaner API than ctypes and is PyPy-compatible. Install with
-``pip install cffi``.
+cffi (C Foreign Function Interface) provides a cleaner, more Pythonic API than ctypes
+for calling C code. Instead of Python type objects, you declare C function signatures
+using actual C syntax in ``ffi.cdef()``, which can often be copied directly from header
+files. cffi handles type conversions automatically and provides better error messages.
+It's also the recommended FFI for PyPy, where it runs significantly faster than ctypes.
+Install with ``pip install cffi``.
 
 .. code-block:: python
 
@@ -440,8 +480,13 @@ cffi provides a cleaner API than ctypes and is PyPy-compatible. Install with
 Cython: Python-like Syntax
 --------------------------
 
-Cython compiles Python-like code to C. It's great for gradual optimization—start
-with Python, add type hints for speed. Install with ``pip install cython``.
+Cython is a programming language that combines Python syntax with C data types,
+compiling to efficient C code. It's excellent for gradual optimization: start with
+pure Python code, then add type declarations to critical sections for dramatic speedups.
+Cython supports three levels of optimization: pure Python (``def``), typed Python
+(``def`` with type hints), and pure C functions (``cdef``). The ``cdef`` functions
+run at C speed but can only be called from other Cython code, so you typically wrap
+them with a ``def`` function for Python access. Install with ``pip install cython``.
 
 .. code-block:: cython
 
@@ -487,7 +532,12 @@ with Python, add type hints for speed. Install with ``pip install cython``.
 Performance Comparison
 ----------------------
 
-Comparing all approaches with the Fibonacci benchmark (n=35):
+Understanding the performance characteristics of each approach helps you choose the
+right tool. This benchmark compares all approaches using recursive Fibonacci (n=35),
+a CPU-bound task that highlights the overhead of Python's interpreter. Native code
+achieves 50-100x speedups by eliminating Python object creation, method dispatch, and
+bytecode interpretation. The actual speedup varies by workload—numerical code with
+NumPy integration can see even larger gains, while I/O-bound code benefits less.
 
 .. code-block:: python
 
@@ -520,6 +570,11 @@ Comparing all approaches with the Fibonacci benchmark (n=35):
 
 Best Practices
 --------------
+
+Following these guidelines will help you write efficient, maintainable, and safe
+native extensions. The most common mistakes are holding the GIL during long operations
+(blocking other threads), copying large arrays unnecessarily (killing performance),
+and ignoring error handling (causing crashes instead of Python exceptions).
 
 **Do:**
 
