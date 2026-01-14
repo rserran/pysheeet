@@ -57,7 +57,6 @@ everyday tasks.
    notes/multitasking/index
    notes/database/index
    notes/security/index
-   notes/testing/index
    notes/extension/index
    notes/pytorch/index
 

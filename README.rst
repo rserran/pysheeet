@@ -65,12 +65,19 @@ Advanced Cheat Sheet
 - `Socket <docs/notes/os/python-socket.rst>`_
 - `Asyncio <docs/notes/multitasking/python-asyncio.rst>`_
 - `Concurrency <docs/notes/multitasking/python-concurrency.rst>`_
-- `Sqlalchemy <docs/notes/database/python-sqlalchemy.rst>`_
 - `Security <docs/notes/security/python-security.rst>`_
 - `SSH <docs/notes/security/python-ssh.rst>`_
 - `C Extensions <docs/notes/extension/python-c-extensions.rst>`_
 - `PyTorch <docs/notes/pytorch/pytorch.rst>`_
 - `Slurm <docs/notes/pytorch/slurm.rst>`_
+
+
+Database
+========
+
+- `SQLAlchemy Basics <docs/notes/database/python-sqlalchemy.rst>`_
+- `SQLAlchemy ORM <docs/notes/database/python-sqlalchemy-orm.rst>`_
+- `SQLAlchemy Query Recipes <docs/notes/database/python-sqlalchemy-query.rst>`_
 
 
 Appendix
