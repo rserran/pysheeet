@@ -65,7 +65,6 @@ Advanced Cheat Sheet
 - `Asyncio <docs/notes/multitasking/python-asyncio.rst>`_
 - `Concurrency <docs/notes/multitasking/python-concurrency.rst>`_
 - `Security <docs/notes/security/python-security.rst>`_
-- `SSH <docs/notes/security/python-ssh.rst>`_
 - `C Extensions <docs/notes/extension/python-c-extensions.rst>`_
 - `PyTorch <docs/notes/pytorch/pytorch.rst>`_
 - `Slurm <docs/notes/pytorch/slurm.rst>`_
@@ -79,6 +78,7 @@ Network
 - `Async Socket I/O <docs/notes/network/python-socket-async.rst>`_
 - `SSL/TLS Sockets <docs/notes/network/python-socket-ssl.rst>`_
 - `Packet Sniffing <docs/notes/network/python-socket-sniffer.rst>`_
+- `SSH and Tunnels <docs/notes/network/python-ssh.rst>`_
 
 
 Database

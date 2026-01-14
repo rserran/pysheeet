@@ -5,4 +5,3 @@ Security
    :maxdepth: 1
 
    python-security
-   python-ssh
