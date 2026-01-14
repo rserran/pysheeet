@@ -53,15 +53,21 @@ Cheat Sheet
 - `Dictionary <docs/notes/basic/python-dict.rst>`_
 - `Heap <docs/notes/basic/python-heap.rst>`_
 - `Generator <docs/notes/basic/python-generator.rst>`_
-- `Time <docs/notes/os/python-date.rst>`_
-- `File <docs/notes/os/python-io.rst>`_
+- `Regular expression <docs/notes/basic/python-rexp.rst>`_
+
+
+System
+======
+
+Date/time handling, file I/O, and operating system interfaces.
+
+- `Datetime <docs/notes/os/python-date.rst>`_ - Timestamps, formatting, parsing, timezones, timedelta
+- `Files and I/O <docs/notes/os/python-io.rst>`_ - Reading, writing, pathlib, shutil, tempfile
+- `Operating System <docs/notes/os/python-os.rst>`_ - Processes, environment, system calls
 
 
 Advanced Cheat Sheet
 ====================
-
-- `Operating System <docs/notes/os/python-os.rst>`_
-- `Regular expression <docs/notes/basic/python-rexp.rst>`_
 - `PyTorch <docs/notes/pytorch/pytorch.rst>`_
 - `Slurm <docs/notes/pytorch/slurm.rst>`_
 
