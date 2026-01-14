@@ -64,9 +64,19 @@ Advanced Cheat Sheet
 - `Regular expression <docs/notes/basic/python-rexp.rst>`_
 - `Asyncio <docs/notes/multitasking/python-asyncio.rst>`_
 - `Concurrency <docs/notes/multitasking/python-concurrency.rst>`_
-- `C Extensions <docs/notes/extension/python-c-extensions.rst>`_
 - `PyTorch <docs/notes/pytorch/pytorch.rst>`_
 - `Slurm <docs/notes/pytorch/slurm.rst>`_
+
+
+C/C++ Extensions
+================
+
+Native extensions for performance-critical code. Covers modern pybind11 (used by
+PyTorch, TensorFlow), ctypes, cffi, Cython, and the traditional Python C API.
+
+- `ctypes <docs/notes/extension/python-ctypes.rst>`_ - Load shared libraries without compilation
+- `Python C API <docs/notes/extension/python-capi.rst>`_ - Traditional C extension reference
+- `Modern C/C++ Extensions <docs/notes/extension/python-cext-modern.rst>`_ - pybind11, Cython
 
 
 Cryptography
