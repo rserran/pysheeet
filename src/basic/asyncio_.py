@@ -9,6 +9,7 @@ class TestAsyncioBasics:
 
     def test_asyncio_run(self):
         """Test basic coroutine execution."""
+
         async def hello():
             return "hello"
 
@@ -17,6 +18,7 @@ class TestAsyncioBasics:
 
     def test_create_task(self):
         """Test task creation and execution."""
+
         async def compute(x):
             await asyncio.sleep(0.01)
             return x * 2
@@ -30,6 +32,7 @@ class TestAsyncioBasics:
 
     def test_gather(self):
         """Test gathering multiple coroutines."""
+
         async def fetch(n):
             await asyncio.sleep(0.01)
             return n
@@ -42,6 +45,7 @@ class TestAsyncioBasics:
 
     def test_wait_for_timeout(self):
         """Test timeout handling."""
+
         async def slow():
             await asyncio.sleep(10)
 
@@ -53,6 +57,7 @@ class TestAsyncioBasics:
 
     def test_wait_first_completed(self):
         """Test waiting for first completed task."""
+
         async def fast():
             await asyncio.sleep(0.01)
             return "fast"
@@ -63,7 +68,9 @@ class TestAsyncioBasics:
 
         async def main():
             tasks = [asyncio.create_task(fast()), asyncio.create_task(slow())]
-            done, pending = await asyncio.wait(tasks, return_when=asyncio.FIRST_COMPLETED)
+            done, pending = await asyncio.wait(
+                tasks, return_when=asyncio.FIRST_COMPLETED
+            )
             for task in pending:
                 task.cancel()
             return len(done), len(pending)
@@ -78,6 +85,7 @@ class TestAsyncIterator:
 
     def test_async_iterator(self):
         """Test custom async iterator."""
+
         class AsyncRange:
             def __init__(self, stop):
                 self.current = 0
@@ -105,6 +113,7 @@ class TestAsyncIterator:
 
     def test_async_generator(self):
         """Test async generator."""
+
         async def async_range(stop):
             for i in range(stop):
                 await asyncio.sleep(0.001)
@@ -165,6 +174,7 @@ class TestSynchronization:
 
     def test_lock(self):
         """Test asyncio.Lock."""
+
         async def main():
             lock = asyncio.Lock()
             counter = [0]
@@ -183,6 +193,7 @@ class TestSynchronization:
 
     def test_semaphore(self):
         """Test asyncio.Semaphore for rate limiting."""
+
         async def main():
             semaphore = asyncio.Semaphore(2)
             concurrent = [0]
@@ -203,6 +214,7 @@ class TestSynchronization:
 
     def test_event(self):
         """Test asyncio.Event for signaling."""
+
         async def main():
             event = asyncio.Event()
             results = []
@@ -227,6 +239,7 @@ class TestQueue:
 
     def test_queue(self):
         """Test asyncio.Queue."""
+
         async def main():
             queue = asyncio.Queue()
             results = []
@@ -249,6 +262,7 @@ class TestQueue:
 
     def test_priority_queue(self):
         """Test asyncio.PriorityQueue."""
+
         async def main():
             queue = asyncio.PriorityQueue()
 
@@ -271,6 +285,7 @@ class TestExceptionHandling:
 
     def test_task_exception(self):
         """Test exception propagation from tasks."""
+
         async def failing():
             raise ValueError("test error")
 
@@ -283,6 +298,7 @@ class TestExceptionHandling:
 
     def test_gather_return_exceptions(self):
         """Test gather with return_exceptions."""
+
         async def ok():
             return "ok"
 
@@ -302,6 +318,7 @@ class TestCancellation:
 
     def test_cancel_task(self):
         """Test cancelling a task."""
+
         async def main():
             cleanup_done = [False]
 
@@ -351,6 +368,7 @@ class TestSubprocess:
 
     def test_subprocess(self):
         """Test running subprocess."""
+
         async def main():
             proc = await asyncio.create_subprocess_shell(
                 "echo hello",
@@ -370,6 +388,7 @@ class TestTimeout:
 
     def test_wait_for_timeout(self):
         """Test asyncio.wait_for timeout."""
+
         async def slow():
             await asyncio.sleep(10)
 
