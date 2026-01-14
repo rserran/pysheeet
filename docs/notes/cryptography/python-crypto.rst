@@ -292,38 +292,6 @@ Use this checklist when implementing cryptography in your application.
     □ Timing-safe comparisons for secrets
     □ Dependencies up to date (check for CVEs)
 
-Quick Decision Guide
---------------------
-
-Not sure what to use? Follow this flowchart:
-
-::
-
-    Need to encrypt data?
-    │
-    ├─► Is it a password? ──► Use Argon2id (store hash, not encrypted)
-    │
-    ├─► Simple use case? ──► Use Fernet (high-level, safe defaults)
-    │
-    ├─► Need to share key? ──► Hybrid encryption:
-    │   │                      1. Generate random AES key
-    │   │                      2. Encrypt data with AES-GCM
-    │   │                      3. Encrypt AES key with RSA-OAEP
-    │   │
-    │   └─► Already have shared key? ──► AES-256-GCM
-    │
-    └─► Need signatures? ──► Ed25519 (or RSA-PSS if compatibility needed)
-
-    Need to verify data integrity?
-    │
-    ├─► Have shared secret? ──► HMAC-SHA256
-    │
-    └─► No shared secret? ──► Digital signature (Ed25519)
-
-    Need key exchange?
-    │
-    └─► X25519 + HKDF to derive encryption keys
-
 Secure Random Generation
 ------------------------
 

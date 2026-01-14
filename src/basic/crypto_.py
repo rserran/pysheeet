@@ -1,6 +1,7 @@
 """
 Tests for modern cryptography examples.
 """
+
 import hashlib
 import hmac
 import os
@@ -11,7 +12,10 @@ from cryptography.fernet import Fernet
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import rsa, padding, ed25519
 from cryptography.hazmat.primitives.asymmetric.x25519 import X25519PrivateKey
-from cryptography.hazmat.primitives.ciphers.aead import AESGCM, ChaCha20Poly1305
+from cryptography.hazmat.primitives.ciphers.aead import (
+    AESGCM,
+    ChaCha20Poly1305,
+)
 from cryptography.hazmat.primitives.kdf.hkdf import HKDF
 from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
 
@@ -65,7 +69,9 @@ class TestHashing:
         mac = hashlib.blake2b(data, key=key, digest_size=32).hexdigest()
         assert len(mac) == 64
         # Different key = different MAC
-        other_mac = hashlib.blake2b(data, key=b"other-key-here!!", digest_size=32).hexdigest()
+        other_mac = hashlib.blake2b(
+            data, key=b"other-key-here!!", digest_size=32
+        ).hexdigest()
         assert mac != other_mac
 
 
@@ -76,7 +82,9 @@ class TestHMAC:
         key = secrets.token_bytes(32)
         message = b"Important message"
         mac = hmac.new(key, message, hashlib.sha256).digest()
-        assert hmac.compare_digest(mac, hmac.new(key, message, hashlib.sha256).digest())
+        assert hmac.compare_digest(
+            mac, hmac.new(key, message, hashlib.sha256).digest()
+        )
 
     def test_hmac_tamper_detection(self):
         key = secrets.token_bytes(32)
@@ -353,5 +361,7 @@ class TestHybridEncryption:
         public_key = private_key.public_key()
         message = b"This is a longer message that exceeds RSA limits" * 100
         encrypted_key, nonce, ciphertext = hybrid_encrypt(public_key, message)
-        decrypted = hybrid_decrypt(private_key, encrypted_key, nonce, ciphertext)
+        decrypted = hybrid_decrypt(
+            private_key, encrypted_key, nonce, ciphertext
+        )
         assert decrypted == message
