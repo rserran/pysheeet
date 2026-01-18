@@ -1,10 +1,13 @@
 .. meta::
-    :description lang=en: Collect useful snippets of PyTorch
-    :keywords: Python, Python3, PyTorch, Distributed Training
+    :description lang=en: PyTorch distributed training guide covering data parallelism, model parallelism, DDP, FSDP, multi-GPU training, and cluster deployment
+    :keywords: Python, Python3, PyTorch, distributed training, DDP, FSDP, data parallel, model parallel, multi-GPU, NCCL, cluster
 
 ============================
 PyTorch Distributed Training
 ============================
+
+.. contents:: Table of Contents
+    :backlinks: none
 
 Parallelism
 -----------

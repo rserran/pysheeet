@@ -1,3 +1,7 @@
+.. meta::
+    :description lang=en: Python basics cheat sheet covering syntax, data types, functions, classes, generators, typing, and essential Python programming concepts
+    :keywords: Python, Python3, basics, syntax, data types, functions, classes, generators, typing, list, dict, set, comprehension
+
 Quick Start
 ===========
 

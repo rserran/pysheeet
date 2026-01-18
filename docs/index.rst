@@ -54,10 +54,11 @@ everyday tasks.
 
    notes/basic/index
    notes/os/index
-   notes/multitasking/index
+   notes/concurrency/index
+   notes/asyncio/index
+   notes/network/index
    notes/database/index
    notes/security/index
-   notes/testing/index
    notes/extension/index
    notes/pytorch/index
 

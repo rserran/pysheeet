@@ -1,10 +1,13 @@
 .. meta::
-    :description lang=en: Collect useful snippets of PyTorch
-    :keywords: Python, Python3, PyTorch
+    :description lang=en: PyTorch tutorial covering tensors, neural networks, GPU acceleration, model training, data loading, and deep learning fundamentals
+    :keywords: Python, Python3, PyTorch, tensor, neural network, deep learning, GPU, CUDA, model, training, DataLoader
 
 =======
 PyTorch
 =======
+
+.. contents:: Table of Contents
+    :backlinks: none
 
 Info
 ----

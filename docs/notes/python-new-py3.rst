@@ -1,6 +1,6 @@
 .. meta::
-    :description lang=en: Collect useful snippets of new features in Python3
-    :keywords: Python, Python3, New in Python3
+    :description lang=en: Python 3 new features guide covering f-strings, walrus operator, dataclasses, async/await, type hints, and major improvements from Python 2
+    :keywords: Python, Python3, new features, f-strings, walrus operator, dataclasses, async await, type hints, pathlib, migration
 
 ==============
 New in Python3

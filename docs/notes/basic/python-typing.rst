@@ -1,10 +1,13 @@
 .. meta::
-    :description lang=en: Collect useful snippets of Python typing
-    :keywords: Python3, Static Typing, Python Type hints, Type hints Cheat Sheet
+    :description lang=en: Python type hints tutorial covering static typing, type annotations, generics, protocols, and mypy type checking
+    :keywords: Python, Python3, typing, type hints, annotations, generics, Protocol, TypeVar, mypy, static typing
 
 ======
 Typing
 ======
+
+.. contents:: Table of Contents
+    :backlinks: none
 
 PEP `484 <https://www.python.org/dev/peps/pep-0484/>`_, which provides a
 specification about what a type system should look like in Python3, introduced

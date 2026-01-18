@@ -1,10 +1,13 @@
 .. meta::
-    :description lang=en: Collect useful snippets of Python Function
-    :keywords: Python, Python Function, Python Cheat Sheet
+    :description lang=en: Python function cheat sheet covering function definitions, arguments, decorators, lambda, closures, and functools
+    :keywords: Python, Python Function, decorator, lambda, closure, *args, **kwargs, functools, lru_cache, partial
 
 ========
 Function
 ========
+
+.. contents:: Table of Contents
+    :backlinks: none
 
 A function can help programmers to wrap their logic into a task for avoiding
 duplicate code. In Python, the definition of a function is so versatile that
@@ -17,17 +20,17 @@ Document Functions
 
 Documentation provides programmers hints about how a function is supposed to
 be used. A docstring gives an expedient way to write a readable document of
-functions. PEP `257 <https://www.python.org/dev/peps/pep-0257>`_ defines some
-conventions of docstrings. In order to avoid violating conventions, there are
-several tools such as `doctest <https://docs.python.org/3/library/doctest.html>`_,
-or `pydocstyle <https://github.com/PyCQA/pydocstyle>`_ can help us check the
-format of docstrings.
+functions. The docstring should be placed as the first statement in the function
+body, enclosed in triple quotes. It can be accessed via the ``__doc__`` attribute
+or the built-in ``help()`` function. PEP `257 <https://www.python.org/dev/peps/pep-0257>`_
+defines conventions for docstrings, and tools like ``pydocstyle`` can help
+enforce these conventions in your codebase.
 
 .. code-block:: python
 
     >>> def example():
-    ...   """This is an example function."""
-    ...   print("Example function")
+    ...     """This is an example function."""
+    ...     print("Example function")
     ...
     >>> example.__doc__
     'This is an example function.'
@@ -38,7 +41,10 @@ Default Arguments
 
 Defining a function where the arguments are optional and have a default value
 is quite simple in Python. We can just assign values in the definition and make
-sure the default arguments appear in the end.
+sure the default arguments appear in the end. When calling the function, you can
+omit arguments that have defaults, pass them positionally, or use keyword syntax
+to specify them explicitly. This flexibility makes functions more versatile and
+easier to use in different contexts.
 
 .. code-block:: python
 
@@ -52,8 +58,41 @@ sure the default arguments appear in the end.
     >>> add(1, b=2)
     3
 
-Option Arguments
-----------------
+.. warning::
+
+    Avoid using mutable objects (like lists or dictionaries) as default arguments.
+    Default argument values are evaluated only once when the function is defined,
+    not each time the function is called. This means mutable defaults are shared
+    across all calls, which can lead to unexpected behavior where modifications
+    persist between function calls.
+
+    .. code-block:: python
+
+        >>> def bad(items=[]):  # DON'T do this
+        ...     items.append(1)
+        ...     return items
+        ...
+        >>> bad()
+        [1]
+        >>> bad()  # unexpected!
+        [1, 1]
+
+        >>> def good(items=None):  # DO this instead
+        ...     if items is None:
+        ...         items = []
+        ...     items.append(1)
+        ...     return items
+
+Variable Arguments ``*args`` and ``**kwargs``
+---------------------------------------------
+
+Python provides a flexible way to handle functions that need to accept a variable
+number of arguments. Use ``*args`` to collect any number of positional arguments
+into a tuple, and ``**kwargs`` to collect any number of keyword arguments into a
+dictionary. These are commonly used when writing wrapper functions, decorators,
+or functions that need to pass arguments through to other functions. The names
+``args`` and ``kwargs`` are conventions; you can use any valid identifier after
+the ``*`` or ``**``.
 
 .. code-block:: python
 
@@ -70,6 +109,12 @@ Option Arguments
 Unpack Arguments
 ----------------
 
+When calling a function, you can use ``*`` to unpack a sequence (like a list or
+tuple) into separate positional arguments, and ``**`` to unpack a dictionary into
+keyword arguments. This is the inverse of ``*args`` and ``**kwargs`` in function
+definitions. Unpacking is particularly useful when you have data in a collection
+that you want to pass to a function that expects separate arguments.
+
 .. code-block:: python
 
     >>> def foo(a, b, c='BAZ'):
@@ -78,8 +123,18 @@ Unpack Arguments
     >>> foo(*("FOO", "BAR"), **{"c": "baz"})
     FOO BAR baz
 
+    >>> args = [1, 2, 3]
+    >>> print(*args)
+    1 2 3
+
 Keyword-Only Arguments
 ----------------------
+
+Arguments that appear after ``*`` or ``*args`` in a function definition are
+keyword-only, meaning they must be passed by name and cannot be passed positionally.
+This feature, introduced in Python 3.0, helps prevent errors when functions have
+many parameters, as it forces callers to be explicit about which argument they're
+providing. Keyword-only arguments can have default values, making them optional.
 
 **New in Python 3.0**
 
@@ -92,22 +147,58 @@ Keyword-Only Arguments
     1 2 3
     >>> f(1, 2, 3)
     Traceback (most recent call last):
-      File "<stdin>", line 1, in <module>
     TypeError: f() takes 2 positional arguments but 3 were given
+
+    >>> # keyword-only with default
+    >>> def g(a, *, kw=10):
+    ...     return a + kw
+    ...
+    >>> g(5)
+    15
+
+Positional-Only Arguments
+-------------------------
+
+Arguments that appear before ``/`` in a function definition are positional-only,
+meaning they cannot be passed by keyword name. This feature, introduced in Python
+3.8, is useful when parameter names are not meaningful to callers or when you want
+to reserve the flexibility to change parameter names without breaking existing code.
+Many built-in functions like ``len()`` and ``pow()`` use positional-only parameters.
+You can combine positional-only (``/``) and keyword-only (``*``) in the same function.
+
+**New in Python 3.8**
+
+.. code-block:: python
+
+    >>> def f(a, b, /, c):
+    ...     print(a, b, c)
+    ...
+    >>> f(1, 2, 3)
+    1 2 3
+    >>> f(1, 2, c=3)
+    1 2 3
+    >>> f(a=1, b=2, c=3)
+    Traceback (most recent call last):
+    TypeError: f() got some positional-only arguments passed as keyword arguments
+
+    >>> # combining positional-only and keyword-only
+    >>> def g(a, /, b, *, c):
+    ...     return a + b + c
+    ...
+    >>> g(1, 2, c=3)
+    6
 
 Annotations
 -----------
 
-**New in Python 3.0**
+Function annotations provide a way to attach metadata to function parameters and
+return values. While Python doesn't enforce these annotations at runtime, they
+serve as documentation and are used by static type checkers like ``mypy`` to catch
+type errors before code runs. Annotations are stored in the function's ``__annotations__``
+attribute as a dictionary. The ``typing`` module (Python 3.5+) provides additional
+types like ``List``, ``Dict``, ``Optional``, and ``Union`` for more expressive type hints.
 
-Annotations can be a useful way to give programmers hints about types of arguments.
-The specification of this feature is on PEP `3107 <https://www.python.org/dev/peps/pep-3107/>`_.
-Python 3.5 introduced ``typing`` module to extend the concept of type hints.
-Moreover, from version 3.6, Python started to offer a general way to define a
-variable with an annotation. Further information can be found on PEP
-`483 <https://www.python.org/dev/peps/pep-0483>`_, PEP
-`484 <https://www.python.org/dev/peps/pep-0484>`_, and PEP
-`526 <https://www.python.org/dev/peps/pep-0526>`_.
+**New in Python 3.0**
 
 .. code-block:: python
 
@@ -122,58 +213,137 @@ variable with an annotation. Further information can be found on PEP
     >>> fib.__annotations__
     {'n': <class 'int'>, 'return': <class 'int'>}
 
-Callable
---------
+Lambda
+------
 
-In some cases such as passing a callback function, we need to check whether an
-object is callable or not. The built-in function, ``callable``, assist us to
-avoid raising a ``TypeError`` if the object is not callable.
+Lambda expressions create small anonymous functions inline. They are syntactically
+restricted to a single expression, which is implicitly returned. Lambdas are useful
+for short, throwaway functions, especially as arguments to higher-order functions
+like ``sorted()``, ``map()``, ``filter()``, and ``reduce()``. While lambdas can make
+code more concise, complex logic should be written as regular named functions for
+better readability and debugging.
 
 .. code-block:: python
 
-    >>> a = 10
-    >>> def fun():
-    ...   print("I am callable")
-    ...
-    >>> callable(a)
-    False
-    >>> callable(fun)
+    >>> square = lambda x: x ** 2
+    >>> square(5)
+    25
+
+    >>> # lambda with multiple arguments
+    >>> add = lambda a, b: a + b
+    >>> add(2, 3)
+    5
+
+    >>> # lambda with conditional
+    >>> max_val = lambda a, b: a if a > b else b
+    >>> max_val(3, 5)
+    5
+
+    >>> # common use: sorting key
+    >>> pairs = [(1, 'b'), (2, 'a'), (3, 'c')]
+    >>> sorted(pairs, key=lambda x: x[1])
+    [(2, 'a'), (1, 'b'), (3, 'c')]
+
+Callable
+--------
+
+In Python, any object that implements the ``__call__`` method is callable, meaning
+it can be invoked like a function using parentheses. This includes functions, methods,
+lambdas, classes (calling a class creates an instance), and instances of classes that
+define ``__call__``. The built-in ``callable()`` function returns ``True`` if an object
+appears callable, which is useful for checking before attempting to call an object
+to avoid ``TypeError`` exceptions.
+
+.. code-block:: python
+
+    >>> callable(print)
     True
+    >>> callable(42)
+    False
+
+    >>> class Adder:
+    ...     def __init__(self, n):
+    ...         self.n = n
+    ...     def __call__(self, x):
+    ...         return self.n + x
+    ...
+    >>> add_five = Adder(5)
+    >>> callable(add_five)
+    True
+    >>> add_five(10)
+    15
 
 Get Function Name
 -----------------
 
+Functions in Python are first-class objects with various attributes that provide
+metadata about them. The ``__name__`` attribute contains the function's name as
+defined, ``__doc__`` contains the docstring, ``__module__`` indicates which module
+the function was defined in, and ``__annotations__`` holds type hints. These
+attributes are useful for debugging, logging, and introspection.
+
 .. code-block:: python
 
     >>> def example_function():
-    ...   pass
+    ...     """Example docstring."""
+    ...     pass
     ...
     >>> example_function.__name__
     'example_function'
+    >>> example_function.__doc__
+    'Example docstring.'
+    >>> example_function.__module__
+    '__main__'
 
-Lambda
-------
+Closure
+-------
 
-Sometimes, we don't want to use the *def* statement to define a short callback
-function. We can use a ``lambda`` expression as a shortcut to define an anonymous
-or an inline function instead. However, only one single expression can be specified
-in ``lambda``. That is, no other features such as multi-line statements,
-conditions, or exception handling can be contained.
+A closure is a function that captures and remembers values from its enclosing
+lexical scope even after that scope has finished executing. This happens when
+a nested function references variables from its outer function. Closures are
+powerful for creating function factories (functions that return customized
+functions), implementing decorators, and maintaining state without using global
+variables or classes. Use the ``nonlocal`` keyword to modify captured variables
+from the enclosing scope.
 
 .. code-block:: python
 
-    >>> fn = lambda x: x**2
-    >>> fn(3)
-    9
-    >>> (lambda x: x**2)(3)
-    9
-    >>> (lambda x: [x*_ for _ in range(5)])(2)
-    [0, 2, 4, 6, 8]
-    >>> (lambda x: x if x>3 else 3)(5)
-    5
+    >>> def make_multiplier(n):
+    ...     def multiplier(x):
+    ...         return x * n
+    ...     return multiplier
+    ...
+    >>> double = make_multiplier(2)
+    >>> triple = make_multiplier(3)
+    >>> double(5)
+    10
+    >>> triple(5)
+    15
+
+    >>> # closure with mutable state
+    >>> def make_counter():
+    ...     count = 0
+    ...     def counter():
+    ...         nonlocal count
+    ...         count += 1
+    ...         return count
+    ...     return counter
+    ...
+    >>> counter = make_counter()
+    >>> counter()
+    1
+    >>> counter()
+    2
 
 Generator
 ---------
+
+Generator functions use the ``yield`` statement to produce a sequence of values
+lazily, one at a time, instead of computing all values upfront and storing them
+in memory. When called, a generator function returns a generator iterator that
+can be iterated over with ``for`` loops or ``next()``. Generators are memory-efficient
+for large sequences and can represent infinite sequences. Generator expressions
+provide a concise syntax similar to list comprehensions but with lazy evaluation.
 
 .. code-block:: python
 
@@ -183,144 +353,130 @@ Generator
     ...         yield a
     ...         b, a = a + b, b
     ...
-    >>> [f for f in fib(10)]
+    >>> list(fib(10))
     [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+
+    >>> # generator expression
+    >>> squares = (x**2 for x in range(5))
+    >>> list(squares)
+    [0, 1, 4, 9, 16]
 
 Decorator
 ---------
 
-**New in Python 2.4**
+Decorators are a powerful pattern for modifying or extending the behavior of
+functions without changing their source code. A decorator is a function that
+takes a function as input and returns a new function (usually a wrapper) that
+adds some functionality before or after calling the original. The ``@decorator``
+syntax is syntactic sugar for ``func = decorator(func)``. Always use ``@wraps``
+from ``functools`` in your wrapper function to preserve the original function's
+metadata like ``__name__``, ``__doc__``, and ``__annotations__``.
 
-- PEP `318 <https://www.python.org/dev/peps/pep-0318/>`_ - Decorators for Functions and Methods
+**New in Python 2.4** - PEP `318 <https://www.python.org/dev/peps/pep-0318/>`_
 
 .. code-block:: python
 
     >>> from functools import wraps
-    >>> def decorator(func):
+    >>> def log_calls(func):
     ...     @wraps(func)
     ...     def wrapper(*args, **kwargs):
-    ...         print("Before calling {}.".format(func.__name__))
-    ...         ret = func(*args, **kwargs)
-    ...         print("After calling {}.".format(func.__name__))
-    ...         return ret
+    ...         print(f"Calling {func.__name__}")
+    ...         return func(*args, **kwargs)
     ...     return wrapper
     ...
-    >>> @decorator
-    ... def example():
-    ...     print("Inside example function.")
+    >>> @log_calls
+    ... def greet(name):
+    ...     return f"Hello, {name}!"
     ...
-    >>> example()
-    Before calling example.
-    Inside example function.
-    After calling example.
+    >>> greet("Alice")
+    Calling greet
+    'Hello, Alice!'
 
-Equals to
-
-.. code-block:: python
-
-    ... def example():
-    ...     print("Inside example function.")
-    ...
-    >>> example = decorator(example)
-    >>> example()
-    Before calling example.
-    Inside example function.
-    After calling example.
+    >>> # equivalent to:
+    >>> # greet = log_calls(greet)
 
 .. note::
 
-   It is better to use ``@wrap`` decorator in the decorate wrapper function
-   becuase ``@wraps`` preserve attributes of the original function, otherwise attributes
-   of the decorated function will be replaced by wrapper function. For example
-
-    .. code-block:: python
-
-        >>> def decorator(func):
-        ...     def wrapper(*args, **kwargs):
-        ...         print('wrap function')
-        ...         return func(*args, **kwargs)
-        ...     return wrapper
-        ...
-        >>> @decorator
-        ... def example(*a, **kw):
-        ...     pass
-        ...
-        >>> example.__name__  # attr of function lose
-        'wrapper'
-
-    With ``@wraps``
-
-    .. code-block:: python
-
-        >>> from functools import wraps
-        >>> def decorator(func):
-        ...     @wraps(func)
-        ...     def wrapper(*args, **kwargs):
-        ...         print('wrap function')
-        ...         return func(*args, **kwargs)
-        ...     return wrapper
-        ...
-        >>> @decorator
-        ... def example(*a, **kw):
-        ...     pass
-        ...
-        >>> example.__name__  # attr of function preserve
-        'example'
+    Always use ``@wraps(func)`` in decorators to preserve the original function's
+    ``__name__``, ``__doc__``, and other attributes. Without it, the decorated
+    function will have the wrapper's attributes, which makes debugging harder.
 
 Decorator with Arguments
 ------------------------
 
+To create a decorator that accepts arguments, you need an extra layer of nesting.
+The outermost function takes the decorator's arguments and returns the actual
+decorator. The middle function takes the function being decorated and returns
+the wrapper. The innermost function is the wrapper that executes when the decorated
+function is called. This pattern is commonly used for decorators like ``@repeat(3)``
+or ``@route('/path')``.
+
 .. code-block:: python
 
     >>> from functools import wraps
-    >>> def decorator_with_argument(val):
+    >>> def repeat(times):
     ...     def decorator(func):
     ...         @wraps(func)
     ...         def wrapper(*args, **kwargs):
-    ...             print("Val is {0}".format(val))
-    ...             return func(*args, **kwargs)
+    ...             for _ in range(times):
+    ...                 result = func(*args, **kwargs)
+    ...             return result
     ...         return wrapper
     ...     return decorator
     ...
-    >>> @decorator_with_argument(10)
-    ... def example():
-    ...     print("This is example function.")
+    >>> @repeat(3)
+    ... def say_hello():
+    ...     print("Hello!")
     ...
-    >>> example()
-    Val is 10
-    This is example function.
+    >>> say_hello()
+    Hello!
+    Hello!
+    Hello!
 
-Equals to
+    >>> # equivalent to:
+    >>> # say_hello = repeat(3)(say_hello)
+
+Class Decorator
+---------------
+
+Decorators can also be implemented as classes instead of functions. A class-based
+decorator implements ``__init__`` to receive the decorated function and ``__call__``
+to act as the wrapper. This approach is useful when the decorator needs to maintain
+state across multiple calls to the decorated function, such as counting calls,
+caching results, or tracking timing information.
 
 .. code-block:: python
 
-    >>> def example():
-    ...     print("This is example function.")
+    >>> class CountCalls:
+    ...     def __init__(self, func):
+    ...         self.func = func
+    ...         self.count = 0
+    ...     def __call__(self, *args, **kwargs):
+    ...         self.count += 1
+    ...         return self.func(*args, **kwargs)
     ...
-    >>> example = decorator_with_argument(10)(example)
+    >>> @CountCalls
+    ... def example():
+    ...     return "result"
+    ...
     >>> example()
-    Val is 10
-    This is example function.
+    'result'
+    >>> example()
+    'result'
+    >>> example.count
+    2
 
-Cache
------
+Cache with ``lru_cache``
+------------------------
+
+The ``lru_cache`` decorator from ``functools`` automatically caches function results
+based on the arguments passed. When the function is called with the same arguments
+again, the cached result is returned instead of recomputing it. This is especially
+useful for expensive computations or recursive functions like Fibonacci. The ``maxsize``
+parameter limits cache size (use ``None`` for unlimited). Use ``cache_info()`` to
+see hit/miss statistics and ``cache_clear()`` to reset the cache.
 
 **New in Python 3.2**
-
-Without Cache
-
-.. code-block:: python
-
-    >>> import time
-    >>> def fib(n):
-    ...     if n < 2:
-    ...         return n
-    ...     return fib(n - 1) + fib(n - 2)
-    ...
-    >>> s = time.time(); _ = fib(32); e = time.time(); e - s
-    1.1562161445617676
-
-With Cache (dynamic programming)
 
 .. code-block:: python
 
@@ -331,7 +487,135 @@ With Cache (dynamic programming)
     ...         return n
     ...     return fib(n - 1) + fib(n - 2)
     ...
-    >>> s = time.time(); _ = fib(32); e = time.time(); e - s
-    2.9087066650390625e-05
+    >>> fib(100)
+    354224848179261915075
     >>> fib.cache_info()
-    CacheInfo(hits=30, misses=33, maxsize=None, currsize=33)
+    CacheInfo(hits=98, misses=101, maxsize=None, currsize=101)
+    >>> fib.cache_clear()  # clear the cache
+
+**New in Python 3.9** - ``@cache`` is a simpler alias for ``@lru_cache(maxsize=None)``
+
+.. code-block:: python
+
+    >>> from functools import cache
+    >>> @cache
+    ... def factorial(n):
+    ...     return n * factorial(n-1) if n else 1
+
+Partial Functions
+-----------------
+
+The ``functools.partial`` function creates a new callable with some arguments of
+the original function pre-filled. This is useful for adapting functions to interfaces
+that expect fewer arguments, creating specialized versions of general functions,
+or preparing callback functions. The resulting partial object can be called with
+the remaining arguments. You can pre-fill both positional and keyword arguments.
+
+.. code-block:: python
+
+    >>> from functools import partial
+    >>> def power(base, exponent):
+    ...     return base ** exponent
+    ...
+    >>> square = partial(power, exponent=2)
+    >>> cube = partial(power, exponent=3)
+    >>> square(5)
+    25
+    >>> cube(5)
+    125
+
+    >>> # useful for callbacks
+    >>> from functools import partial
+    >>> def greet(greeting, name):
+    ...     return f"{greeting}, {name}!"
+    ...
+    >>> say_hello = partial(greet, "Hello")
+    >>> say_hello("Alice")
+    'Hello, Alice!'
+
+``singledispatch`` - Function Overloading
+-----------------------------------------
+
+The ``singledispatch`` decorator from ``functools`` enables function overloading
+based on the type of the first argument. You define a base function and then
+register specialized implementations for different types using the ``@func.register``
+decorator. When the function is called, Python automatically dispatches to the
+appropriate implementation based on the argument's type. This is useful for writing
+generic functions that behave differently for different types.
+
+**New in Python 3.4**
+
+.. code-block:: python
+
+    >>> from functools import singledispatch
+    >>> @singledispatch
+    ... def process(arg):
+    ...     return f"Default: {arg}"
+    ...
+    >>> @process.register(int)
+    ... def _(arg):
+    ...     return f"Integer: {arg * 2}"
+    ...
+    >>> @process.register(list)
+    ... def _(arg):
+    ...     return f"List with {len(arg)} items"
+    ...
+    >>> process("hello")
+    'Default: hello'
+    >>> process(5)
+    'Integer: 10'
+    >>> process([1, 2, 3])
+    'List with 3 items'
+
+``reduce`` - Cumulative Operations
+----------------------------------
+
+The ``reduce`` function from ``functools`` applies a two-argument function
+cumulatively to the items of a sequence, from left to right, reducing the sequence
+to a single value. For example, ``reduce(f, [a, b, c, d])`` computes ``f(f(f(a, b), c), d)``.
+An optional third argument provides an initial value. While ``reduce`` can be powerful,
+list comprehensions or explicit loops are often more readable for simple cases.
+
+.. code-block:: python
+
+    >>> from functools import reduce
+    >>> # sum of list
+    >>> reduce(lambda x, y: x + y, [1, 2, 3, 4, 5])
+    15
+
+    >>> # product of list
+    >>> reduce(lambda x, y: x * y, [1, 2, 3, 4, 5])
+    120
+
+    >>> # with initial value
+    >>> reduce(lambda x, y: x + y, [1, 2, 3], 10)
+    16
+
+Higher-Order Functions
+----------------------
+
+Higher-order functions are functions that take other functions as arguments or
+return functions as results. Python provides several built-in higher-order functions
+that are commonly used for functional programming patterns. ``map()`` applies a
+function to every item in an iterable, ``filter()`` keeps items where the function
+returns ``True``, and ``sorted()``/``min()``/``max()`` accept a ``key`` function
+to customize comparison. These functions return iterators (except ``sorted``),
+so wrap them in ``list()`` if you need a list.
+
+.. code-block:: python
+
+    >>> # map - apply function to each item
+    >>> list(map(lambda x: x**2, [1, 2, 3, 4]))
+    [1, 4, 9, 16]
+
+    >>> # filter - keep items where function returns True
+    >>> list(filter(lambda x: x > 2, [1, 2, 3, 4]))
+    [3, 4]
+
+    >>> # sorted with key function
+    >>> sorted(['banana', 'apple', 'cherry'], key=len)
+    ['apple', 'banana', 'cherry']
+
+    >>> # min/max with key function
+    >>> max(['apple', 'banana', 'cherry'], key=len)
+    'banana'

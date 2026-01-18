@@ -16,6 +16,8 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python }}
+    - name: Install clang-format and cmake
+      run: sudo apt-get install -y clang-format cmake
     - name: Install
       run: make deps
     - name: Test

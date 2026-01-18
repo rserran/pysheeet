@@ -1,6 +1,13 @@
+.. meta::
+    :description lang=en: Python __future__ module guide covering future statements, backward compatibility, and feature backporting from newer Python versions
+    :keywords: Python, __future__, future statements, backward compatibility, print_function, annotations, division
+
 ======
 Future
 ======
+
+.. contents:: Table of Contents
+    :backlinks: none
 
 
 `Future statements <https://docs.python.org/3/reference/simple_stmts.html#future>`_

@@ -42,6 +42,9 @@ official document, `What’s New in Python <https://docs.python.org/3/whatsnew/i
 Cheat Sheet
 ===========
 
+Core Python fundamentals including data types, functions, classes, and commonly
+used patterns for everyday programming tasks.
+
 - `From Scratch <docs/notes/basic/python-basic.rst>`_
 - `Future <docs/notes/basic/python-future.rst>`_
 - `Typing <docs/notes/basic/python-typing.rst>`_
@@ -53,31 +56,105 @@ Cheat Sheet
 - `Dictionary <docs/notes/basic/python-dict.rst>`_
 - `Heap <docs/notes/basic/python-heap.rst>`_
 - `Generator <docs/notes/basic/python-generator.rst>`_
-- `Time <docs/notes/os/python-date.rst>`_
-- `File <docs/notes/os/python-io.rst>`_
-- `Operating System <docs/notes/os/python-os.rst>`_
-
-
-Advanced Cheat Sheet
-====================
-
 - `Regular expression <docs/notes/basic/python-rexp.rst>`_
-- `Socket <docs/notes/os/python-socket.rst>`_
-- `Asyncio <docs/notes/multitasking/python-asyncio.rst>`_
-- `Concurrency <docs/notes/multitasking/python-concurrency.rst>`_
-- `Sqlalchemy <docs/notes/database/python-sqlalchemy.rst>`_
-- `Security <docs/notes/security/python-security.rst>`_
-- `SSH <docs/notes/security/python-ssh.rst>`_
-- `Tests <docs/notes/testing/python-tests.rst>`_
-- `C Extensions <docs/notes/extension/python-c-extensions.rst>`_
-- `PyTorch <docs/notes/pytorch/pytorch.rst>`_
+
+
+System
+======
+
+Date/time handling, file I/O, and operating system interfaces.
+
+- `Datetime <docs/notes/os/python-date.rst>`_ - Timestamps, formatting, parsing, timezones, timedelta
+- `Files and I/O <docs/notes/os/python-io.rst>`_ - Reading, writing, pathlib, shutil, tempfile
+- `Operating System <docs/notes/os/python-os.rst>`_ - Processes, environment, system calls
+
+
+Concurrency
+===========
+
+Threading, multiprocessing, and concurrent.futures for parallel execution.
+Covers synchronization primitives, process pools, and bypassing the GIL.
+
+- `Threading <docs/notes/concurrency/python-threading.rst>`_ - Threads, locks, semaphores, events, conditions
+- `Multiprocessing <docs/notes/concurrency/python-multiprocessing.rst>`_ - Processes, pools, shared memory, IPC
+- `concurrent.futures <docs/notes/concurrency/python-futures.rst>`_ - Executors, futures, callbacks
+
+
+Asyncio
+=======
+
+Asynchronous programming with Python's ``asyncio`` module. Covers coroutines,
+event loops, tasks, networking, and advanced patterns.
+
+- `A Hitchhiker's Guide to Asynchronous Programming <docs/notes/asyncio/python-asyncio-guide.rst>`_ - Design philosophy and evolution
+- `Asyncio Basics <docs/notes/asyncio/python-asyncio-basic.rst>`_ - Coroutines, tasks, gather, timeouts
+- `Asyncio Networking <docs/notes/asyncio/python-asyncio-server.rst>`_ - TCP/UDP servers, HTTP, SSL/TLS
+- `Asyncio Advanced <docs/notes/asyncio/python-asyncio-advanced.rst>`_ - Synchronization, queues, subprocesses
+
+
+C/C++ Extensions
+================
+
+Native extensions for performance-critical code. Covers modern pybind11 (used by
+PyTorch, TensorFlow), ctypes, cffi, Cython, and the traditional Python C API.
+
+- `ctypes <docs/notes/extension/python-ctypes.rst>`_ - Load shared libraries without compilation
+- `Python C API <docs/notes/extension/python-capi.rst>`_ - Traditional C extension reference
+- `Modern C/C++ Extensions <docs/notes/extension/python-cext-modern.rst>`_ - pybind11, Cython
+
+
+Security
+========
+
+Modern cryptographic practices and common security vulnerabilities. Covers
+encryption, TLS/SSL, and why legacy patterns are dangerous.
+
+- `Modern Cryptography <docs/notes/security/python-crypto.rst>`_ - AES-GCM, RSA-OAEP, Ed25519, Argon2
+- `TLS/SSL and Certificates <docs/notes/security/python-tls.rst>`_ - HTTPS servers, certificate generation
+- `Common Vulnerabilities <docs/notes/security/python-vulnerability.rst>`_ - Padding oracle, injection, timing attacks
+
+
+Network
+=======
+
+Low-level network programming with Python sockets. Covers TCP/UDP communication,
+server implementations, asynchronous I/O, SSL/TLS encryption, and packet analysis.
+
+- `Socket Basics <docs/notes/network/python-socket.rst>`_
+- `Socket Servers <docs/notes/network/python-socket-server.rst>`_
+- `Async Socket I/O <docs/notes/network/python-socket-async.rst>`_
+- `SSL/TLS Sockets <docs/notes/network/python-socket-ssl.rst>`_
+- `Packet Sniffing <docs/notes/network/python-socket-sniffer.rst>`_
+- `SSH and Tunnels <docs/notes/network/python-ssh.rst>`_
+
+
+Database
+========
+
+Database access with SQLAlchemy, Python's most popular ORM. Covers connection
+management, raw SQL, object-relational mapping, and common query patterns.
+
+- `SQLAlchemy Basics <docs/notes/database/python-sqlalchemy.rst>`_
+- `SQLAlchemy ORM <docs/notes/database/python-sqlalchemy-orm.rst>`_
+- `SQLAlchemy Query Recipes <docs/notes/database/python-sqlalchemy-query.rst>`_
+
+
+PyTorch
+=======
+
+Deep learning with PyTorch and distributed training on HPC clusters. Covers
+tensor operations, neural networks, and job scheduling with Slurm.
+
 - `Slurm <docs/notes/pytorch/slurm.rst>`_
+- `PyTorch <docs/notes/pytorch/pytorch.rst>`_
 
 
 Appendix
 =========
 
-- `A Hitchhikers Guide to Asynchronous Programming <docs/notes/appendix/python-concurrent.rst>`_
+Supplementary topics covering Python internals, debugging techniques, and
+language features that don't fit elsewhere.
+
 - `PEP 572 and the walrus operator <docs/notes/appendix/python-walrus.rst>`_
 - `Python Interpreter in GNU Debugger <docs/notes/appendix/python-gdb.rst>`_
 

@@ -1,10 +1,13 @@
 .. meta::
-    :description lang=en: Collect useful snippets of unicode
-    :keywords: Python, Python3, Python Unicode, Python Unicode Cheat Sheet
+    :description lang=en: Python Unicode tutorial covering string encoding, decoding, UTF-8, ASCII, bytes conversion, and character handling in Python 3
+    :keywords: Python, Python3, Unicode, UTF-8, encoding, decoding, bytes, string, ASCII, character, codec
 
 =======
 Unicode
 =======
+
+.. contents:: Table of Contents
+    :backlinks: none
 
 The main goal of this cheat sheet is to collect some common snippets which are
 related to Unicode. In Python 3, strings are represented by Unicode instead of

@@ -1,6 +1,6 @@
 .. meta::
-    :description lang=en: Collect useful snippets of Python
-    :keywords: Python, Python Cheat Sheet
+    :description lang=en: Python basics tutorial covering fundamental syntax, data types, control flow, string formatting, and essential Python programming concepts
+    :keywords: Python, Python3, basics, syntax, data types, control flow, string formatting, variables, operators, conditionals
 
 ============
 From Scratch
