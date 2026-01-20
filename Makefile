@@ -6,6 +6,8 @@ PY36 = $(shell expr $(VER) \>= 3.6)
 CEXT_DIR = src/cext
 CEXT_BUILD = $(CEXT_DIR)/build
 CAPI_DIR = src/cext/capi
+CPP_FROM_PY_DIR = src/cpp_from_python
+CPP_FROM_PY_BUILD = $(CPP_FROM_PY_DIR)/build
 PY_ARCH = $(shell python -c "import platform; print(platform.machine())")
 
 .PHONY: build deps test format cext
@@ -17,6 +19,7 @@ build: html
 clean:
 	cd docs && make clean
 	rm -rf $(CEXT_BUILD)
+	rm -rf $(CPP_FROM_PY_BUILD)
 	rm -rf $(CAPI_DIR)/build $(CAPI_DIR)/*.so $(CAPI_DIR)/*.egg-info
 
 cext:
@@ -27,7 +30,14 @@ cext:
 	make
 	cd $(CAPI_DIR) && python setup.py build_ext --inplace
 
-test: clean build cext
+cpp_from_python:
+	@echo "Building C++ from Python examples..."
+	mkdir -p $(CPP_FROM_PY_BUILD) && \
+	cd $(CPP_FROM_PY_BUILD) && \
+	cmake .. && \
+	make
+
+test: clean build cext cpp_from_python
 	pycodestyle $(SRC)
 	pydocstyle $(SRC)
 	bandit app.py
@@ -35,6 +45,7 @@ test: clean build cext
 	python -m pytest src/basic/*.py src/new_py3/*.py -v
 	python -m pytest $(CEXT_DIR)/test_cext.py -v
 	python -m pytest $(CAPI_DIR)/test_capi.py -v
+	cd $(CPP_FROM_PY_BUILD) && make test
 ifeq ($(PY36), 1)
 	black --quiet --diff --check --line-length 79 $(SRC)
 endif

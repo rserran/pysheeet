@@ -97,10 +97,12 @@ C/C++ Extensions
 
 Native extensions for performance-critical code. Covers modern pybind11 (used by
 PyTorch, TensorFlow), ctypes, cffi, Cython, and the traditional Python C API.
+Also includes a guide for Python developers learning modern C++ syntax.
 
 - `ctypes <docs/notes/extension/python-ctypes.rst>`_ - Load shared libraries without compilation
 - `Python C API <docs/notes/extension/python-capi.rst>`_ - Traditional C extension reference
 - `Modern C/C++ Extensions <docs/notes/extension/python-cext-modern.rst>`_ - pybind11, Cython
+- `Learn C++ from Python <docs/notes/extension/cpp-from-python.rst>`_ - Modern C++ for Python developers
 
 
 Security
