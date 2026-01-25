@@ -25,3 +25,4 @@ For calling existing C libraries without a build step, use ctypes or cffi.
    python-ctypes
    python-capi
    python-cext-modern
+   cpp-from-python
