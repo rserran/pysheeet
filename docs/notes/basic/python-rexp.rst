@@ -1,6 +1,6 @@
 .. meta::
-    :description lang=en: Python regular expression cheat sheet covering re module, pattern matching, groups, lookahead, lookbehind, substitution, and common regex patterns
-    :keywords: Python, Python Regex, Regular Expression, re module, pattern matching, findall, search, match, sub, lookahead, lookbehind, named groups
+    :description lang=en: Python regex cheat sheet covering re module, pattern matching, groups, lookahead, lookbehind, substitution, and common regex patterns with code examples
+    :keywords: Python, Python3, Python regex, Python regex cheat sheet, regular expression, re module, pattern matching, findall, search, match, sub, lookahead, lookbehind, named groups
 
 ==================
 Regular Expression

@@ -1,6 +1,6 @@
 .. meta::
-    :description lang=en: Python set cheat sheet covering set comprehensions, set operations (union, intersection, difference, symmetric difference), removing duplicates from lists, checking subsets and supersets, and frozenset with practical code examples
-    :keywords: Python, Python Set, set comprehension, set operations, union, intersection, difference, symmetric difference, frozenset, Python unique list, subset, superset
+    :description lang=en: Python set cheat sheet covering set comprehensions, set operations (union, intersection, difference), removing duplicates, subsets, supersets, and frozenset with code examples
+    :keywords: Python, Python3, Python set, Python set cheat sheet, set comprehension, set operations, union, intersection, difference, symmetric difference, frozenset, subset, superset
 
 ===
 Set

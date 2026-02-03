@@ -1,6 +1,6 @@
 .. meta::
-    :description lang=en: Python dictionary cheat sheet covering creation, manipulation, merging, comprehensions, defaultdict, OrderedDict, and advanced patterns like emulating dictionaries and implementing LRU cache with practical code examples
-    :keywords: Python, Python Dictionary, dict, Python dict tutorial, Python hashmap, key-value pairs, defaultdict, OrderedDict, dictionary comprehension, LRU cache Python, Python dict methods
+    :description lang=en: Python dictionary cheat sheet covering creation, manipulation, merging, comprehensions, defaultdict, OrderedDict, and LRU cache with code examples
+    :keywords: Python, Python3, Python dictionary, Python dict cheat sheet, dict, hashmap, key-value pairs, defaultdict, OrderedDict, dictionary comprehension, LRU cache, dict methods
 
 ==========
 Dictionary

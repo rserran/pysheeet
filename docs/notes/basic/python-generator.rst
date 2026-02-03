@@ -1,6 +1,6 @@
 .. meta::
-    :description lang=en: Python generator cheat sheet covering generator functions, generator expressions, yield, yield from, send, async generators, and coroutines
-    :keywords: Python, Python Generator, yield, yield from, generator expression, async generator, Python iterator, coroutine, contextmanager
+    :description lang=en: Python generator cheat sheet covering generator functions, generator expressions, yield, yield from, send, async generators, and coroutines with code examples
+    :keywords: Python, Python3, Python generator, Python generator cheat sheet, yield, yield from, generator expression, async generator, iterator, coroutine, contextmanager
 
 =========
 Generator

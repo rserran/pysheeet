@@ -1,6 +1,6 @@
 .. meta::
-    :description lang=en: Python list tutorial covering list operations, comprehensions, slicing, sorting, filtering, and common list manipulation patterns
-    :keywords: Python, Python3, list, list comprehension, slicing, sorting, filtering, append, extend, iteration
+    :description lang=en: Python list cheat sheet covering list operations, comprehensions, slicing, sorting, filtering, and common list manipulation patterns with code examples
+    :keywords: Python, Python3, Python list, Python list cheat sheet, list comprehension, slicing, sorting, filtering, append, extend, iteration
 
 ====
 List

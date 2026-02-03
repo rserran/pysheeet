@@ -1,6 +1,6 @@
 .. meta::
-    :description lang=en: Python function cheat sheet covering function definitions, arguments, decorators, lambda, closures, and functools
-    :keywords: Python, Python Function, decorator, lambda, closure, *args, **kwargs, functools, lru_cache, partial
+    :description lang=en: Python function cheat sheet covering function definitions, arguments, decorators, lambda, closures, and functools with code examples
+    :keywords: Python, Python3, Python function, Python function cheat sheet, decorator, lambda, closure, *args, **kwargs, functools, lru_cache, partial
 
 ========
 Function
