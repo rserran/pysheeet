@@ -60,7 +60,7 @@ everyday tasks.
    notes/database/index
    notes/security/index
    notes/extension/index
-   notes/pytorch/index
+   notes/llm/index
    notes/hpc/index
 
 Appendix

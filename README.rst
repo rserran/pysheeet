@@ -141,14 +141,14 @@ management, raw SQL, object-relational mapping, and common query patterns.
 - `SQLAlchemy Query Recipes <docs/notes/database/python-sqlalchemy-query.rst>`_
 
 
-PyTorch
-=======
+LLM
+===
 
-Deep learning with PyTorch. Covers tensor operations, neural networks, GPU
-acceleration, and distributed training.
+Large Language Models (LLM) training, inference, and optimization. Covers PyTorch,
+distributed training, vLLM, SGLang, and Megatron-LM for building and serving LLMs.
 
-- `PyTorch <docs/notes/pytorch/pytorch.rst>`_
-- `Distributed Training <docs/notes/pytorch/distributed.rst>`_
+- `PyTorch <docs/notes/llm/pytorch.rst>`_
+- `Distributed Training <docs/notes/llm/distributed.rst>`_
 
 
 HPC
