@@ -144,11 +144,20 @@ management, raw SQL, object-relational mapping, and common query patterns.
 PyTorch
 =======
 
-Deep learning with PyTorch and distributed training on HPC clusters. Covers
-tensor operations, neural networks, and job scheduling with Slurm.
+Deep learning with PyTorch. Covers tensor operations, neural networks, GPU
+acceleration, and distributed training.
 
-- `Slurm <docs/notes/pytorch/slurm.rst>`_
 - `PyTorch <docs/notes/pytorch/pytorch.rst>`_
+- `Distributed Training <docs/notes/pytorch/distributed.rst>`_
+
+
+HPC
+===
+
+High-Performance Computing tools for cluster management and job scheduling.
+Covers Slurm workload manager for distributed computing and GPU clusters.
+
+- `Slurm <docs/notes/hpc/slurm.rst>`_
 
 
 Appendix

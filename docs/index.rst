@@ -61,6 +61,7 @@ everyday tasks.
    notes/security/index
    notes/extension/index
    notes/pytorch/index
+   notes/hpc/index
 
 Appendix
 --------
