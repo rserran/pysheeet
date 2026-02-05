@@ -191,7 +191,7 @@ on your DP and TP configuration.
     vllm serve Qwen/Qwen2.5-14B-MoE \
       --tensor-parallel-size 8 \
       --enable-expert-parallel \
-      --all2all-backend deepep_low_latency
+      --all2all-backend allgather_reducescatter
 
     # EP is computed automatically: EP = DP × TP
     # With TP=8, EP=8, each GPU holds 1/8 of the experts
