@@ -144,11 +144,20 @@ management, raw SQL, object-relational mapping, and common query patterns.
 LLM
 ===
 
-Large Language Models (LLM) training, inference, and optimization. Covers PyTorch,
-distributed training, vLLM, SGLang, and Megatron-LM for building and serving LLMs.
+Large Language Models (LLM) training, inference, and optimization. Covers PyTorch
+for model development, distributed training across GPUs, and vLLM for high-performance
+LLM inference and serving.
 
-- `PyTorch <docs/notes/llm/pytorch.rst>`_
-- `Distributed Training <docs/notes/llm/distributed.rst>`_
+PyTorch
+-------
+
+- `PyTorch <docs/notes/llm/pytorch.rst>`_ - Tensors, autograd, neural networks, training loops
+- `Distributed Training <docs/notes/llm/distributed.rst>`_ - Multi-GPU training, DDP, FSDP, DeepSpeed
+
+vLLM
+----
+
+- `vLLM Serving <docs/notes/llm/vllm-serving.rst>`_ - Production LLM inference with tensor/pipeline/data parallelism
 
 
 HPC

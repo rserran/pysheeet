@@ -1,16 +1,27 @@
 .. meta::
-    :description lang=en: Large Language Models (LLM) guide covering PyTorch, distributed training, vLLM, SGLang, Megatron-LM, inference optimization, and model serving
-    :keywords: LLM, Large Language Models, PyTorch, vLLM, SGLang, Megatron, GPT, distributed training, model inference, GPU optimization, CUDA, transformer models, model serving
+    :description lang=en: Large Language Models (LLM) guide covering PyTorch, distributed training, and vLLM inference optimization
+    :keywords: LLM, Large Language Models, PyTorch, vLLM, distributed training, model inference, GPU optimization, CUDA, transformer models, model serving
 
 LLM
 ===
 
 Large Language Models (LLM) training, inference, and optimization. Covers PyTorch
-for model development, distributed training across GPUs, and specialized frameworks
-for LLM inference and serving including vLLM, SGLang, and Megatron-LM.
+for model development, distributed training across GPUs, and vLLM for high-performance
+LLM inference and serving.
+
+PyTorch
+-------
 
 .. toctree::
    :maxdepth: 1
 
    pytorch
    distributed
+
+vLLM
+----
+
+.. toctree::
+   :maxdepth: 1
+
+   vllm-serving
