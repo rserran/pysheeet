@@ -19,8 +19,7 @@ quick code examples. Whether you're learning Python for web development, data sc
 you'll find practical examples that save you time and improve your coding efficiency.
 
 Contributions are always welcome—feel free to share ideas for new snippets, improvements, or clearer explanations!
-
-Any snippets are welcome. If you'd like to contribute, `fork pysheeet on GitHub`_.
+If you'd like to contribute, `fork pysheeet on GitHub`_.
 If there is any question or suggestion, please create an issue on `GitHub Issues`_.
 
 .. _fork pysheeet on GitHub: https://github.com/crazyguitar/pysheeet
