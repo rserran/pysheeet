@@ -19,7 +19,7 @@ distributed inference across multiple GPUs and nodes for serving the largest mod
 This guide covers everything from basic single-GPU deployment to advanced multi-node
 distributed serving with tensor parallelism, pipeline parallelism, data parallelism, and
 expert parallelism for Mixture-of-Experts (MoE) models. All scripts and examples are
-located in the ``src/llm/vllm/`` directory.
+located in the `src/llm/vllm/ <https://github.com/crazyguitar/pysheeet/tree/master/src/llm/vllm>`_ directory.
 
 Quick Start
 -----------
@@ -100,7 +100,7 @@ and embeddings. Here are the most common usage patterns:
     curl http://localhost:8000/v1/models
 
 For more API examples including batch completions, sampling parameters, logprobs, stop
-sequences, and other advanced features, refer to ``src/llm/vllm/test.sh``.
+sequences, and other advanced features, refer to `test.sh <https://github.com/crazyguitar/pysheeet/blob/master/src/llm/vllm/test.sh>`_.
 
 Tensor Parallel (TP)
 --------------------
