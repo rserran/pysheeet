@@ -148,15 +148,8 @@ Large Language Models (LLM) training, inference, and optimization. Covers PyTorc
 for model development, distributed training across GPUs, and vLLM for high-performance
 LLM inference and serving.
 
-PyTorch
--------
-
 - `PyTorch <docs/notes/llm/pytorch.rst>`_ - Tensors, autograd, neural networks, training loops
 - `Distributed Training <docs/notes/llm/distributed.rst>`_ - Multi-GPU training, DDP, FSDP, DeepSpeed
-
-vLLM
-----
-
 - `vLLM Serving <docs/notes/llm/vllm-serving.rst>`_ - Production LLM inference with tensor/pipeline/data parallelism
 
 
