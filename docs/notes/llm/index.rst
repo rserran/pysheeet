@@ -9,19 +9,9 @@ Large Language Models (LLM) training, inference, and optimization. Covers PyTorc
 for model development, distributed training across GPUs, and vLLM for high-performance
 LLM inference and serving.
 
-PyTorch
--------
-
 .. toctree::
    :maxdepth: 1
 
    pytorch
    distributed
-
-vLLM
-----
-
-.. toctree::
-   :maxdepth: 1
-
    vllm-serving
