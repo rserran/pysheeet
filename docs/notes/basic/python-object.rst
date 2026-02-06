@@ -1,6 +1,6 @@
 .. meta::
-    :description lang=en: Python class and object-oriented programming cheat sheet covering magic methods, property decorators, inheritance, context managers, and design patterns
-    :keywords: Python, Python Cheat Sheet, Python OOP, Python Class, Magic Methods, Property Decorator, Context Manager, Singleton, Abstract Class, Descriptor
+    :description lang=en: Python class cheat sheet covering magic methods, property decorators, inheritance, context managers, and OOP design patterns with code examples
+    :keywords: Python, Python3, Python class, Python OOP cheat sheet, magic methods, property decorator, context manager, singleton, abstract class, descriptor, inheritance
 
 =====
 Class

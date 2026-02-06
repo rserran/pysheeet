@@ -141,14 +141,25 @@ management, raw SQL, object-relational mapping, and common query patterns.
 - `SQLAlchemy Query Recipes <docs/notes/database/python-sqlalchemy-query.rst>`_
 
 
-PyTorch
-=======
+LLM
+===
 
-Deep learning with PyTorch and distributed training on HPC clusters. Covers
-tensor operations, neural networks, and job scheduling with Slurm.
+Large Language Models (LLM) training, inference, and optimization. Covers PyTorch
+for model development, distributed training across GPUs, and vLLM for high-performance
+LLM inference and serving.
 
-- `Slurm <docs/notes/pytorch/slurm.rst>`_
-- `PyTorch <docs/notes/pytorch/pytorch.rst>`_
+- `PyTorch <docs/notes/llm/pytorch.rst>`_ - Tensors, autograd, neural networks, training loops
+- `Distributed Training <docs/notes/llm/distributed.rst>`_ - Multi-GPU training, DDP, FSDP, DeepSpeed
+- `vLLM Serving <docs/notes/llm/vllm-serving.rst>`_ - Production LLM inference with tensor/pipeline/data parallelism
+
+
+HPC
+===
+
+High-Performance Computing tools for cluster management and job scheduling.
+Covers Slurm workload manager for distributed computing and GPU clusters.
+
+- `Slurm <docs/notes/hpc/slurm.rst>`_
 
 
 Appendix

@@ -1,6 +1,6 @@
 .. meta::
-    :description lang=en: Python type hints tutorial covering static typing, type annotations, generics, protocols, and mypy type checking
-    :keywords: Python, Python3, typing, type hints, annotations, generics, Protocol, TypeVar, mypy, static typing
+    :description lang=en: Python typing cheat sheet covering type hints, annotations, generics, protocols, TypeVar, and mypy type checking with code examples
+    :keywords: Python, Python3, Python typing, Python type hints cheat sheet, type annotations, generics, Protocol, TypeVar, mypy, static typing
 
 ======
 Typing
