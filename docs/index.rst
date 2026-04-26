@@ -25,6 +25,22 @@ If there is any question or suggestion, please create an issue on `GitHub Issues
 .. _fork pysheeet on GitHub: https://github.com/crazyguitar/pysheeet
 .. _GitHub Issues: https://github.com/crazyguitar/pysheeet/issues
 
+Plugin
+------
+
+**pysheeet** is available as a `Claude Code <https://claude.com/claude-code>`_ plugin. Once installed,
+Claude automatically uses the cheat sheets to answer Python questions.
+
+.. code-block:: bash
+
+    # Step 1: Add the marketplace
+    claude plugin marketplace add crazyguitar/pysheeet
+
+    # Step 2: Install the plugin
+    claude plugin install pysheeet@pysheeet
+
+For local testing and manual installation, see the main `README <https://github.com/crazyguitar/pysheeet/blob/master/README.rst>`_.
+
 What's New In Python 3
 ----------------------
 
@@ -39,6 +55,12 @@ this part provides a brief glance of new features in Python 3.
 
    notes/python-new-py3
 
+Blog
+----
+
+This website also covers advanced topics related to LLM training, inference,
+HPC networking, distributed systems, GPU computing, and Python debugging
+techniques in the `blog </notes/appendix/index.html>`_.
 
 Python Cheat Sheet
 ------------------
@@ -51,6 +73,7 @@ everyday tasks.
 .. toctree::
    :maxdepth: 1
 
+   notes/interview/index
    notes/basic/index
    notes/os/index
    notes/concurrency/index
@@ -61,13 +84,3 @@ everyday tasks.
    notes/extension/index
    notes/llm/index
    notes/hpc/index
-
-Appendix
---------
-
-The appendix mainly focuses on some critical concepts missing in cheat sheets.
-
-.. toctree::
-   :maxdepth: 1
-
-   notes/appendix/index

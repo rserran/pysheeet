@@ -8,19 +8,85 @@
 {%- if pagename == 'index' %}
 <link rel="canonical" href="https://www.pythonsheets.com/"/>
 <meta property="og:url" content="https://www.pythonsheets.com/">
+<meta property="og:type" content="website">
 <meta property="og:description" content="Comprehensive Python cheat sheet with practical code snippets for developers. Learn Python basics, advanced topics, databases, networking, and more.">
 {%- elif pagename == '404' -%}
 {%- else %}
 <link rel="canonical" href="https://www.pythonsheets.com/{{ pagename }}{{ file_suffix }}"/>
 <meta property="og:url" content="https://www.pythonsheets.com/{{ pagename }}{{ file_suffix }}">
+<meta property="og:type" content="article">
 <meta property="og:description" content="{{ title }} - Python code examples and snippets from the comprehensive Python cheat sheet.">
 {%- endif %}
-<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
 <meta property="og:title" content="{{ title }}{{ titlesuffix }}">
 <meta property="og:site_name" content="Python Cheat Sheet">
+<meta property="og:image" content="https://www.pythonsheets.com/_static/logo.png">
+<meta property="og:image:alt" content="Python Cheat Sheet">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="{{ title }}{{ titlesuffix }}">
 <meta name="twitter:description" content="{% if pagename == 'index' %}Comprehensive Python cheat sheet with practical code snippets for developers{% else %}{{ title }} - Python code examples and snippets{% endif %}">
+<meta name="twitter:image" content="https://www.pythonsheets.com/_static/logo.png">
+<meta name="twitter:image:alt" content="Python Cheat Sheet">
+{%- if pagename == 'index' %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Python Cheat Sheet",
+  "alternateName": "pysheeet",
+  "url": "https://www.pythonsheets.com/",
+  "description": "Comprehensive Python cheat sheet with practical code snippets for developers. Learn Python basics, advanced topics, databases, networking, and more.",
+  "inLanguage": "en",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://www.pythonsheets.com/search.html?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "crazyguitar",
+    "url": "https://github.com/crazyguitar"
+  }
+}
+</script>
+{%- elif pagename not in ['404', 'search', 'genindex'] and title is defined and title %}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": {{ (title ~ (titlesuffix or '')) | tojson }},
+  "name": {{ title | tojson }},
+  "url": {{ ("https://www.pythonsheets.com/" ~ pagename ~ file_suffix) | tojson }},
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": {{ ("https://www.pythonsheets.com/" ~ pagename ~ file_suffix) | tojson }}
+  },
+  "inLanguage": "en",
+  {%- if last_updated %}
+  "dateModified": {{ last_updated | tojson }},
+  {%- endif %}
+  "image": "https://www.pythonsheets.com/_static/logo.png",
+  "author": {
+    "@type": "Person",
+    "name": "crazyguitar",
+    "url": "https://github.com/crazyguitar"
+  },
+  "publisher": {
+    "@type": "Person",
+    "name": "crazyguitar",
+    "url": "https://github.com/crazyguitar"
+  },
+  "isPartOf": {
+    "@type": "WebSite",
+    "name": "Python Cheat Sheet",
+    "url": "https://www.pythonsheets.com/"
+  }
+}
+</script>
+{%- endif %}
 {%- if tracking_id %}
 <!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id={{ tracking_id }}"></script>

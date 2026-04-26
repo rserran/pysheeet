@@ -32,12 +32,24 @@ extensions = [
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
+    'sphinx.ext.autosectionlabel',
     'myst_parser',
     'sphinx_copybutton',
     'sphinx.ext.graphviz',
     'sphinx_design',
-    'sphinx.ext.extlinks'
+    'sphinx.ext.extlinks',
+    'notfound.extension'
 ]
+
+# Prefix auto-generated section labels with the document path so that
+# identical section titles across different notes don't collide.
+autosectionlabel_prefix_document = True
+
+# A handful of notes repeat the same sub-section title within a single file.
+# The content is intentional, so silence the resulting duplicate-label warnings.
+suppress_warnings = ['autosectionlabel.*']
+
+notfound_urls_prefix = "/"
 
 myst_enable_extensions = [
     "colon_fence",

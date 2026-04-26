@@ -28,8 +28,51 @@ coding faster, easier, and more enjoyable. You can explore all the cheat sheets 
 `Pysheeet <https://www.pythonsheets.com/>`_. Contributions are always welcome—feel
 free to fork the repo and submit a pull request to help it grow!
 
+Plugin
+======
 
-What’s New In Python 3
+**pysheeet** is available as a Claude Code plugin. Once installed, Claude
+automatically uses the cheat sheets to answer Python questions — just ask
+naturally and the skill triggers based on context.
+
+Installation
+------------
+
+**As a Claude Code plugin (recommended):**
+
+.. code-block:: bash
+
+    # Step 1: Add the marketplace
+    claude plugin marketplace add crazyguitar/pysheeet
+
+    # Step 2: Install the plugin
+    claude plugin install pysheeet@pysheeet
+
+**Local testing (single session only):**
+
+.. code-block:: bash
+
+    claude --plugin-dir /path/to/pysheeet
+
+**Manual installation (requires cloning the repo):**
+
+.. code-block:: bash
+
+    git clone https://github.com/crazyguitar/pysheeet.git
+    mkdir -p ~/.claude/skills
+    cp -r pysheeet/skills/py ~/.claude/skills/py
+
+Python Interview Cheatsheet
+===========================
+
+Curated Python interview questions indexed by topic — each question links
+directly to the section of the cheat sheet that answers it. Use it for quick
+review before an interview, or to drill down on a specific area (GIL, asyncio,
+decorators, MRO, and more).
+
+- `Python Interview Cheatsheet <docs/notes/interview/index.rst>`_
+
+What's New In Python 3
 ======================
 
 This part only provides a quick glance at some important features in Python 3.
@@ -145,29 +188,35 @@ LLM
 ===
 
 Large Language Models (LLM) training, inference, and optimization. Covers PyTorch
-for model development, distributed training across GPUs, and vLLM for high-performance
-LLM inference and serving.
+for model development, distributed training across GPUs, and vLLM/SGLang for
+high-performance LLM inference and serving.
 
 - `PyTorch <docs/notes/llm/pytorch.rst>`_ - Tensors, autograd, neural networks, training loops
-- `Distributed Training <docs/notes/llm/distributed.rst>`_ - Multi-GPU training, DDP, FSDP, DeepSpeed
-- `vLLM Serving <docs/notes/llm/vllm-serving.rst>`_ - Production LLM inference with tensor/pipeline/data parallelism
+- `Megatron <docs/notes/llm/megatron.rst>`_ - NVIDIA Megatron training/fine-tuning framework with enroot/pyxis
+- `LLM Serving <docs/notes/llm/llm-serving.rst>`_ - vLLM and SGLang for production inference with TP/PP/DP/EP
+- `LLM Benchmark <docs/notes/llm/llm-bench.rst>`_ - Benchmark suite for measuring serving performance
 
 
 HPC
 ===
 
 High-Performance Computing tools for cluster management and job scheduling.
-Covers Slurm workload manager for distributed computing and GPU clusters.
+Covers Slurm workload manager and Ray for distributed computing on GPU clusters.
 
 - `Slurm <docs/notes/hpc/slurm.rst>`_
+- `Ray Cluster <docs/notes/hpc/ray.rst>`_
 
 
-Appendix
-=========
+Blog
+====
 
 Supplementary topics covering Python internals, debugging techniques, and
 language features that don't fit elsewhere.
 
+- `NVSHMEM Multi-NIC Support with AWS EFA <docs/notes/appendix/nvshmem-multi-nic.rst>`_
+- `Is Disaggregated Prefill/Decode a Silver Bullet for LLM Serving? <docs/notes/appendix/disaggregated-prefill-decode.rst>`_
+- `Monitoring EFA with NCCL GIN and Nsys <docs/notes/appendix/megatron-efa-monitoring.rst>`_
+- `GPU-Initiated Networking for NCCL on AWS <docs/notes/appendix/nccl-gin.rst>`_
 - `PEP 572 and the walrus operator <docs/notes/appendix/python-walrus.rst>`_
 - `Python Interpreter in GNU Debugger <docs/notes/appendix/python-gdb.rst>`_
 
