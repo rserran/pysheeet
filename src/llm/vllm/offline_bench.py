@@ -19,6 +19,7 @@ Usage:
         --tp-size 2 --dp-size 4 \
         --num-prompts 200
 """
+
 import argparse
 import json
 import os
@@ -39,12 +40,16 @@ def viztracer_profiler(output_file, world_rank):
         try:
             from viztracer import VizTracer
 
-            viztracer = VizTracer(output_file=output_file, verbose=0, log_torch=True)
+            viztracer = VizTracer(
+                output_file=output_file, verbose=0, log_torch=True
+            )
             if world_rank == 0:
                 print(f"VizTracer profiling enabled. Output: {output_file}")
         except ImportError:
             if world_rank == 0:
-                print("Warning: viztracer not installed (pip install viztracer)")
+                print(
+                    "Warning: viztracer not installed (pip install viztracer)"
+                )
 
     try:
         if viztracer:
@@ -94,7 +99,9 @@ def load_sharegpt_prompts(dataset_path: str, num_prompts: int) -> List[str]:
     return prompts[:num_prompts]
 
 
-def generate_random_prompts(num_prompts: int, input_len: int, tokenizer) -> List[str]:
+def generate_random_prompts(
+    num_prompts: int, input_len: int, tokenizer
+) -> List[str]:
     """Generate random prompts with specified input length."""
     # Use a fixed vocabulary for reproducibility
     vocab = list(range(1000, 10000))  # Use token IDs from vocab
@@ -127,7 +134,9 @@ def parse_args():
     parser = argparse.ArgumentParser(description="Offline vLLM benchmark")
 
     # Model args
-    parser.add_argument("--model", type=str, required=True, help="Model name or path")
+    parser.add_argument(
+        "--model", type=str, required=True, help="Model name or path"
+    )
     parser.add_argument(
         "--max-model-len", type=int, default=None, help="Max model length"
     )
@@ -172,9 +181,14 @@ def parse_args():
     )
 
     # Benchmark args
-    parser.add_argument("--num-prompts", type=int, default=50, help="Number of prompts")
     parser.add_argument(
-        "--dataset-path", type=str, default=None, help="Path to ShareGPT dataset"
+        "--num-prompts", type=int, default=50, help="Number of prompts"
+    )
+    parser.add_argument(
+        "--dataset-path",
+        type=str,
+        default=None,
+        help="Path to ShareGPT dataset",
     )
     parser.add_argument(
         "--input-len",
@@ -188,7 +202,9 @@ def parse_args():
         default=None,
         help="Output length (maps to --max-tokens)",
     )
-    parser.add_argument("--max-tokens", type=int, default=128, help="Max output tokens")
+    parser.add_argument(
+        "--max-tokens", type=int, default=128, help="Max output tokens"
+    )
     parser.add_argument(
         "--temperature", type=float, default=0.0, help="Sampling temperature"
     )
@@ -283,7 +299,9 @@ def main():
     world_rank = dist.get_rank() if dist.is_initialized() else 0
 
     # Distribute prompts across DP ranks
-    local_prompts = [p for i, p in enumerate(prompts) if i % dp_size == dp_rank]
+    local_prompts = [
+        p for i, p in enumerate(prompts) if i % dp_size == dp_rank
+    ]
 
     # Warmup
     if world_rank == 0:
@@ -310,7 +328,9 @@ def main():
         # Check if detailed metrics are available
         req_metrics = output.metrics
         if req_metrics and hasattr(req_metrics, "first_token_ts"):
-            ttft = (req_metrics.first_token_ts - req_metrics.scheduled_ts) * 1000
+            ttft = (
+                req_metrics.first_token_ts - req_metrics.scheduled_ts
+            ) * 1000
             if num_output_tokens > 1:
                 total_gen_time = (
                     req_metrics.last_token_ts - req_metrics.first_token_ts
@@ -364,7 +384,9 @@ def main():
         # Only print from world rank 0
         if world_rank == 0:
             # Filter to only DP ranks (every TP_SIZE-th rank)
-            tp_size = llm.llm_engine.vllm_config.parallel_config.tensor_parallel_size
+            tp_size = (
+                llm.llm_engine.vllm_config.parallel_config.tensor_parallel_size
+            )
             dp_stats = [all_stats[i] for i in range(0, world_size, tp_size)]
 
             # Aggregate
@@ -434,8 +456,12 @@ def print_results(
     print(f"Benchmark duration (s):                  {duration:<10.2f}")
     print(f"Total input tokens:                      {total_input:<10}")
     print(f"Total generated tokens:                  {total_output:<10}")
-    print(f"Request throughput (req/s):              {successful/duration:<10.2f}")
-    print(f"Output token throughput (tok/s):         {total_output/duration:<10.2f}")
+    print(
+        f"Request throughput (req/s):              {successful/duration:<10.2f}"
+    )
+    print(
+        f"Output token throughput (tok/s):         {total_output/duration:<10.2f}"
+    )
     print(
         f"Total token throughput (tok/s):          {(total_input+total_output)/duration:<10.2f}"
     )

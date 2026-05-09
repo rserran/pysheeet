@@ -2,7 +2,16 @@
 """This is a simple cheatsheet webapp."""
 
 import os
-from flask import Flask, abort, send_from_directory, render_template
+import re
+
+from flask import (
+    Flask,
+    abort,
+    redirect,
+    render_template,
+    request,
+    send_from_directory,
+)
 from flask_sslify import SSLify
 from flask_seasurf import SeaSurf
 from flask_talisman import Talisman
@@ -11,6 +20,12 @@ from werkzeug.utils import safe_join
 
 DIR = os.path.dirname(os.path.realpath(__file__))
 ROOT = os.path.join(DIR, "docs", "_build", "html")
+
+# Pysheeet was historically hosted on Read the Docs, which uses
+# /en/<slug>/<path> URLs (latest, stable, vX.Y.Z, master). The current flat
+# Heroku origin 404s those. Redirect them to the canonical flat URL so Google
+# can drop them from the index cleanly instead of 404-churning.
+_LEGACY_RTD_PATH = re.compile(r"^en/[^/]+/(.+)$")
 
 
 def find_key(token):
@@ -83,6 +98,14 @@ if "DYNO" in os.environ:
 def page_not_found(e):
     """Redirect to 404.html."""
     return render_template("404.html"), 404
+
+
+@app.before_request
+def redirect_legacy_rtd_paths():
+    """301 legacy /en/<slug>/... RTD URLs to flat canonical paths."""
+    match = _LEGACY_RTD_PATH.match(request.path.lstrip("/"))
+    if match:
+        return redirect("/" + match.group(1), code=301)
 
 
 @app.route("/<path:path>")
