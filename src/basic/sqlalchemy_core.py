@@ -35,7 +35,6 @@ from sqlalchemy.orm import (
 )
 from sqlalchemy.ext.hybrid import hybrid_property
 
-
 # ============================================================================
 # SQLAlchemy Core Tests
 # ============================================================================

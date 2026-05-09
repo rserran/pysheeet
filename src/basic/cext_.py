@@ -243,12 +243,10 @@ class TestCffi:
         """Test cffi with libc."""
         ffi = cffi_available
 
-        ffi.cdef(
-            """
+        ffi.cdef("""
             int abs(int x);
             size_t strlen(const char *s);
-        """
-        )
+        """)
 
         if platform.system() == "Darwin":
             libc = ffi.dlopen("libc.dylib")
@@ -264,12 +262,10 @@ class TestCffi:
         """Test cffi with libm."""
         ffi = cffi_available
 
-        ffi.cdef(
-            """
+        ffi.cdef("""
             double sqrt(double x);
             double pow(double x, double y);
-        """
-        )
+        """)
 
         if platform.system() == "Darwin":
             libm = ffi.dlopen("libm.dylib")

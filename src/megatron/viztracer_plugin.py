@@ -45,7 +45,10 @@ def _patched_handle_step(config, iteration, rank, pytorch_prof):
 
     from viztracer import VizTracer
 
-    out_dir = os.environ.get("VIZTRACER_OUTPUT_DIR", os.path.join(os.path.dirname(__file__), "viztracer_output"))
+    out_dir = os.environ.get(
+        "VIZTRACER_OUTPUT_DIR",
+        os.path.join(os.path.dirname(__file__), "viztracer_output"),
+    )
     os.makedirs(out_dir, exist_ok=True)
     out_path = os.path.join(out_dir, f"trace_rank{rank}.json")
 
@@ -57,7 +60,9 @@ def _patched_handle_step(config, iteration, rank, pytorch_prof):
     return None
 
 
-def _patched_handle_stop(config, iteration, rank, pytorch_prof, nsys_nvtx_context=None):
+def _patched_handle_stop(
+    config, iteration, rank, pytorch_prof, nsys_nvtx_context=None
+):
     global _viztracer_instance
 
     _orig_handle_stop(config, iteration, rank, pytorch_prof, nsys_nvtx_context)
@@ -90,9 +95,9 @@ def install():
 
     def _patched_finalize(self):
         if getattr(self, "use_viztracer", False):
-            assert not self.use_nsys_profiler and not self.use_pytorch_profiler, (
-                "use_viztracer is mutually exclusive with nsys and pytorch profilers"
-            )
+            assert (
+                not self.use_nsys_profiler and not self.use_pytorch_profiler
+            ), "use_viztracer is mutually exclusive with nsys and pytorch profilers"
         else:
             _orig_finalize(self)
 

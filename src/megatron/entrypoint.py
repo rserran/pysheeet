@@ -10,10 +10,12 @@ import importlib.util
 import sys
 
 import megatron.core.jit as _jit
+
 if not hasattr(_jit, "disable_jit_fuser"):
     _jit.disable_jit_fuser = lambda: None
 
 import viztracer_plugin
+
 viztracer_plugin.install()
 
 from omegaconf import OmegaConf
@@ -40,7 +42,9 @@ def parse_cli_overrides(cfg, args):
     if args:
         omega_conf, excluded = create_omegaconf_dict_config(cfg)
         omega_conf = parse_hydra_overrides(omega_conf, args)
-        apply_overrides(cfg, OmegaConf.to_container(omega_conf, resolve=True), excluded)
+        apply_overrides(
+            cfg, OmegaConf.to_container(omega_conf, resolve=True), excluded
+        )
 
 
 def main() -> None:

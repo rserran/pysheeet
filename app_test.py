@@ -11,10 +11,10 @@ from werkzeug.exceptions import NotFound
 from flask_testing import LiveServerTestCase
 
 from app import acme, find_key, static_proxy, index_redirection, page_not_found
+from app import redirect_legacy_rtd_paths
 
 from app import ROOT
 from app import app
-
 
 if platform.system() == "Darwin":
     multiprocessing.set_start_method("fork")
@@ -146,6 +146,35 @@ class PysheeetTest(LiveServerTestCase):
         """Test page not found."""
         html, status_code = page_not_found(None)
         self.assertEqual(status_code, 404)
+
+    def test_legacy_rtd_path_redirect(self):
+        """Legacy /en/<slug>/... must 301 to the flat canonical URL."""
+        url = self.get_server_url()
+        cases = {
+            "/en/latest/notes/basic/python-basic.html": (
+                "/notes/basic/python-basic.html"
+            ),
+            "/en/stable/index.html": "/index.html",
+            "/en/0.1.0/notes/asyncio/index.html": (
+                "/notes/asyncio/index.html"
+            ),
+        }
+        for legacy, flat in cases.items():
+            resp = requests.get(url + legacy, allow_redirects=False)
+            self.assertEqual(resp.status_code, 301)
+            self.assertTrue(resp.headers["Location"].endswith(flat))
+
+    def test_redirect_legacy_rtd_paths_passthrough(self):
+        """Non-legacy paths must not be intercepted."""
+        with app.test_request_context("/notes/basic/python-basic.html"):
+            self.assertIsNone(redirect_legacy_rtd_paths())
+
+    def test_redirect_legacy_rtd_paths_match(self):
+        """Legacy /en/<slug>/... returns a 301 redirect response."""
+        with app.test_request_context("/en/latest/index.html"):
+            resp = redirect_legacy_rtd_paths()
+            self.assertEqual(resp.status_code, 301)
+            self.assertTrue(resp.headers["Location"].endswith("/index.html"))
 
 
 if __name__ == "__main__":
