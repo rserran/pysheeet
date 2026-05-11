@@ -138,6 +138,18 @@ pygments_style = 'sphinx'
 todo_include_todos = True
 
 
+# -- Sitemap configuration ------------------------------------------------
+# Emit canonical <link rel="canonical"> tags pointing at the www host so
+# Google consolidates the duplicate www/non-www indexing.
+html_baseurl = 'https://www.pythonsheets.com/'
+sitemap_url_scheme = "{link}"
+sitemap_excludes = [
+    "search.html",
+    "genindex.html",
+    "404.html",
+]
+
+
 # -- Options for HTML output ----------------------------------------------
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for

@@ -27,6 +27,54 @@ ROOT = os.path.join(DIR, "docs", "_build", "html")
 # can drop them from the index cleanly instead of 404-churning.
 _LEGACY_RTD_PATH = re.compile(r"^en/[^/]+/(.+)$")
 
+# Pre-restructure docs lived at flat paths like /notes/python-typing.html or
+# /appendix/python-walrus.html. The 2024-2026 reorg moved them under section
+# subdirectories (e.g. /notes/basic/python-typing.html), but Google still
+# indexes the legacy URLs. Map them explicitly to the current location.
+_LEGACY_FLAT_REDIRECTS = {
+    "notes/python-basic.html": "notes/basic/python-basic.html",
+    "notes/python-dict.html": "notes/basic/python-dict.html",
+    "notes/python-func.html": "notes/basic/python-func.html",
+    "notes/python-future.html": "notes/basic/python-future.html",
+    "notes/python-generator.html": "notes/basic/python-generator.html",
+    "notes/python-heap.html": "notes/basic/python-heap.html",
+    "notes/python-list.html": "notes/basic/python-list.html",
+    "notes/python-object.html": "notes/basic/python-object.html",
+    "notes/python-rexp.html": "notes/basic/python-rexp.html",
+    "notes/python-set.html": "notes/basic/python-set.html",
+    "notes/python-typing.html": "notes/basic/python-typing.html",
+    "notes/python-unicode.html": "notes/basic/python-unicode.html",
+    "notes/python-date.html": "notes/os/python-date.html",
+    "notes/python-io.html": "notes/os/python-io.html",
+    "notes/python-os.html": "notes/os/python-os.html",
+    "notes/python-socket.html": "notes/network/python-socket.html",
+    "notes/python-ssh.html": "notes/network/python-ssh.html",
+    "notes/python-sqlalchemy.html": ("notes/database/python-sqlalchemy.html"),
+    "notes/python-asyncio.html": ("notes/asyncio/python-asyncio-guide.html"),
+    "notes/python-concurrency.html": "notes/concurrency/index.html",
+    "notes/python-c-extensions.html": (
+        "notes/extension/python-cext-modern.html"
+    ),
+    "notes/python-security.html": ("notes/security/python-vulnerability.html"),
+    "notes/security/python-security.html": (
+        "notes/security/python-vulnerability.html"
+    ),
+    "appendix/python-walrus.html": "notes/appendix/python-walrus.html",
+    "appendix/python-gdb.html": "notes/appendix/python-gdb.html",
+    "appendix/python-concurrent.html": "notes/appendix/index.html",
+    "appendix/python-asyncio.html": (
+        "notes/asyncio/python-asyncio-guide.html"
+    ),
+    "notes/multitasking/index.html": "notes/concurrency/index.html",
+    "notes/pytorch/pytorch.html": "notes/llm/pytorch.html",
+    "notes/pytorch/distributed.html": "notes/llm/pytorch.html",
+}
+
+
+def _resolve_legacy_flat_target(path):
+    """Return the nested URL for a known legacy flat path, or None."""
+    return _LEGACY_FLAT_REDIRECTS.get(path)
+
 
 def find_key(token):
     """Find the key from the environment variable."""
@@ -101,11 +149,30 @@ def page_not_found(e):
 
 
 @app.before_request
+def redirect_canonical_host():
+    """301 pythonsheets.com to the canonical www.pythonsheets.com origin."""
+    host = (request.host or "").lower()
+    if host == "pythonsheets.com" or host.startswith("pythonsheets.com:"):
+        url = "{0}://www.{1}{2}".format(request.scheme, host, request.path)
+        if request.query_string:
+            url += "?" + request.query_string.decode("latin-1")
+        return redirect(url, code=301)
+
+
+@app.before_request
 def redirect_legacy_rtd_paths():
     """301 legacy /en/<slug>/... RTD URLs to flat canonical paths."""
     match = _LEGACY_RTD_PATH.match(request.path.lstrip("/"))
     if match:
         return redirect("/" + match.group(1), code=301)
+
+
+@app.before_request
+def redirect_legacy_flat_paths():
+    """301 pre-restructure flat URLs to their current nested locations."""
+    target = _resolve_legacy_flat_target(request.path.lstrip("/"))
+    if target:
+        return redirect("/" + target, code=301)
 
 
 @app.route("/<path:path>")
