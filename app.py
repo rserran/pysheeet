@@ -66,8 +66,68 @@ _LEGACY_FLAT_REDIRECTS = {
         "notes/asyncio/python-asyncio-guide.html"
     ),
     "notes/multitasking/index.html": "notes/concurrency/index.html",
+    "notes/multitasking/python-asyncio.html": (
+        "notes/asyncio/python-asyncio-guide.html"
+    ),
+    "notes/multitasking/python-concurrency.html": (
+        "notes/concurrency/index.html"
+    ),
     "notes/pytorch/pytorch.html": "notes/llm/pytorch.html",
     "notes/pytorch/distributed.html": "notes/llm/pytorch.html",
+    "notes/pytorch/index.html": "notes/llm/index.html",
+    "notes/pytorch/slurm.html": "notes/hpc/slurm.html",
+    # Intermediate restructuring steps (container/ iteration/ string/ →
+    # basic/, cryptography/ → security/, io/ → os/ or network/).
+    "notes/container/index.html": "notes/basic/index.html",
+    "notes/container/python-dict.html": "notes/basic/python-dict.html",
+    "notes/container/python-heap.html": "notes/basic/python-heap.html",
+    "notes/container/python-list.html": "notes/basic/python-list.html",
+    "notes/container/python-set.html": "notes/basic/python-set.html",
+    "notes/iteration/index.html": "notes/basic/index.html",
+    "notes/iteration/python-generator.html": (
+        "notes/basic/python-generator.html"
+    ),
+    "notes/string/index.html": "notes/basic/index.html",
+    "notes/string/python-rexp.html": "notes/basic/python-rexp.html",
+    "notes/string/python-unicode.html": "notes/basic/python-unicode.html",
+    "notes/cryptography/index.html": "notes/security/index.html",
+    "notes/cryptography/python-crypto.html": (
+        "notes/security/python-crypto.html"
+    ),
+    "notes/cryptography/python-tls.html": "notes/security/python-tls.html",
+    "notes/io/index.html": "notes/os/index.html",
+    "notes/io/python-io.html": "notes/os/python-io.html",
+    "notes/io/python-socket.html": "notes/network/python-socket.html",
+    # python-socket lived briefly under os/ before moving to network/.
+    "notes/os/python-socket.html": "notes/network/python-socket.html",
+    # python-ssh lived briefly under security/ before moving to network/.
+    "notes/security/python-ssh.html": "notes/network/python-ssh.html",
+    # vllm/sglang split was later consolidated into generic llm-bench/serving.
+    "notes/llm/distributed.html": "notes/llm/pytorch.html",
+    "notes/llm/sglang-bench.html": "notes/llm/llm-bench.html",
+    "notes/llm/sglang-serving.html": "notes/llm/llm-serving.html",
+    "notes/llm/vllm-bench.html": "notes/llm/llm-bench.html",
+    "notes/llm/vllm-serving.html": "notes/llm/llm-serving.html",
+    # Nested appendix paths (the unprefixed appendix/* keys above cover the
+    # original RTD-flat form; these handle the post-rename location).
+    "notes/appendix/python-asyncio.html": (
+        "notes/asyncio/python-asyncio-guide.html"
+    ),
+    "notes/appendix/python-concurrent.html": ("notes/concurrency/index.html"),
+    "notes/appendix/python-decorator.html": "index.html",
+    # c-extensions was renamed to cext-modern.
+    "notes/extension/python-c-extensions.html": (
+        "notes/extension/python-cext-modern.html"
+    ),
+    # Pages deleted without a direct replacement go to the root index so
+    # Google drops them via a 301 chain instead of holding the 404s.
+    "notes/python-aws.html": "index.html",
+    "notes/python-cstyle.html": "index.html",
+    "notes/python-code-style.html": "index.html",
+    "notes/python-network.html": "notes/network/index.html",
+    "notes/python-iterator.html": "notes/basic/python-generator.html",
+    "notes/testing/index.html": "index.html",
+    "notes/testing/python-tests.html": "index.html",
 }
 
 
