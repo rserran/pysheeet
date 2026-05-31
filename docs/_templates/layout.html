@@ -5,14 +5,14 @@
 <meta name="keywords" content="Python, Python cheat sheet, Python tutorial, Python examples, Python code snippets, programming, development">
 <meta name="author" content="crazyguitar">
 <meta name="robots" content="index, follow">
+{# Canonical URLs are emitted by Sphinx via html_baseurl; do not duplicate
+   them here or Google reports "Duplicate without user-selected canonical". #}
 {%- if pagename == 'index' %}
-<link rel="canonical" href="https://www.pythonsheets.com/"/>
 <meta property="og:url" content="https://www.pythonsheets.com/">
 <meta property="og:type" content="website">
 <meta property="og:description" content="Comprehensive Python cheat sheet with practical code snippets for developers. Learn Python basics, advanced topics, databases, networking, and more.">
 {%- elif pagename == '404' -%}
 {%- else %}
-<link rel="canonical" href="https://www.pythonsheets.com/{{ pagename }}{{ file_suffix }}"/>
 <meta property="og:url" content="https://www.pythonsheets.com/{{ pagename }}{{ file_suffix }}">
 <meta property="og:type" content="article">
 <meta property="og:description" content="{{ title }} - Python code examples and snippets from the comprehensive Python cheat sheet.">

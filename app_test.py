@@ -191,6 +191,39 @@ class PysheeetTest(LiveServerTestCase):
             ),
             "notes/multitasking/index.html": "notes/concurrency/index.html",
             "notes/pytorch/pytorch.html": "notes/llm/pytorch.html",
+            # Intermediate restructuring snapshots Google still has indexed.
+            "notes/container/python-dict.html": (
+                "notes/basic/python-dict.html"
+            ),
+            "notes/iteration/python-generator.html": (
+                "notes/basic/python-generator.html"
+            ),
+            "notes/string/python-unicode.html": (
+                "notes/basic/python-unicode.html"
+            ),
+            "notes/cryptography/python-crypto.html": (
+                "notes/security/python-crypto.html"
+            ),
+            "notes/io/python-socket.html": (
+                "notes/network/python-socket.html"
+            ),
+            "notes/os/python-socket.html": (
+                "notes/network/python-socket.html"
+            ),
+            "notes/security/python-ssh.html": (
+                "notes/network/python-ssh.html"
+            ),
+            "notes/pytorch/slurm.html": "notes/hpc/slurm.html",
+            "notes/llm/vllm-serving.html": "notes/llm/llm-serving.html",
+            "notes/extension/python-c-extensions.html": (
+                "notes/extension/python-cext-modern.html"
+            ),
+            "notes/appendix/python-asyncio.html": (
+                "notes/asyncio/python-asyncio-guide.html"
+            ),
+            # Deleted pages with no direct successor go to the root.
+            "notes/python-aws.html": "index.html",
+            "notes/testing/python-tests.html": "index.html",
         }
         for old, new in cases.items():
             self.assertEqual(_resolve_legacy_flat_target(old), new)
